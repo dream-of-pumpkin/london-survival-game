@@ -226,6 +226,99 @@ body{
 }
 .spotPortrait.on{display:block}
 
+/* ===== 街角咖啡：立牌式菜单面板 ===== */
+.cafeMenu{
+  position:absolute;right:1.8vmin;top:13.4vmin;bottom:2vmin;width:45vmin;
+  z-index:20;display:none;flex-direction:column;overflow:hidden;
+  background:linear-gradient(178deg,#fbf6ea 0%,#f2e9d7 62%,#ece1cc 100%);
+  border:1px solid rgba(63,47,34,.5);border-radius:.6vmin;
+  box-shadow:0 2vmin 5vmin rgba(0,0,0,.55),inset 0 0 .0 1px rgba(255,255,255,.6);
+  font-family:var(--serif);color:#3f2f22;
+}
+.cafeMenu.on{display:flex}
+#s8.cafeMode .talk{right:49vmin;pointer-events:none}
+#s8.cafeMode .talk button{pointer-events:auto}
+#s8.cafeMode .spotPortrait{display:none}
+#s8.cafeMode .spotHot{display:none}
+.cmHead{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.15vmin 1.6vmin .95vmin;
+  background:linear-gradient(180deg,#453224,#3a2a1e);
+  color:#f5ecda;border-bottom:2px solid #4f6b4a;
+}
+.cmHead b{font-size:1.85vmin;letter-spacing:.06em;font-weight:600}
+.cmHead i{font-family:var(--sans);font-style:normal;font-size:1.02vmin;letter-spacing:.2em;opacity:.72}
+.cmTabs{display:flex;gap:.35vmin;padding:.75vmin 1vmin .1vmin;background:rgba(63,47,34,.05)}
+.cmTab{
+  flex:1;padding:.6vmin .2vmin;cursor:pointer;
+  font-family:var(--sans);font-size:1.12vmin;letter-spacing:.03em;
+  color:#6d5a45;background:rgba(255,252,243,.5);
+  border:1px solid rgba(63,47,34,.14);border-bottom:none;
+  border-radius:.3vmin .3vmin 0 0;
+}
+.cmTab.on{background:#fbf6ea;color:#3f2f22;font-weight:700;border-bottom:2px solid #4f6b4a;box-shadow:0 -.3vmin .8vmin rgba(0,0,0,.06)}
+.cmBody{flex:1;overflow-y:auto;padding:1vmin 1.1vmin;display:grid;grid-template-columns:1fr 1fr;gap:.85vmin;align-content:start}
+.cmNote{grid-column:1/-1;font-family:var(--sans);font-size:1.02vmin;color:#8a7a63;letter-spacing:.02em;line-height:1.6;margin:.2vmin 0 .3vmin}
+.cmNote.cmEnd{margin-top:.7vmin;border-top:1px dashed rgba(63,47,34,.22);padding-top:.7vmin;color:#7a6a55}
+.cmCard{
+  display:flex;align-items:center;gap:.75vmin;padding:.65vmin .7vmin;text-align:left;cursor:pointer;
+  background:rgba(255,252,244,.94);border:1px solid rgba(63,47,34,.16);border-radius:.35vmin;
+  transition:border-color .14s,transform .12s,box-shadow .14s;
+}
+.cmCard:hover{border-color:rgba(79,107,74,.8);transform:translateY(-.2vmin);box-shadow:0 .5vmin 1.2vmin rgba(0,0,0,.14)}
+.cmCard:focus-visible{outline:2px solid #4f6b4a;outline-offset:1px}
+.cmCard .th{flex:0 0 4.6vmin;width:4.6vmin;height:4.6vmin;display:grid;place-items:center}
+.cmCard .th img,.cmCard .th svg{width:100%;height:100%;object-fit:contain;display:block}
+.cmCard .tx{flex:1;min-width:0}
+.cmCard .nm{display:block;font-size:1.28vmin;line-height:1.32}
+.cmCard .en{display:block;font-family:var(--sans);font-size:.98vmin;letter-spacing:.02em;color:#8a7a63;margin-top:.1vmin}
+.cmCard .pr{display:block;font-family:var(--sans);font-size:1.12vmin;font-weight:600;color:#8a4b2a;margin-top:.2vmin}
+.cmTag{display:inline-block;margin-left:.35vmin;padding:.05vmin .4vmin;border-radius:.2vmin;background:#4f6b4a;color:#f4efdf;font-family:var(--sans);font-size:.92vmin;letter-spacing:.04em;vertical-align:.1vmin}
+.cmTag.alt{background:#a8552f}
+.cmFoot{
+  display:flex;align-items:center;gap:.7vmin;padding:.85vmin 1.1vmin;
+  border-top:1px dashed rgba(63,47,34,.3);background:rgba(251,246,234,.97);
+}
+.cmFoot .stat{flex:1;font-family:var(--sans);font-size:1.05vmin;color:#7a6a55;letter-spacing:.02em}
+.cmBtn{
+  font-family:var(--sans);font-size:1.16vmin;letter-spacing:.04em;cursor:pointer;
+  padding:.68vmin 1.15vmin;border-radius:.3vmin;
+  background:rgba(63,47,34,.06);color:#3f2f22;border:1px solid rgba(63,47,34,.26);
+}
+.cmBtn:hover{background:rgba(63,47,34,.12)}
+.cmBtn.primary{background:#4f6b4a;color:#f6f2e3;border-color:#3f5639;font-weight:600}
+.cmBtn.primary:hover{background:#5b7a55}
+.cmBtn:disabled{opacity:.45;cursor:not-allowed}
+/* 规格页 */
+.cmSpecWrap{padding:1.2vmin 1.3vmin 0;flex:1;overflow-y:auto}
+.cmSpecTop{display:flex;gap:1.1vmin;align-items:center;padding-bottom:.9vmin;border-bottom:1px solid rgba(63,47,34,.16)}
+.cmSpecTop .big{flex:0 0 8vmin;width:8vmin;height:8vmin;display:grid;place-items:center;background:rgba(255,252,244,.8);border:1px solid rgba(63,47,34,.14);border-radius:.4vmin}
+.cmSpecTop .big img,.cmSpecTop .big svg{width:100%;height:100%;object-fit:contain}
+.cmSpecTop h4{margin:0;font-size:1.7vmin;font-weight:600;letter-spacing:.02em}
+.cmSpecTop .e2{font-family:var(--sans);font-size:1.05vmin;color:#8a7a63;margin-top:.15vmin}
+.cmSpecTop .pp{font-family:var(--sans);font-size:1.3vmin;font-weight:700;color:#8a4b2a;margin-top:.35vmin}
+.cmRow{margin-top:.85vmin}
+.cmRow .lb{font-family:var(--sans);font-size:1.02vmin;letter-spacing:.1em;color:#7a6a55}
+.cmRow .chips{display:flex;flex-wrap:wrap;gap:.5vmin;margin-top:.4vmin}
+.cmChip{
+  font-family:var(--sans);font-size:1.05vmin;cursor:pointer;
+  padding:.45vmin .75vmin;border-radius:.25vmin;
+  background:rgba(255,252,244,.9);border:1px solid rgba(63,47,34,.24);color:#4a3726;
+}
+.cmChip:hover{border-color:rgba(79,107,74,.85)}
+.cmChip.on{background:#4f6b4a;border-color:#3f5639;color:#f6f2e3;font-weight:600}
+.cmChip .add{opacity:.7;margin-left:.2vmin}
+/* 结果页 */
+.cmDone{padding:1.6vmin 1.5vmin;display:flex;flex-direction:column;gap:.9vmin;flex:1;overflow-y:auto}
+.cmDone .dk{font-family:var(--sans);font-size:1.02vmin;letter-spacing:.18em;color:#7a6a55}
+.cmDone .t1{font-size:1.9vmin;line-height:1.4}
+.cmDone .t2{font-family:var(--sans);font-size:1.2vmin;line-height:1.85;color:#5c4b39}
+.cmDone .rec{font-family:var(--sans);font-size:1.1vmin;line-height:1.8;color:#6d5a45;border-top:1px dashed rgba(63,47,34,.28);padding-top:.8vmin}
+.cmDone .delta{font-family:var(--sans);font-size:1.15vmin;color:#4f6b4a;font-weight:600}
+.cmDone .delta.bad{color:#a8473a}
+.cmDone .row{display:flex;gap:.7vmin;margin-top:.4vmin}
+
+
 /* ===== 洗手间点读层 ===== */
 .learnLayer{position:absolute;inset:0;display:none;z-index:13}
 .learnLayer.on{display:block}
@@ -758,6 +851,7 @@ body{
         <span class="progress" id="learnProg"></span>
       </div>
     </div>
+    <div class="cafeMenu" id="cafeMenu" aria-label="咖啡店菜单"></div>
     <button class="spotHot" id="spotHot">点这里</button>
     <div class="talk">
       <div class="speech">
@@ -2254,6 +2348,211 @@ function setSpotPortrait(img){
   else { pel.classList.remove('on'); pel.style.backgroundImage = 'none'; }
 }
 
+// ===== 街角咖啡：立牌式菜单 =====
+const CAFE_SVG = {
+  teacup: '<svg viewBox="0 0 40 40"><path d="M8 15h17v8a7 7 0 0 1-7 7H15a7 7 0 0 1-7-7z" fill="none" stroke="#5a4430" stroke-width="1.6"/><path d="M25 17h4a4 4 0 0 1 0 8h-4" fill="none" stroke="#5a4430" stroke-width="1.6"/><path d="M10 34h19" stroke="#8a7a63" stroke-width="1.4"/><path d="M15 8c2 2-2 3 0 5M20 7c2 2-2 3 0 5" fill="none" stroke="#a8552f" stroke-width="1.2"/></svg>',
+  teapot: '<svg viewBox="0 0 40 40"><path d="M12 14h14a5 5 0 0 1 5 5v3a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8v-3a5 5 0 0 1 5-5z" fill="none" stroke="#5a4430" stroke-width="1.6"/><path d="M31 17l5-4" stroke="#5a4430" stroke-width="1.6"/><path d="M9 16c-3 1-3 6 1 6" fill="none" stroke="#5a4430" stroke-width="1.6"/><path d="M16 9h6" stroke="#5a4430" stroke-width="1.8"/><path d="M19 30v4" stroke="#8a7a63" stroke-width="1.4"/></svg>',
+  hotchoc: '<svg viewBox="0 0 40 40"><path d="M9 12h18v16a6 6 0 0 1-6 6h-6a6 6 0 0 1-6-6z" fill="none" stroke="#5a4430" stroke-width="1.6"/><path d="M27 16h3a4 4 0 0 1 0 8h-3" fill="none" stroke="#5a4430" stroke-width="1.6"/><path d="M9 12h18l-2 4H11z" fill="none" stroke="#5a4430" stroke-width="1.4"/><path d="M14 34h10" stroke="#8a7a63" stroke-width="1.4"/></svg>',
+  croissant: '<svg viewBox="0 0 40 40"><path d="M6 26c0-9 7-14 14-14s14 5 14 14c0 2-2 3-4 2l-8-2-8 2c-2 1-4 0-4-2z" fill="none" stroke="#5a4430" stroke-width="1.6"/><path d="M14 20c2-3 4-4 6-4M20 16c3 0 5 3 6 8" fill="none" stroke="#a8552f" stroke-width="1.2"/></svg>',
+  cake: '<svg viewBox="0 0 40 40"><path d="M8 20h24v12c0 1-1 2-2 2H10c-1 0-2-1-2-2z" fill="none" stroke="#5a4430" stroke-width="1.6"/><path d="M8 26c2 2 4 2 6 0s4-2 6 0 4 2 6 0 4-2 6 0" fill="none" stroke="#a8552f" stroke-width="1.3"/><path d="M20 8v9M20 8c1-2 3-2 3 0" fill="none" stroke="#5a4430" stroke-width="1.4"/></svg>',
+  toast: '<svg viewBox="0 0 40 40"><path d="M8 30l3-16c0-2 2-3 4-3h10c2 0 4 1 4 3l3 16z" fill="none" stroke="#5a4430" stroke-width="1.6"/><path d="M12 22h16" stroke="#a8552f" stroke-width="1.3"/></svg>'
+};
+
+const CAFE = {
+  cats: [
+    { k: 'coffee', label: '咖啡 COFFEE', items: [
+      { id: 'americano', nm: '美式咖啡', en: 'Americano', price: 2.95, img: 'mug', say: 'An americano, please.' },
+      { id: 'flat', nm: '馥芮白', en: 'Flat White', price: 3.40, img: 'cupFlat', tag: '人气', say: 'A flat white, please.' },
+      { id: 'latte', nm: '拿铁咖啡', en: 'Latte', price: 3.85, img: 'cupTall', say: 'A latte, please.' },
+      { id: 'cortado', nm: '可塔多', en: 'Cortado', price: 3.20, img: 'cortado', tag: '小杯', say: 'A cortado, please.' },
+      { id: 'iced', nm: '冰拿铁', en: 'Iced Latte', price: 4.10, img: 'iced', tag: '冰', say: 'An iced latte, please.' },
+      { id: 'caramel', nm: '焦糖玛奇朵', en: 'Caramel Macchiato', price: 4.30, img: 'cupTall', tag: '推荐', tagAlt: true, say: 'A caramel macchiato, please.' }
+    ] },
+    { k: 'tea', label: '茶饮 TEA', items: [
+      { id: 'breakfast', nm: '英式早餐茶', en: 'English Breakfast', price: 2.60, svg: 'teacup', say: 'An English breakfast tea, please.' },
+      { id: 'earlgrey', nm: '伯爵茶', en: 'Earl Grey', price: 2.70, svg: 'teapot', say: 'An Earl Grey, please.' },
+      { id: 'chai', nm: '香料奶茶', en: 'Chai Latte', price: 3.60, svg: 'teacup', tag: '新品', say: 'A chai latte, please.' }
+    ] },
+    { k: 'sig', label: '特调 SIGNATURE', items: [
+      { id: 'vanilla', nm: '香草拿铁', en: 'Vanilla Latte', price: 4.20, img: 'cupTall', tag: '新品', say: 'A vanilla latte, please.' },
+      { id: 'mocha', nm: '摩卡', en: 'Mocha', price: 4.40, img: 'mug', say: 'A mocha, please.' },
+      { id: 'choc', nm: '热巧克力', en: 'Hot Chocolate', price: 3.80, svg: 'hotchoc', say: 'A hot chocolate, please.' }
+    ] },
+    { k: 'food', label: '小食 FOOD', items: [
+      { id: 'croissant', nm: '黄油可颂', en: 'Butter Croissant', price: 3.60, svg: 'croissant', cis: 'Croissant', say: 'A butter croissant, please.' },
+      { id: 'cheesecake', nm: '芝士蛋糕', en: 'Cheesecake', price: 5.20, svg: 'cake', cis: 'Cake', say: 'A cheesecake, please.' },
+      { id: 'toastie', nm: '芝士三明治', en: 'Cheese Toastie', price: 4.80, svg: 'toast', cis: 'Toastie', say: 'A cheese toastie, please.' }
+    ] }
+  ]
+};
+
+let cafeSt = { cat: 'coffee', item: null, size: 'Regular', milk: 'Whole', sugar: 'No sugar', serve: 'For here' };
+
+function cafeThumb(it, big){
+  const cls = big ? 'big' : 'th';
+  if (it.img && ITEM_B64[it.img]) return '<span class="' + cls + '"><img src="' + ITEM_B64[it.img] + '" alt=""></span>';
+  return '<span class="' + cls + '">' + (CAFE_SVG[it.svg] || '') + '</span>';
+}
+function cafeFind(id){
+  for (const c of CAFE.cats) for (const it of c.items) if (it.id === id) return it;
+  return null;
+}
+function cafeFood(it){ return it.svg === 'croissant' || it.svg === 'cake' || it.svg === 'toast'; }
+function cafeTotal(){
+  const it = cafeSt.item; if (!it) return 0;
+  let p = it.price;
+  if (!cafeFood(it) && cafeSt.size === 'Large') p += 0.60;
+  if (!cafeFood(it) && cafeSt.milk === 'Oat milk') p += 0.50;
+  if (!cafeFood(it) && cafeSt.milk === 'Soya milk') p += 0.50;
+  return Math.round(p * 100) / 100;
+}
+
+function openCafe(){
+  if (S.mood == null) S.mood = 55;
+  cafeSt.cat = 'coffee'; cafeSt.item = null; cafeSt.size = 'Regular'; cafeSt.milk = 'Whole'; cafeSt.sugar = 'No sugar'; cafeSt.serve = 'For here';
+  $('cafeMenu').classList.add('on');
+  $('s8').classList.add('cafeMode');
+  $('spotOpts').innerHTML = '';
+  $('spotWords').innerHTML = 'menu 菜单 · flat white 馥芮白 · oat milk 燕麦奶 · takeaway 带走';
+  renderCafeMenu();
+  $('spotWho').textContent = 'BARISTA';
+  typeLine($('spotLine'), 'Morning! What can I get you?');
+  $('spotCn').textContent = '早上好，要点什么？右边是今天的立牌菜单，按分类挑，点一杯试试。';
+  speak('Morning! What can I get you?', null, 'BARISTA');
+  updateDayHud();
+}
+
+function cafeFoot(){
+  return '<div class="cmFoot">' +
+    '<span class="stat">现金 £' + fmt(S.cash) + ' · 精神 ' + Math.round(S.mood) + '</span>' +
+    '<button class="cmBtn" data-act="exit">← 回街区</button>' +
+    '</div>';
+}
+
+function renderCafeMenu(){
+  const box = $('cafeMenu');
+  const cat = CAFE.cats.find(c => c.k === cafeSt.cat) || CAFE.cats[0];
+  let h = '<div class="cmHead"><b>街角咖啡 CORNER CAFÉ</b><i>MENU · PICCADILLY</i></div>';
+  h += '<div class="cmTabs">' + CAFE.cats.map(c =>
+    '<button class="cmTab' + (c.k === cafeSt.cat ? ' on' : '') + '" data-cat="' + c.k + '">' + c.label + '</button>').join('') + '</div>';
+  h += '<div class="cmBody">';
+  h += '<div class="cmNote">点一杯，听一遍英文，再选杯型和奶——不会点就这样问：Could I have a latte, please?</div>';
+  cat.items.forEach(it => {
+    h += '<button class="cmCard" data-item="' + it.id + '">' + cafeThumb(it, false) + '<span class="tx">' +
+      '<span class="nm">' + it.nm + (it.tag ? '<span class="cmTag' + (it.tagAlt ? ' alt' : '') + '">' + it.tag + '</span>' : '') + '</span>' +
+      '<span class="en">' + it.en + '</span>' +
+      '<span class="pr">£' + fmt(it.price) + (cafeFood(it) ? '' : ' · 常规/大杯') + '</span>' +
+      '</span></button>';
+  });
+  h += '<div class="cmNote cmEnd">OPEN 07:00–18:00 · 堂食把杯子放回回收架 · 带走杯盖与糖在柜台左侧自取</div>';
+  h += '</div>' + cafeFoot();
+  box.innerHTML = h;
+}
+function renderCafeSpec(){
+  const it = cafeSt.item;
+  const isFood = cafeFood(it);
+  let h = '<div class="cmHead"><b>' + it.nm + '</b><i>' + it.en.toUpperCase() + '</i></div>';
+  h += '<div class="cmSpecWrap">';
+  h += '<div class="cmSpecTop">' + cafeThumb(it, true) + '<div><h4>' + it.nm + '</h4>' +
+    '<div class="e2">' + it.en + '</div><div class="pp">£' + fmt(cafeTotal()) + '</div></div></div>';
+  if (!isFood){
+    h += '<div class="cmRow"><div class="lb">杯型 SIZE</div><div class="chips">' +
+      ['Regular', 'Large'].map(v => '<button class="cmChip' + (cafeSt.size === v ? ' on' : '') + '" data-size="' + v + '">' +
+        v + (v === 'Large' ? '<span class="add"> +£0.60</span>' : '') + '</button>').join('') + '</div></div>';
+    h += '<div class="cmRow"><div class="lb">奶 MILK</div><div class="chips">' +
+      ['Whole milk', 'Oat milk', 'Soya milk'].map(v => '<button class="cmChip' + (cafeSt.milk === v ? ' on' : '') + '" data-milk="' + v + '">' +
+        v + (v === 'Whole milk' ? '' : '<span class="add"> +£0.50</span>') + '</button>').join('') + '</div></div>';
+  }
+  h += '<div class="cmRow"><div class="lb">甜度 SUGAR</div><div class="chips">' +
+    ['No sugar', 'One sugar', 'Two sugars'].map(v => '<button class="cmChip' + (cafeSt.sugar === v ? ' on' : '') + '" data-sugar="' + v + '">' + v + '</button>').join('') + '</div></div>';
+  h += '<div class="cmRow"><div class="lb">堂食 / 带走</div><div class="chips">' +
+    ['For here', 'Takeaway'].map(v => '<button class="cmChip' + (cafeSt.serve === v ? ' on' : '') + '" data-serve="' + v + '">' + v + '</button>').join('') + '</div></div>';
+  h += '</div>';
+  h += '<div class="cmFoot" style="margin-top:auto">' +
+    '<button class="cmBtn" data-act="back">← 换一杯</button>' +
+    '<span class="stat"></span>' +
+    '<button class="cmBtn primary" data-act="order">点单 · £' + fmt(cafeTotal()) + '</button></div>';
+  $('cafeMenu').innerHTML = h;
+}
+
+function renderCafeDone(order){
+  let h = '<div class="cmHead"><b>订单已收到</b><i>' + order.en.toUpperCase() + '</i></div>';
+  h += '<div class="cmDone">' +
+    '<div class="dk">RECEIPT · 收据</div>' +
+    '<div class="t1">你买了一杯 ' + order.nm + '</div>' +
+    '<div class="t2">' + order.line + '</div>' +
+    '<div class="delta">−£' + fmt(order.paid) + '　·　精神 +' + order.mood + '　·　余 £' + fmt(S.cash) + '</div>' +
+    '<div class="rec">' + order.rec + '</div>' +
+    '<div class="rec">店员接下来会问 Anything else? 想加个可颂（£3.60）就说 Yes, a croissant please. 不要就说 No, that\'s all, thanks.</div>' +
+    '<div class="rec">当前：现金 £' + fmt(S.cash) + ' · 精神 ' + Math.round(S.mood) + ' · 行动 ' + Math.max(0, S.act) + '</div>' +
+    '<div class="row"><button class="cmBtn" data-act="again">再点一杯</button>' +
+    '<button class="cmBtn" data-act="exit">回街区</button></div>' +
+    '</div>';
+  $('cafeMenu').innerHTML = h;
+}
+
+function cafeOrder(){
+  const it = cafeSt.item, total = cafeTotal();
+  if (S.cash < total){
+    $('spotCn').textContent = '钱不够：这杯 £' + fmt(total) + '，你只有 £' + fmt(S.cash) + '。挑便宜的那杯。';
+    speak("Sorry, I can't afford that.", null, 'PLAYER');
+    return;
+  }
+  S.cash -= total;
+  const isFood = cafeFood(it);
+  const mood = isFood ? 6 : 5;
+  S.mood = Math.min(100, (S.mood || 55) + mood);
+  const spec = isFood ? '' : (cafeSt.size + ' · ' + cafeSt.milk);
+  const specCN = isFood ? '' : ((cafeSt.size === 'Large' ? '大杯' : '常规杯') + ' · ' +
+    cafeSt.milk.replace('Whole milk', '全脂奶').replace('Oat milk', '燕麦奶').replace('Soya milk', '豆奶'));
+  const serveCN = cafeSt.serve === 'Takeaway' ? '带走' : '堂食';
+  const line = [specCN, serveCN + ' — ' + it.en].filter(Boolean).join(' · ');
+  const rec = cafeSt.serve === 'Takeaway'
+    ? 'Takeaway 记得自己拿杯盖和吸管，柜台侧面的糖也自己取。'
+    : 'For here 堂食：喝完把杯子放回回收架（trolley），不用自己洗。';
+  const order = { nm: it.nm, en: it.en, line: line, paid: total, mood: mood, rec: rec };
+  renderCafeDone(order);
+  $('spotLine').textContent = "That's £" + fmt(total) + '. Thanks, have a good one.';
+  $('spotCn').textContent = '店员收下钱：“£' + fmt(total) + '，谢谢，慢走。”你端着杯子找个位子坐下，精神好了一点。';
+  $('spotWords').innerHTML = 'That\'s £' + fmt(total) + ' = 一共这么多钱 · have a good one 慢走/祝愉快';
+  speak("That's £" + fmt(total) + ', please.', null, 'BARISTA');
+  updateDayHud();
+}
+
+$('cafeMenu').addEventListener('click', e => {
+  const t = e.target.closest('button');
+  if (!t) return;
+  if (t.dataset.cat){ cafeSt.cat = t.dataset.cat; renderCafeMenu(); return; }
+  if (t.dataset.item){
+    cafeSt.item = cafeFind(t.dataset.item);
+    cafeSt.size = 'Regular'; cafeSt.milk = 'Whole'; cafeSt.sugar = 'No sugar'; cafeSt.serve = 'For here';
+    renderCafeSpec();
+    const it = cafeSt.item;
+    $('spotCn').textContent = '你指着菜单说：' + it.say + '（中文：要一杯' + it.nm + '）';
+    $('spotWords').innerHTML = 'Could I have … , please? 点单万能句 · a / an 按读音选';
+    speak(it.say, null, 'PLAYER');
+    return;
+  }
+  if (t.dataset.size){ cafeSt.size = t.dataset.size; renderCafeSpec(); speak(t.dataset.size + ', please.', null, 'PLAYER'); return; }
+  if (t.dataset.milk){ cafeSt.milk = t.dataset.milk; renderCafeSpec(); speak(t.dataset.milk + ', please.', null, 'PLAYER'); return; }
+  if (t.dataset.sugar){ cafeSt.sugar = t.dataset.sugar; renderCafeSpec(); speak(t.dataset.sugar + ', please.', null, 'PLAYER'); return; }
+  if (t.dataset.serve){ cafeSt.serve = t.dataset.serve; renderCafeSpec(); speak(t.dataset.serve + ', please.', null, 'PLAYER'); return; }
+  const act = t.dataset.act;
+  if (act === 'order'){ cafeOrder(); return; }
+  if (act === 'back' || act === 'again'){
+    renderCafeMenu();
+    typeLine($('spotLine'), 'Anything else?');
+    $('spotCn').textContent = '还想再点一杯吗？同一张菜单，点第二杯就行——店员会问 Anything else?（还要别的吗）。';
+    speak('Anything else?', null, 'BARISTA');
+    return;
+  }
+  if (act === 'exit'){
+    $('cafeMenu').classList.remove('on');
+    $('s8').classList.remove('cafeMode');
+    showScene(7); renderHub();
+  }
+});
+
 function runSpot(key){
   spotSession.key = key;
   spotSession.step = 0;
@@ -2272,12 +2571,15 @@ function runSpot(key){
   const firstWho = (sp.steps && sp.steps[0] && sp.steps[0].who) || '';
   setSpotPortrait(sp.portrait || WHOIMG[firstWho]);
   showScene(8);
+  if (key === 'coffee'){ openCafe(); return; }
+  $('cafeMenu').classList.remove('on');
+  $('s8').classList.remove('cafeMode');
   if (sp.learn && !sp.learnAfterTalk) renderSpotLearn();
   else renderSpotIdle();
 }
 
 const HOT = {
-  coffee: { label: '点店员 · 点单', en: 'Tap the barista to order.', cn: '点右边的店员，开始点单。' },
+  coffee: { label: '看菜单 · 点单', en: 'Tap the barista to order.', cn: '点右边的店员，打开立牌菜单。' },
   market: { label: '点老板 · 买东西', en: 'Tap the shopkeeper.', cn: '点柜台后的老板，买今天的食材。' },
   shop: { label: '点收银员 · 结账', en: 'Tap the cashier.', cn: '点收银员，开始结账。' },
   kitchen: { label: '点老板 · 谈工作', en: 'Tap the chef.', cn: '点后厨的老板，问他缺不缺人手。' },
