@@ -107,6 +107,7 @@ body{
 .btn.ghost{background:rgba(247,243,233,.1);color:#f7f3e9}
 
 /* ===== 对话区 ===== */
+.talk.split{ right:37%; }
 .talk{
   position:absolute;left:3vmin;right:3vmin;bottom:3vmin;
   display:grid;grid-template-columns:1fr;
@@ -225,6 +226,32 @@ body{
   display:none;z-index:16;
 }
 .spotPortrait.on{display:block}
+
+/* ===== 主角状态面板（饥饿 / 生命 / 理智） ===== */
+.stats{
+  position:absolute;left:1.8vmin;top:6.6vmin;z-index:23;
+  display:none;flex-direction:column;gap:.55vmin;
+  padding:.85vmin 1.1vmin .9vmin;
+  background:rgba(20,26,34,.72);
+  border:1px solid rgba(238,232,218,.24);border-radius:.45vmin;
+  backdrop-filter:blur(2px);
+  font-family:var(--sans);font-size:1.05vmin;letter-spacing:.03em;
+}
+.stats.on{display:flex}
+.stats.spot{top:auto;bottom:2.2vmin;left:1.8vmin}
+.stRow{display:flex;align-items:center;gap:.6vmin;color:#e8e1d1}
+.stLb{width:2.6vmin;color:#c9c1b1}
+.stIco{
+  width:1.7vmin;height:1.7vmin;border-radius:50%;display:grid;place-items:center;
+  font-size:.95vmin;color:#f6f1e2;background:#7a6a50;
+}
+.stIco.hungry{background:#a8642c}
+.stIco.life{background:#9d4136}
+.stIco.mind{background:#4a6480}
+.stBar{width:7.4vmin;height:.95vmin;background:rgba(255,255,255,.16);border-radius:.5vmin;overflow:hidden}
+.stBar i{display:block;height:100%;width:0;transition:width .4s ease,background .3s}
+.stats b{min-width:2.2vmin;text-align:right;color:#f3ecd9;font-weight:600}
+
 
 /* ===== 街角咖啡：立牌式菜单面板 ===== */
 .cafeMenu{
@@ -395,6 +422,18 @@ body{
   pointer-events:none;
   mask-image:linear-gradient(to bottom,#000 88%,transparent 100%);
   -webkit-mask-image:linear-gradient(to bottom,#000 88%,transparent 100%);
+}
+/* 右侧立绘：边缘柔和过渡，避免白色底图在画面上留出一个硬边的矩形 */
+.portrait.soft{
+  height:88%;
+  mask-image:linear-gradient(to bottom,#000 84%,transparent 100%),
+             linear-gradient(to right,transparent 0,#000 16%),
+             radial-gradient(120% 110% at 58% 48%,#000 58%,transparent 96%);
+  mask-composite:intersect;
+  -webkit-mask-image:linear-gradient(to bottom,#000 84%,transparent 100%),
+             linear-gradient(to right,transparent 0,#000 16%),
+             radial-gradient(120% 110% at 58% 48%,#000 58%,transparent 96%);
+  -webkit-mask-composite:source-in;
 }
 .portrait.talk{animation:breathe 4.2s ease-in-out infinite}
 @keyframes breathe{
@@ -700,8 +739,8 @@ body{
       <div class="left"><span class="badge" id="hudVisa">身份未定</span><span class="item">第 <b>1</b> 天</span></div>
       <div class="left"><span class="item">现金 £<b id="hudCash">—</b></span><span class="item">英语 <b id="hudScore">0</b></span></div>
     </div>
-    <img class="portrait talk" src="assets/npc-officer.jpg" alt="英国边境检查官">
-    <div class="talk">
+    <img class="portrait talk soft" src="assets/npc-officer.jpg" alt="英国边境检查官" style="left:auto;right:2vmin">
+    <div class="talk split">
       <div class="speech">
         <div class="who">BORDER OFFICER</div>
         <div class="en" id="line"></div>
@@ -826,6 +865,7 @@ body{
       </div>
       <div class="opts" id="hubOpts"></div>
       <div class="toolrow">
+        <button class="small" id="hubToilet">回青旅 · 洗手间（不耗行动点）</button>
         <button class="small" id="hubSleep">回青旅睡觉 · 结束这一天</button>
         <span class="progress" id="hubProg">第 1 天</span>
       </div>
@@ -869,6 +909,12 @@ body{
       </div>
     </div>
   </section>
+
+  <div class="stats" id="stats" aria-label="主角状态">
+    <div class="stRow"><span class="stIco hungry">H</span><span class="stLb">饥饿</span><span class="stBar"><i id="barHunger"></i></span><b id="valHunger">—</b></div>
+    <div class="stRow"><span class="stIco life">V</span><span class="stLb">生命</span><span class="stBar"><i id="barHealth"></i></span><b id="valHealth">—</b></div>
+    <div class="stRow"><span class="stIco mind">S</span><span class="stLb">理智</span><span class="stBar"><i id="barSanity"></i></span><b id="valSanity">—</b></div>
+  </div>
 
   <!-- ===== 场景 9：景点（游客路线） ===== -->
   <section class="scene" id="s9">
@@ -1009,8 +1055,12 @@ const $ = id => document.getElementById(id);
 
 function showScene(n){
   stopAudio();
-  document.querySelectorAll('.scene').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.scene').forEach(el => {
+    if (!el.classList.contains('active')) clearTalkCard(el.id);
+    el.classList.remove('active');
+  });
   $('s' + n).classList.add('active');
+  showStats(n === 7 ? 'hub' : (n === 8 ? 'spot' : 'off'));
   const tip = $('tip');
   tip.style.display = (n === 2 || n === 9) ? 'none' : 'block';
   tip.textContent = (n === 7 || n === 8 || n === 9) ? '点选项继续 · 听不懂就看下面的中文释义' : "点击画面推进 · 听不懂就按 I don't understand";
@@ -1403,6 +1453,56 @@ function fillVoiceSelect(){
 }
 let curAudio = null;
 let lastSpoken = null;
+
+// ===== 音量归一：按每段音频的 RMS 自动增益，统一所有角色的响度 =====
+let actx = null;
+const RMS_TARGET = 0.085;
+const gainCache = {};
+function audioCtx(){
+  if (!actx){
+    try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){ actx = null; }
+  }
+  if (actx && actx.state === 'suspended'){ try { actx.resume(); } catch(e){} }
+  return actx;
+}
+function base64ToBuf(dataUrl){
+  if (!dataUrl || dataUrl.indexOf('data:') !== 0) return null;
+  try {
+    const bin = atob(dataUrl.slice(dataUrl.indexOf(',') + 1));
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return bytes.buffer;
+  } catch(e){ return null; }
+}
+function routeAudio(a, vid){
+  const ctx = audioCtx();
+  if (!ctx || !ctx.createMediaElementSource) return;
+  try {
+    const src = ctx.createMediaElementSource(a);
+    const g = ctx.createGain();
+    src.connect(g); g.connect(ctx.destination);
+    if (gainCache[vid] != null){ g.gain.value = gainCache[vid]; return; }
+    g.gain.value = 1;
+    const apply = buf => {
+      let sum = 0;
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) sum += d[i] * d[i];
+      const rms = Math.sqrt(sum / (d.length || 1)) || 0.05;
+      const gain = Math.max(0.55, Math.min(4.5, RMS_TARGET / rms));
+      gainCache[vid] = gain;
+      g.gain.value = gain;
+    };
+    const raw = base64ToBuf(VOICE_B64[vid]);
+    if (raw){
+      Promise.resolve(ctx.decodeAudioData(raw)).then(apply).catch(() => {});
+    } else {
+      fetch('assets/voice/' + vid + '.mp3')
+        .then(r => r.arrayBuffer())
+        .then(b => Promise.resolve(ctx.decodeAudioData(b)).then(apply))
+        .catch(() => {});
+    }
+  } catch(e){}
+}
 function stopAudio(){
   if (curAudio){ try { curAudio.pause(); curAudio.currentTime = 0; } catch(e){} curAudio = null; }
   try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch(e){}
@@ -1431,6 +1531,7 @@ function speak(text, cb, who){
   if (vid && window.Audio){
     const a = new Audio(VOICE_B64[vid] || ('assets/voice/' + vid + '.mp3'));
     curAudio = a;
+    routeAudio(a, vid);
     let backed = false;
     const guard = setTimeout(finish, 9000);
     let stalled = null;
@@ -1850,6 +1951,9 @@ function renderEnd(mode){
     note = '撑到第 ' + S.day + ' 天。' + (student
       ? '学生签续签要 CAS、£1,483 的九个月生活费证明，和 £490 申请费——比生存本身更硬的一道墙。'
       : '旅游签不能打工、不能随便延期。想留下来，只剩转学生签这一条正经路。');
+  } else if (mode === 'collapse'){
+    title = '你撑不住了。';
+    note = '第 ' + S.day + ' 天，你在街上眼前一黑。<br>饥饿和理智都见底时，伦敦会先把你按倒：先吃饭、先睡觉，再谈省钱和打工。';
   } else if (mode === 'caught'){
     title = '被查到了。';
     note = '第 ' + S.day + ' 天，内政部的人站在后厨门口。<br>黑工被查：遣返、十年内禁止入境。为了四小时 £40，赌掉整年，不值。';
@@ -1873,8 +1977,69 @@ function startLoop(){
   S.foodStock = 0;
   S.visaDays = S.visa === 'student' ? 365 : 90;
   S.hadTowel = false;
+  S.hunger = 65; S.health = 100; S.sanity = 75;
   showScene(7);
   renderHub();
+}
+
+// ===== 主角状态：饥饿 / 生命 / 理智 =====
+function initStats(){
+  if (S.hunger == null) S.hunger = 65;
+  if (S.health == null) S.health = 100;
+  if (S.sanity == null) S.sanity = 75;
+}
+function clamp01(v){ return Math.max(0, Math.min(100, Math.round(v))); }
+function updateStats(){
+  initStats();
+  const set = (id, v) => {
+    const bar = $('bar' + id), val = $('val' + id);
+    if (bar){ bar.style.width = v + '%'; bar.style.background = v > 55 ? '#6c9a55' : (v > 25 ? '#c8a049' : '#a8473a'); }
+    if (val) val.textContent = v;
+  };
+  set('Hunger', clamp01(S.hunger));
+  set('Health', clamp01(S.health));
+  set('Sanity', clamp01(S.sanity));
+}
+function showStats(kind){
+  const el = $('stats'); if (!el) return;
+  el.classList.toggle('on', kind !== 'off');
+  el.classList.toggle('spot', kind === 'spot');
+  if (kind !== 'off') updateStats();
+}
+function drainStats(kind){
+  initStats();
+  if (kind === 'action'){
+    S.hunger = clamp01(S.hunger - 12);
+    if (S.hunger <= 0){ S.health = clamp01(S.health - 6); S.sanity = clamp01(S.sanity - 8); }
+    else if (S.hunger < 30){ S.sanity = clamp01(S.sanity - 3); }
+    if (S.sanity <= 0){ S.sanity = 0; }
+  }
+  if (S.health <= 0){ ending('collapse'); return true; }
+  updateStats();
+  return false;
+}
+function eat(amount, sanityGain){
+  initStats();
+  S.hunger = clamp01(S.hunger + amount);
+  if (sanityGain) S.sanity = clamp01(S.sanity + sanityGain);
+  updateStats();
+}
+function sleepStats(){
+  initStats();
+  S.hunger = clamp01(S.hunger - 22);
+  S.sanity = clamp01(S.sanity + (S.hunger > 0 ? 16 : 4));
+  S.health = clamp01(S.health + (S.hunger > 0 ? 8 : -6));
+  updateStats();
+  if (S.health <= 0){ ending('collapse'); return true; }
+  return false;
+}
+
+// 对话结束清空台词，避免残留在画面上
+function clearTalkCard(scope){
+  const root = scope ? $(scope) : document;
+  if (!root) return;
+  root.querySelectorAll('.talk .en, .talk .cn, .talk .words, .talk .sub').forEach(el => { el.textContent = ''; });
+  root.querySelectorAll('.talk .opts, .talk .opts.spotStrip').forEach(el => { el.innerHTML = ''; });
 }
 
 function updateDayHud(){
@@ -1897,8 +2062,7 @@ const HUB_SPOTS = [
   { k: 'market', name: '亚洲超市', sub: '买食材 · £12/3 天', img: 'scene-market.jpg' },
   { k: 'shop', name: '便利店', sub: 'SIM · 牛奶 · 洗衣', img: 'scene-shop.jpg' },
   { k: 'kitchen', name: '中餐馆后厨', sub: '谈一份工', img: 'scene-kitchen.jpg' },
-  { k: 'tube', name: '地铁站', sub: '买票 · 问站', img: 'scene-tube-platform.jpg' },
-  { k: 'toilet', name: '洗手间', sub: '点物件 · 学单词', img: 'scene-toilet.jpg' }
+  { k: 'tube', name: '地铁站', sub: '买票 · 问站', img: 'scene-tube-platform.jpg' }
 ];
 
 function renderHub(){
@@ -1939,13 +2103,17 @@ function enterSpot(k){
     speak("I'm done for today. Let's sleep.", null, 'PLAYER');
     return;
   }
-  if (k !== 'sleep') S.act--;
+  if (k !== 'sleep'){ S.act--; if (drainStats('action')) return; }
   let key = k;
   if (k === 'kitchen' && S.visa !== 'student') key = 'kitchenT';
   runSpot(key);
 }
 
 $('hubSleep').addEventListener('click', () => enterSpot('sleep'));
+$('hubToilet').addEventListener('click', () => {
+  if (!S.act && S.day > 1){ /* 夜里也能去，不扣行动点 */ }
+  runSpot('toilet');
+});
 
 // —— 选项图标（内联 SVG，水彩纸配色） ——
 const SVGS = (p) => '<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">' + p + '</svg>';
@@ -2502,6 +2670,7 @@ function cafeOrder(){
   const isFood = cafeFood(it);
   const mood = isFood ? 6 : 5;
   S.mood = Math.min(100, (S.mood || 55) + mood);
+  eat(isFood ? 22 : 8, isFood ? 3 : 1);
   const spec = isFood ? '' : (cafeSt.size + ' · ' + cafeSt.milk);
   const specCN = isFood ? '' : ((cafeSt.size === 'Large' ? '大杯' : '常规杯') + ' · ' +
     cafeSt.milk.replace('Whole milk', '全脂奶').replace('Oat milk', '燕麦奶').replace('Soya milk', '豆奶'));
@@ -2714,6 +2883,10 @@ function finishSpot(msg){
   $('spotProg').textContent = '现金 £' + fmt(S.cash) + (S.foodStock ? ' · 食材 ' + S.foodStock + ' 天' : '');
   speak(msg || 'Thanks. Have a good day.', null, 'NARRATOR');
   updateDayHud();
+  clearTimeout(window.__spotClearTimer);
+  window.__spotClearTimer = setTimeout(() => {
+    if ($('s8').classList.contains('active')) clearTalkCard('s8');
+  }, 4500);
 }
 
 $('spotBack').addEventListener('click', () => {
@@ -2730,6 +2903,7 @@ function endDay(){
   if (S.cash < total){ ending('broke'); return; }
   S.cash -= total;
   if (S.foodStock > 0) S.foodStock--;
+  if (sleepStats()) return;
   S.day++;
   S.act = 2;
   S.sleptBefore = true;
@@ -2746,6 +2920,7 @@ function ending(mode){
 $('again').addEventListener('click', () => {
   S.qi = 0; S.score = 0; S.revealed = false; S.wrong = 0; S.visa = null; S.cash = 0; S.home = null;
   S.day = 1; S.act = 2; S.foodStock = 0; S.visaDays = 0; S.spotKey = null;
+  S.hunger = 65; S.health = 100; S.sanity = 75;
   ['hudScore','hudCash','hudCash2','hudCash3','hudCash4','hudVisa','hudVisa2','hudVisa3','hudVisa4'].forEach(id=>{ if($(id)) $(id).textContent='—'; });
   $('hudScore').textContent = '0';
   $('hudVisa').textContent = '身份未定';
