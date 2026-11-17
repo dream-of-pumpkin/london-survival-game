@@ -228,6 +228,10 @@ body{
 .spotPortrait.on{display:block}
 
 /* ===== 主角状态面板（饥饿 / 生命 / 理智） ===== */
+.phaseTint{
+  position:absolute;inset:0;pointer-events:none;z-index:2;
+  transition:background 1.4s ease;
+}
 .stats{
   position:absolute;left:1.8vmin;top:6.6vmin;z-index:23;
   display:none;flex-direction:column;gap:.55vmin;
@@ -851,8 +855,9 @@ body{
   <section class="scene" id="s7">
     <div class="bg" style="background-image:url('assets/scene-street.jpg')"></div>
     <div class="tint" style="background:linear-gradient(to top,rgba(10,14,18,.62),rgba(10,14,18,.18) 60%)"></div>
+    <div class="phaseTint" id="phaseTint"></div>
     <div class="hud">
-      <div class="left"><span class="badge" id="hubVisa">—</span><span class="item">第 <b id="hubDay">1</b> 天</span><span class="item">行动 <b id="hubAct">2</b></span></div>
+      <div class="left"><span class="badge" id="hubVisa">—</span><span class="item">第 <b id="hubDay">1</b> 天</span><span class="item">行动 <b id="hubAct">4</b></span><span class="item" id="hubTime">Morning</span></div>
       <div class="left"><span class="item">现金 £<b id="hubCash">—</b></span><span class="item" id="hubVisaLeft">签证剩 — 天</span></div>
     </div>
     <div class="talk">
@@ -878,7 +883,7 @@ body{
     <div class="tint" style="background:linear-gradient(to bottom,rgba(10,14,18,.34),rgba(8,12,16,.62))"></div>
     <div class="hud">
       <div class="left"><span class="badge" id="spotPlace">—</span><span class="item">第 <b id="spotDay">1</b> 天</span></div>
-      <div class="left"><span class="item">现金 £<b id="spotCash">—</b></span><span class="item" id="spotActText">行动 2</span></div>
+      <div class="left"><span class="item">现金 £<b id="spotCash">—</b></span><span class="item" id="spotTime">Morning</span><span class="item" id="spotActText">行动 4</span></div>
     </div>
     <div class="spotPortrait" id="spotPortrait"></div>
     <div class="learnLayer" id="learnLayer"></div>
@@ -1973,7 +1978,7 @@ const TRAVEL_DAY2 = TRAVEL_DAY;
 
 function startLoop(){
   S.day = 2;
-  S.act = 2;
+  S.act = 4;
   S.foodStock = 0;
   S.visaDays = S.visa === 'student' ? 365 : 90;
   S.hadTowel = false;
@@ -2052,6 +2057,10 @@ function updateDayHud(){
   if ($('spotDay')) $('spotDay').textContent = S.day;
   if ($('spotCash')) $('spotCash').textContent = fmt(S.cash);
   if ($('spotActText')) $('spotActText').textContent = '行动 ' + Math.max(0, S.act);
+  const ph = (S.act == null) ? PHASES[0] : phaseInfo();
+  if ($('hubTime')) $('hubTime').textContent = ph.k;
+  if ($('spotTime')) $('spotTime').textContent = ph.k;
+  applyPhaseTint();
   if ($('sightDay')) $('sightDay').textContent = S.day;
   if ($('sightCash')) $('sightCash').textContent = fmt(S.cash);
   if ($('sightActText')) $('sightActText').textContent = '行动 ' + Math.max(0, S.act);
@@ -2065,19 +2074,48 @@ const HUB_SPOTS = [
   { k: 'tube', name: '地铁站', sub: '买票 · 问站', img: 'scene-tube-platform.jpg' }
 ];
 
+// ===== 一天四段：Morning → Noon → Afternoon → Evening =====
+const PHASES = [
+  { k: 'Morning', line: "Morning. What's the plan today?", cn: '早上。今天打算做什么？' },
+  { k: 'Noon', line: "It's noon. Where next?", cn: '中午了。接下来去哪儿？' },
+  { k: 'Afternoon', line: 'Good afternoon. Anything else today?', cn: '下午。今天还要做点什么？' },
+  { k: 'Evening', line: 'Evening already. One last stop?', cn: '天快黑了。最后一站？' },
+  { k: 'Night', line: "It's late. Time to get some sleep.", cn: '夜深了，该回青旅睡觉了。' }
+];
+function phaseIndex(){
+  return Math.max(0, Math.min(4, 4 - Math.max(0, S.act || 0)));
+}
+function phaseInfo(){
+  return PHASES[phaseIndex()];
+}
+const PHASE_TINT = [
+  'linear-gradient(to bottom,rgba(206,222,238,.30),rgba(255,242,220,.18))',
+  'linear-gradient(to bottom,rgba(255,251,238,.34),rgba(255,236,196,.20))',
+  'linear-gradient(to bottom,rgba(255,196,126,.30),rgba(198,138,88,.20))',
+  'linear-gradient(to bottom,rgba(92,104,148,.34),rgba(28,34,54,.44))',
+  'linear-gradient(to bottom,rgba(40,48,76,.46),rgba(12,16,26,.62))'
+];
+function applyPhaseTint(){
+  const el = $('phaseTint');
+  if (!el) return;
+  el.style.background = PHASE_TINT[phaseIndex()];
+  el.style.mixBlendMode = 'soft-light';
+}
+
 function renderHub(){
   updateDayHud();
   const box = $('hubOpts');
   box.innerHTML = '';
   const rent = S.home.perNight;
   const foodPart = S.foodStock > 0 ? '食材已在手' : '£' + fmt(FOOD_DAY2);
-  $('hubWho').textContent = 'LONDON · DAY ' + S.day;
-  $('hubLine').textContent = S.act > 0 ? "Morning. What's the plan today?" : "It's late. Time to get some sleep.";
+  const ph = phaseInfo();
+  $('hubWho').textContent = 'LONDON · DAY ' + S.day + ' · ' + ph.k.toUpperCase();
+  $('hubLine').textContent = ph.line;
   $('hubCn').textContent = S.act > 0
-    ? '今天还有 ' + S.act + ' 个行动点。每晚固定开销：住宿 £' + fmt(rent) + ' + 伙食 ' + foodPart + ' + 交通 £' + fmt(TRAVEL_DAY2) + '。'
-    : '今天的行动点用完了。睡觉，明天再来——每晚固定开销一样要扣。';
+    ? ph.cn + '今天还有 ' + S.act + ' 个行动点（' + ph.k + '）。每晚固定开销：住宿 £' + fmt(rent) + ' + 伙食 ' + foodPart + ' + 交通 £' + fmt(TRAVEL_DAY2) + '。'
+    : ph.cn + '今天的行动点用完了。睡觉，明天再来——每晚固定开销一样要扣。';
   $('hubProg').textContent = '现金 £' + fmt(S.cash) + ' · 住宿 £' + fmt(rent) + '/晚';
-  speak(S.act > 0 ? "Morning. What's the plan today?" : "It's late. Time to get some sleep.", null, 'PLAYER');
+  speak(ph.line, null, 'PLAYER');
 
   if (S.act > 0){
     box.className = 'opts spotStrip';
@@ -2905,7 +2943,7 @@ function endDay(){
   if (S.foodStock > 0) S.foodStock--;
   if (sleepStats()) return;
   S.day++;
-  S.act = 2;
+  S.act = 4;
   S.sleptBefore = true;
   if (S.day > S.visaDays){ ending('visa'); return; }
   showScene(7);
@@ -2919,7 +2957,7 @@ function ending(mode){
 
 $('again').addEventListener('click', () => {
   S.qi = 0; S.score = 0; S.revealed = false; S.wrong = 0; S.visa = null; S.cash = 0; S.home = null;
-  S.day = 1; S.act = 2; S.foodStock = 0; S.visaDays = 0; S.spotKey = null;
+  S.day = 1; S.act = 4; S.foodStock = 0; S.visaDays = 0; S.spotKey = null;
   S.hunger = 65; S.health = 100; S.sanity = 75;
   ['hudScore','hudCash','hudCash2','hudCash3','hudCash4','hudVisa','hudVisa2','hudVisa3','hudVisa4'].forEach(id=>{ if($(id)) $(id).textContent='—'; });
   $('hudScore').textContent = '0';
