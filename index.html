@@ -821,15 +821,86 @@ body{
 .smMsg{font-family:var(--sans);font-size:.98vmin;color:#4f6b4a;line-height:1.5}
 
 
+/* ===== 角色档案界面（水彩纸 + 墨蓝） ===== */
+.roleWrap:after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(70% 55% at 18% 12%,rgba(255,255,255,.5),rgba(255,255,255,0) 70%),
+    radial-gradient(60% 45% at 88% 90%,rgba(186,148,86,.16),rgba(186,148,86,0) 72%)}
+.roleWrap>*{position:relative;z-index:1}
+.rpMeta{display:flex;gap:1.7vmin;align-items:flex-end}
+.rpRes{display:flex;flex-direction:row;align-items:baseline;gap:.55vmin}
+.rpRes span{font-family:var(--sans);font-size:.88vmin;letter-spacing:.12em;color:#8a7452;line-height:1;white-space:nowrap}
+.rpRes b{font-family:var(--serif);font-size:1.42vmin;color:#2f3a44;font-weight:600;letter-spacing:.02em;line-height:1;white-space:nowrap}
+.rpRes.red b{color:#a8473a}
+.rpCode{position:absolute;right:1.3vmin;top:1.1vmin;font-family:var(--sans);font-size:.9vmin;letter-spacing:.22em;color:rgba(253,247,233,.82);background:rgba(20,16,10,.3);padding:.3vmin .55vmin}
+.rpSeal{position:absolute;left:1.7vmin;top:1.3vmin;width:7vmin;height:7vmin;border:1px solid rgba(178,78,64,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#ad4a3c;font-family:var(--serif);font-size:1.2vmin;letter-spacing:.12em;transform:rotate(-9deg);background:rgba(253,247,233,.16);box-shadow:inset 0 0 0 .22vmin rgba(253,247,233,.14)}
+.roleWrap{padding:2vmin 2.2vmin 1.6vmin;overflow:hidden}
+.rpTop{flex:0 0 auto;min-height:5vmin;display:flex;align-items:center;justify-content:space-between;gap:2vmin;padding-bottom:.9vmin;border-bottom:1px solid rgba(63,47,34,.22)}
+.rpKicker{font-family:var(--serif);font-size:1.55vmin;letter-spacing:.3em;color:#6b5940}
+.rpMeta{font-family:var(--sans);font-size:1.2vmin;color:#4c3d2d;letter-spacing:.05em}
+.rpMeta em{font-style:normal;color:#a8473a;font-weight:600}
+.rpBody{flex:1 1 auto;min-height:0;display:flex;gap:1.2vmin;padding-top:1.2vmin}
+.rpNav{flex:0 0 10vmin;display:flex;flex-direction:column;gap:.8vmin}
+.rpTab{display:flex;flex-direction:column;gap:.25vmin;align-items:flex-start;padding:.9vmin 1vmin;border:1px solid rgba(63,47,34,.18);background:rgba(255,252,244,.62);cursor:pointer;text-align:left;transition:background .18s,border-color .18s}
+.rpTab b{font-family:var(--serif);font-size:1.35vmin;color:#3f2f22;font-weight:600}
+.rpTab i{font-family:var(--sans);font-size:.95vmin;letter-spacing:.18em;color:#8a7452;font-style:normal}
+.rpTab.on{background:#2f3a44;border-color:#2f3a44}
+.rpTab.on b{color:#f6efdd}
+.rpTab.on i{color:rgba(246,239,221,.66)}
+.rpArt{flex:1 1 auto;min-width:0;position:relative;overflow:hidden;border:1px solid rgba(63,47,34,.2);background:#efe4cd}
+.rpArtBg{position:absolute;inset:0;background-size:cover;background-position:50% 6%;filter:brightness(1.05) saturate(1.03)}
+.rpArtShade{position:absolute;inset:0;background:linear-gradient(to top,rgba(24,20,14,.74) 0%,rgba(24,20,14,.2) 42%,rgba(24,20,14,0) 62%)}
+.rpArtName{position:absolute;left:1.8vmin;right:1.8vmin;bottom:1.5vmin}
+.rpArtName b{display:block;font-family:var(--serif);font-size:3.4vmin;color:#fdf7e9;letter-spacing:.06em;text-shadow:0 .3vmin 1vmin rgba(0,0,0,.42)}
+.rpArtName i{font-family:var(--sans);font-size:1.05vmin;letter-spacing:.26em;color:rgba(253,247,233,.8);font-style:normal}
+.rpInfo{flex:0 0 29.6vmin;display:flex;flex-direction:column;gap:.7vmin;overflow-y:auto;padding-right:.3vmin;scrollbar-width:thin}
+.rpInfo::-webkit-scrollbar{width:.4vmin}
+.rpInfo::-webkit-scrollbar-thumb{background:rgba(63,47,34,.28)}
+.rpCard{border:1px solid rgba(63,47,34,.18);background:linear-gradient(180deg,rgba(255,253,246,.94),rgba(246,238,222,.9));padding:.95vmin 1.15vmin}
+.rpCard h4{font-family:var(--serif);font-size:1.22vmin;letter-spacing:.14em;color:#6b5940;font-weight:600;margin-bottom:.62vmin;display:flex;justify-content:space-between;align-items:baseline}
+.rpCard h4 span{font-family:var(--sans);font-size:.92vmin;letter-spacing:.2em;color:#9a8664}
+.rpStars i{display:inline-block;width:1.05vmin;height:1.05vmin;margin-left:.1vmin;transform:rotate(45deg);background:rgba(63,47,34,.2)}
+.rpStars i.on{background:#b8873f}
+.rpRow{display:flex;justify-content:space-between;align-items:center;font-family:var(--sans);font-size:1.18vmin;color:#3f2f22;padding:.22vmin 0;border-bottom:1px dotted rgba(63,47,34,.12)}
+.rpRow span{color:#7d6a4f}
+.rpRow b{font-weight:600}
+.rpBar{margin:.42vmin 0}
+.rpBar .k{display:flex;justify-content:space-between;font-family:var(--sans);font-size:1.05vmin;color:#4c3d2d;margin-bottom:.3vmin}
+.rpBar .t{height:.7vmin;background:rgba(63,47,34,.14)}
+.rpBar .t i{display:block;height:100%}
+.rpNote{font-family:var(--sans);font-size:1.14vmin;line-height:1.76;color:#5c4b35}
+.rpPick{position:sticky;bottom:0;z-index:2;margin-top:auto;padding:.95vmin 1.3vmin;border:0;background:#2f3a44;color:#f8f1e0;font-family:var(--serif);font-size:1.5vmin;letter-spacing:.14em;cursor:pointer;box-shadow:0 .4vmin 1.2vmin rgba(31,26,18,.22)}
+.rpPick:hover{background:#3b4a57}
+.rpRail{flex:0 0 auto;height:10.6vmin;display:flex;gap:1vmin;padding-top:1.1vmin}
+.rpThumb{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:.9vmin;padding:.6vmin;border:1px solid rgba(63,47,34,.18);background:rgba(255,252,244,.62);cursor:pointer;text-align:left}
+.rpThumb .im{flex:0 0 6.2vmin;align-self:stretch;background-size:cover;background-position:50% 10%}
+.rpThumb .tx{min-width:0}
+.rpThumb .tx b{display:block;font-family:var(--serif);font-size:1.45vmin;color:#3f2f22;white-space:nowrap}
+.rpThumb .tx i{font-family:var(--sans);font-size:.92vmin;letter-spacing:.14em;color:#8a7452;font-style:normal;white-space:nowrap}
+.rpThumb .tx .st{display:block;margin-top:.45vmin;line-height:1}
+.rpThumb .tx .st i{width:.75vmin;height:.75vmin;margin-right:.2vmin}
+.rpThumb.on{box-shadow:inset 0 0 0 .2vmin #2f3a44;border-color:#2f3a44}
+
 </style>
 </head>
 <body>
 <div class="stage" id="stage">
   <div class="roleWrap" id="rolePick">
-    <div class="roleHead"><h1>选一个角色</h1><i>WHO YOU ARE IN LONDON</i></div>
-    <div class="roleSub">这里选的是人物：长相、年龄、行李和你演谁。每个角色自带一套开局条件（现金、签证、体力、心气），选定后整局都跟着你。</div>
-    <div class="roleGrid" id="roleGrid"></div>
-    <div class="roleFoot">选完之后：下飞机 → 海关五问 → 行李转盘 → 出口 → 今晚睡哪。</div>
+    <div class="rpTop">
+      <span class="rpKicker">角色档案 · CHARACTER</span>
+      <div class="rpMeta" id="rpMeta"></div>
+    </div>
+    <div class="rpBody">
+      <div class="rpNav" id="rpNav"></div>
+      <div class="rpArt">
+        <div class="rpArtBg" id="rpArtBg"></div>
+        <div class="rpArtShade"></div>
+        <div class="rpCode" id="rpCode">ROLE 01 / 03</div>
+        <div class="rpSeal" id="rpSeal">学生签</div>
+        <div class="rpArtName"><b id="rpName">—</b><i id="rpEn">—</i></div>
+      </div>
+      <div class="rpInfo" id="rpInfo"></div>
+    </div>
+    <div class="rpRail" id="rpRail"></div>
   </div>
 
   
@@ -3502,41 +3573,104 @@ $('mapBack').addEventListener('click', () => {
 
 // ===== 开局：角色选择 =====
 const ROLES = [
-  { key: 'student', visa: 'student', nm: '留学生', visaTag: '学生签', en: 'THE STUDENT',
+  { key: 'student', visa: 'student', nm: '留学生', visaTag: '学生签', en: 'THE STUDENT', star: 3,
+    bags: ['CAS 信原件', '宿舍合同', '旧帆布包', '欧标转换插头'],
     img: 'assets/role-student.jpg', cash: 2000, hunger: 62, health: 92, sanity: 70, visaDays: 365,
     bg: '22 岁，语言学校 6 个月。CAS 信、宿舍合同、两千镑现金全塞在一个旧帆布包里。学生签每周能兼职 20 小时，但课不能缺。',
     tip: '可打工 · 房租压力最大' },
-  { key: 'tourist', visa: 'tourist', nm: '游客', visaTag: '旅游签', en: 'THE TOURIST',
+  { key: 'tourist', visa: 'tourist', nm: '游客', visaTag: '旅游签', en: 'THE TOURIST', star: 2,
+    bags: ['挂脖相机', '折了三道的地图', '旅行枕', '退税单据'],
     img: 'assets/role-tourist.jpg', cash: 5000, hunger: 78, health: 96, sanity: 82, visaDays: 90,
     bg: '26 岁，十天的年假加两天调休。脖子上挂着相机，手里一张折了三道的地图。钱最宽裕，但旅游签不能打工。',
     tip: '现金最多 · 不可打工' },
-  { key: 'backpacker', visa: 'tourist', nm: '背包客', visaTag: '旅游签', en: 'THE BACKPACKER',
+  { key: 'backpacker', visa: 'tourist', nm: '背包客', visaTag: '旅游签', en: 'THE BACKPACKER', star: 5,
+    bags: ['三件换洗衣服', '半袋饼干', '滤水壶', '旧睡袋'],
     img: 'assets/role-backpacker.jpg', cash: 3200, hunger: 55, health: 88, sanity: 62, visaDays: 90,
     bg: '24 岁，辞职出来的第 40 天，包里还剩三件换洗和半袋饼干。钱最少、身体最扛，但心气已经磨得很薄。',
     tip: '能吃苦 · 理智起点低' }
 ];
-function renderRolePick(){
-  const box = $('roleGrid');
-  box.innerHTML = '';
-  ROLES.forEach(r => {
-    const b = document.createElement('button');
-    b.className = 'roleCard';
-    b.innerHTML =
-      '<span class="rolePhoto" style="background-image:url(\'' + r.img + '\')"></span>' +
-      '<span class="roleInfo"><b>' + r.nm + '</b><em>' + r.en + (r.visaTag ? ' · ' + r.visaTag : '') + '</em>' +
-      '<p>' + r.bg + '</p>' +
-      '<span class="roleVals">' +
-        '<span>饥饿<b>' + r.hunger + '</b></span>' +
-        '<span>生命<b>' + r.health + '</b></span>' +
-        '<span>理智<b>' + r.sanity + '</b></span>' +
-      '</span>' +
-      '<span class="roleVals" style="grid-template-columns:1fr;border-top:none;padding-top:.55vmin">' +
-        '<span style="text-align:left;color:#8a7558">£' + fmt(r.cash) + ' · ' + r.tip + '</span>' +
-      '</span></span>';
-    b.addEventListener('click', () => pickRole(r));
-    box.appendChild(b);
-  });
+let rpIdx = 0, rpTab = 'info';
+const RP_TABS = [
+  { k: 'info', cn: '角色信息', en: 'CHARACTER' },
+  { k: 'cond', cn: '开局条件', en: 'CONDITION' },
+  { k: 'bag', cn: '行李清单', en: 'LUGGAGE' }
+];
+function rpStars(n){
+  let out = '';
+  for (let i = 0; i < 5; i++) out += '<i class="' + (i < n ? 'on' : '') + '"></i>';
+  return '<span class="rpStars">' + out + '</span>';
 }
+function rpBar(label, v, color){
+  return '<div class="rpBar"><div class="k"><span>' + label + '</span><b>' + v + '</b></div>' +
+    '<div class="t"><i style="width:' + v + '%;background:' + color + '"></i></div></div>';
+}
+function renderRolePick(){
+  const r = ROLES[rpIdx] || ROLES[0];
+  const isStudent = r.visa === 'student';
+
+  $('rpMeta').innerHTML =
+    '<div class="rpRes"><span>现金 CASH</span><b>£' + fmt(r.cash) + '</b></div>' +
+    '<div class="rpRes"><span>签证 VISA</span><b>' + r.visaDays + ' 天</b></div>' +
+    '<div class="rpRes"><span>英语 ENGLISH</span><b>' + (isStudent ? 10 : 4) + '</b></div>' +
+    '<div class="rpRes red"><span>难度 LEVEL</span><b>' + r.star + ' / 5</b></div>';
+  $('rpCode').textContent = 'ROLE 0' + (rpIdx + 1) + ' / 0' + ROLES.length;
+  $('rpSeal').textContent = r.visaTag;
+
+  $('rpNav').innerHTML = RP_TABS.map(t =>
+    '<button class="rpTab' + (t.k === rpTab ? ' on' : '') + '" data-tab="' + t.k + '"><b>' + t.cn + '</b><i>' + t.en + '</i></button>').join('');
+
+  $('rpArtBg').style.backgroundImage = "url('" + r.img + "')";
+  $('rpName').textContent = r.nm;
+  $('rpEn').textContent = r.en + ' · ' + r.visaTag;
+
+  let h = '';
+  if (rpTab === 'info'){
+    h += '<div class="rpCard"><h4>开局状态 <span>STATUS</span></h4>' +
+      '<div class="rpRow"><span>难度</span>' + rpStars(r.star) + '</div>' +
+      rpBar('饥饿', r.hunger, '#c8a049') + rpBar('生命', r.health, '#a8473a') + rpBar('理智', r.sanity, '#6f7ea8') +
+      '</div>';
+    h += '<div class="rpCard"><h4>人物小传 <span>PROFILE</span></h4><p class="rpNote">' + r.bg + '</p></div>';
+  } else if (rpTab === 'cond'){
+    h += '<div class="rpCard"><h4>入境开局 <span>ENTRY</span></h4>' +
+      '<div class="rpRow"><span>随身现金</span><b>£' + fmt(r.cash) + '</b></div>' +
+      '<div class="rpRow"><span>签证类型</span><b>' + r.visaTag + '</b></div>' +
+      '<div class="rpRow"><span>停留天数</span><b>' + r.visaDays + ' 天</b></div>' +
+      '<div class="rpRow"><span>打工权限</span><b>' + (isStudent ? '每周 20 小时' : '不能打工') + '</b></div>' +
+      '<div class="rpRow"><span>英语基础</span><b>' + (isStudent ? 10 : 4) + ' 分</b></div>' +
+      '</div>';
+    h += '<div class="rpCard"><h4>压力提示 <span>WARNING</span></h4><p class="rpNote">' + r.tip + '。' +
+      (isStudent ? '课缺勤会被学校报到，房租是每周最大的一笔。' : (r.cash > 4000 ? '钱够撑十几天，但每花一镑都在倒数。' : '钱最少，得先找日结的活。')) +
+      '</p></div>';
+    h += '<div class="rpCard"><h4>难度评估 <span>LEVEL</span></h4>' +
+      '<div class="rpRow"><span>开局难度</span>' + rpStars(r.star) + '</div>' +
+      '<p class="rpNote">' + (r.star >= 4 ? '前三天最难：住处、交通、第一顿饭都要现找。' : (r.star === 3 ? '前三天要紧：先报到，再解决房租。' : '前两天还算宽裕：先把卡和住处办妥。')) + '</p></div>';
+  } else {
+    h += '<div class="rpCard"><h4>背包里 <span>IN BAG</span></h4>' +
+      r.bags.map((b, k) => '<div class="rpRow"><span>' + (k + 1) + '</span><b>' + b + '</b></div>').join('') +
+      '</div>';
+    h += '<div class="rpCard"><h4>落地后要先办 <span>TO DO</span></h4><p class="rpNote">' +
+      (isStudent ? '学校报到、开银行账户、买 Oyster 卡、办 SIM 卡。' : '换 SIM 卡、买 Oyster 卡、订头两晚住处、摸清回程路线。') +
+      '</p></div>';
+    h += '<div class="rpCard"><h4>不能丢的 <span>KEEP SAFE</span></h4>' +
+      '<div class="rpRow"><span>护照</span><b>随身内袋</b></div>' +
+      '<div class="rpRow"><span>' + (isStudent ? 'CAS 信 / 录取函' : '回程机票') + '</span><b>别塞托运</b></div>' +
+      '</div>';
+  }
+  h += '<button class="rpPick" data-pick="1">以「' + r.nm + '」入境</button>';
+  $('rpInfo').innerHTML = h;
+
+  $('rpRail').innerHTML = ROLES.map((x, k) =>
+    '<button class="rpThumb' + (k === rpIdx ? ' on' : '') + '" data-role="' + k + '">' +
+    '<span class="im" style="background-image:url(\'' + x.img + '\')"></span>' +
+    '<span class="tx"><b>' + x.nm + '</b><i>' + x.en + '</i><span class="st">' + rpStars(x.star) + '</span></span></button>').join('');
+}
+$('rolePick').addEventListener('click', e => {
+  const t = e.target.closest('button');
+  if (!t) return;
+  if (t.dataset.tab){ rpTab = t.dataset.tab; renderRolePick(); return; }
+  if (t.dataset.role != null){ rpIdx = parseInt(t.dataset.role, 10) || 0; renderRolePick(); return; }
+  if (t.dataset.pick){ pickRole(ROLES[rpIdx] || ROLES[0]); return; }
+});
 let skipThenExit = false;
 function pickRole(r){
   S.role = r;
@@ -3553,11 +3687,11 @@ function pickRole(r){
 }
 function rolePickBoot(){
   try { renderRolePick(); } catch (e) {}
-  if (!document.getElementById('roleGrid').children.length){
+  if (!document.getElementById('rpInfo').children.length){
     setTimeout(() => {
       try { renderRolePick(); } catch (e) {}
-      if (!document.getElementById('roleGrid').children.length){
-        document.getElementById('roleGrid').innerHTML =
+      if (!document.getElementById('rpInfo').children.length){
+        document.getElementById('rpInfo').innerHTML =
           '<div style="grid-column:1/-1;font-family:var(--sans);font-size:1.1vmin;color:#a8473a;line-height:1.7">' +
           '角色卡没渲染出来。请下拉刷新一次；如果还不行，把手机横过来再试。</div>';
       }
