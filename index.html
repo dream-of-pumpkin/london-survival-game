@@ -826,8 +826,8 @@ body{
 <body>
 <div class="stage" id="stage">
   <div class="roleWrap" id="rolePick">
-    <div class="roleHead"><h1>选一个身份</h1><i>WHO YOU ARE IN LONDON</i></div>
-    <div class="roleSub">三个身份的钱、签证、体力和心气都不一样，选定后整局都跟着你。没有哪个更"对"——挑你想演的那个人。</div>
+    <div class="roleHead"><h1>选一个角色</h1><i>WHO YOU ARE IN LONDON</i></div>
+    <div class="roleSub">这里选的是人物：长相、年龄、行李和你演谁。每个角色自带一套开局条件（现金、签证、体力、心气），选定后整局都跟着你。</div>
     <div class="roleGrid" id="roleGrid"></div>
     <div class="roleFoot">选完之后：下飞机 → 海关五问 → 行李转盘 → 出口 → 今晚睡哪。</div>
   </div>
@@ -845,7 +845,7 @@ body{
       <small>FLIGHT BA038 ／ 17:40 ／ LHR</small>
       <p>安全带指示灯灭了。窗外的云已经散开，下面是伦敦的屋顶、教堂尖顶，和一条反着光的河。<br>你把护照塞进外套内袋，手心里有点潮。</p>
       <button class="btn" id="go1">下飞机</button>
-      <button class="skipLink" id="skipVisa">跳过海关测试 · 直接选身份</button>
+      <button class="skipLink" id="skipVisa">跳过海关盘问 · 直接出关</button>
     </div>
   </section>
 
@@ -880,6 +880,7 @@ body{
       <div class="opts" id="opts"></div>
       <div class="toolrow">
         <button class="small" id="btnLost">I don't understand</button>
+        <button class="small" id="btnSkipCustoms">跳过盘问 · 直接出关</button>
         <button class="small" id="btnSkip" style="display:none">下一句</button>
         <span class="progress" id="prog">QUESTION 1 / 5</span>
       </div>
@@ -1198,8 +1199,6 @@ const S = { qi: 0, score: 0, revealed: false, wrong: 0, visa: null, cash: 0 };
 const $ = id => document.getElementById(id);
 
 function showScene(n){
-  const skipBtn = $('skipVisa');
-  if (skipBtn) skipBtn.style.display = S.role ? 'none' : '';
   stopAudio();
   document.querySelectorAll('.scene').forEach(el => {
     if (!el.classList.contains('active')) clearTalkCard(el.id);
@@ -1900,16 +1899,13 @@ function applyVisa(kind, score){
 
 // 跳过海关：直接选身份
 $('skipVisa').addEventListener('click', () => {
-  if (S.role){
-    $('rolePick').classList.add('off');
-    showScene(3);
-    $('s3text').style.display = '';
-    $('belt').classList.remove('gone');
-    $('belt').style.display = '';
+  if (!S.role){
+    skipThenExit = true;
+    renderRolePick();
+    $('rolePick').classList.remove('off');
     return;
   }
-  renderRolePick();
-  $('rolePick').classList.remove('off');
+  enterExit();
 });
 $('pickCancel').addEventListener('click', () => $('pickVisa').classList.remove('on'));
 document.querySelectorAll('.idbtn').forEach(b => {
@@ -1930,14 +1926,16 @@ $('belt').addEventListener('click', () => {
   $('s3p').textContent = extra + '（现金 £' + fmt(S.cash) + '）';
 });
 
-$('go3').addEventListener('click', () => {
+$('go3').addEventListener('click', enterExit);
+
+function enterExit(){
   showScene(4);
   document.querySelector('#s4 .bg').style.backgroundImage = "url('assets/scene-exit.jpg')";
   $('exitTalk').style.display = 'none';
   $('clerk').style.display = 'none';
   $('hTube').style.display = ''; $('hTaxi').style.display = ''; $('hCoffee').style.display = '';
   updateHud();
-});
+}
 
 // ===== 场景4 出口三选一 =====
 let pendingRide = null;
@@ -2030,6 +2028,7 @@ $('airCafeMenu').addEventListener('click', e => {
   if (act === 'back' || act === 'again'){ renderCafeMenu('airCafeMenu'); speak('Anything else?', null, 'BARISTA'); return; }
   if (act === 'exit'){ closeAirCafe(); return; }
 });
+$('btnSkipCustoms').addEventListener('click', enterExit);
 $('hTube').addEventListener('click', () => pickExit('tube'));
 $('hTaxi').addEventListener('click', () => pickExit('taxi'));
 $('hCoffee').addEventListener('click', () => pickExit('coffee'));
@@ -3503,15 +3502,15 @@ $('mapBack').addEventListener('click', () => {
 
 // ===== 开局：角色选择 =====
 const ROLES = [
-  { key: 'student', visa: 'student', nm: '留学生 · 学生签', en: 'THE STUDENT',
+  { key: 'student', visa: 'student', nm: '留学生', visaTag: '学生签', en: 'THE STUDENT',
     img: 'assets/role-student.jpg', cash: 2000, hunger: 62, health: 92, sanity: 70, visaDays: 365,
     bg: '22 岁，语言学校 6 个月。CAS 信、宿舍合同、两千镑现金全塞在一个旧帆布包里。学生签每周能兼职 20 小时，但课不能缺。',
     tip: '可打工 · 房租压力最大' },
-  { key: 'tourist', visa: 'tourist', nm: '游客 · 旅游签', en: 'THE TOURIST',
+  { key: 'tourist', visa: 'tourist', nm: '游客', visaTag: '旅游签', en: 'THE TOURIST',
     img: 'assets/role-tourist.jpg', cash: 5000, hunger: 78, health: 96, sanity: 82, visaDays: 90,
     bg: '26 岁，十天的年假加两天调休。脖子上挂着相机，手里一张折了三道的地图。钱最宽裕，但旅游签不能打工。',
     tip: '现金最多 · 不可打工' },
-  { key: 'backpacker', visa: 'tourist', nm: '背包客 · 旅游签', en: 'THE BACKPACKER',
+  { key: 'backpacker', visa: 'tourist', nm: '背包客', visaTag: '旅游签', en: 'THE BACKPACKER',
     img: 'assets/role-backpacker.jpg', cash: 3200, hunger: 55, health: 88, sanity: 62, visaDays: 90,
     bg: '24 岁，辞职出来的第 40 天，包里还剩三件换洗和半袋饼干。钱最少、身体最扛，但心气已经磨得很薄。',
     tip: '能吃苦 · 理智起点低' }
@@ -3524,7 +3523,7 @@ function renderRolePick(){
     b.className = 'roleCard';
     b.innerHTML =
       '<span class="rolePhoto" style="background-image:url(\'' + r.img + '\')"></span>' +
-      '<span class="roleInfo"><b>' + r.nm + '</b><em>' + r.en + '</em>' +
+      '<span class="roleInfo"><b>' + r.nm + '</b><em>' + r.en + (r.visaTag ? ' · ' + r.visaTag : '') + '</em>' +
       '<p>' + r.bg + '</p>' +
       '<span class="roleVals">' +
         '<span>饥饿<b>' + r.hunger + '</b></span>' +
@@ -3538,10 +3537,9 @@ function renderRolePick(){
     box.appendChild(b);
   });
 }
+let skipThenExit = false;
 function pickRole(r){
   S.role = r;
-  const skipBtn = $('skipVisa');
-  if (skipBtn) skipBtn.style.display = 'none';
   S.visa = r.visa;
   S.cash = r.cash;
   S.score = r.visa === 'student' ? 10 : 4;
@@ -3550,6 +3548,7 @@ function pickRole(r){
   $('rolePick').classList.add('off');
   updateHud();
   updateStats();
+  if (skipThenExit){ skipThenExit = false; enterExit(); return; }
   showScene(1);
 }
 function rolePickBoot(){
