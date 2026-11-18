@@ -20,6 +20,7 @@
   --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 html,body{height:100%}
 body{
   background:#12151a;
@@ -716,17 +717,17 @@ body{
 .roleHead h1{font-size:2.9vmin;letter-spacing:.14em;font-weight:600}
 .roleHead i{font-style:normal;font-family:var(--sans);font-size:1.1vmin;letter-spacing:.22em;color:#7d6a4f}
 .roleSub{font-family:var(--sans);font-size:1.28vmin;line-height:1.7;color:#5f4d39;margin:1.1vmin 0 1.6vmin;max-width:86%}
-.roleGrid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:1.7vmin}
+.roleGrid{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:minmax(30vmin,1fr);gap:1.7vmin}
 .roleCard{display:flex;flex-direction:column;text-align:left;cursor:pointer;padding:0;overflow:hidden;
   background:linear-gradient(178deg,#fdf9ee,#f1e7d3);border:1px solid rgba(63,47,34,.3);border-radius:.5vmin;
   transition:transform .16s,box-shadow .16s,border-color .16s}
 .roleCard:hover{transform:translateY(-.45vmin);box-shadow:0 1.6vmin 3.4vmin rgba(58,38,18,.26);border-color:#a8473a}
-.rolePhoto{flex:1 1 44%;min-height:11vmin;background-size:cover;background-position:52% 12%;
+.rolePhoto{flex:1 1 42%;min-height:9vmin;background-size:cover;background-position:52% 12%;
   border-bottom:1px solid rgba(63,47,34,.16)}
 .roleInfo{padding:1vmin 1.2vmin 1.2vmin}
 .roleInfo b{display:block;font-size:1.8vmin;letter-spacing:.05em}
 .roleInfo em{display:block;font-style:normal;font-family:var(--sans);font-size:1.02vmin;letter-spacing:.16em;color:#8a7558;margin:.2vmin 0 .7vmin}
-.roleInfo p{font-family:var(--sans);font-size:1.12vmin;line-height:1.62;color:#4c3d2d;min-height:5.6vmin}
+.roleInfo p{font-family:var(--sans);font-size:1.12vmin;line-height:1.62;color:#4c3d2d}
 .roleVals{display:grid;grid-template-columns:repeat(3,1fr);gap:.4vmin;margin-top:.8vmin;
   border-top:1px dashed rgba(63,47,34,.22);padding-top:.75vmin}
 .roleVals span{font-family:var(--sans);font-size:.98vmin;color:#6d5a45;text-align:center}
@@ -816,6 +817,28 @@ body{
 .smSum{flex:1;min-width:0;font-family:var(--sans);font-size:1vmin;color:#6d5a45;line-height:1.45}
 .smSum b{display:block;font-family:var(--serif);font-size:1.5vmin;color:#a8473a}
 .smMsg{font-family:var(--sans);font-size:.98vmin;color:#4f6b4a;line-height:1.5}
+
+/* ===== 竖屏 / 窄屏：选人层整屏接管视口，横排卡片可滚动 ===== */
+@media (max-aspect-ratio: 8/9){
+  .roleWrap{position:fixed;inset:0;z-index:60;padding:5vw 5vw 4vw;overflow-y:auto;
+    background:linear-gradient(184deg,#fbf5e6 0%,#f2e7cf 46%,#e6d5b4 100%)}
+  .roleHead{padding-bottom:3.4vw;border-bottom:1px solid rgba(63,47,34,.16)}
+  .roleHead{flex-direction:column;align-items:flex-start;gap:1vmin}
+  .roleHead h1{font-size:8vw;white-space:nowrap}
+  .roleHead i{font-size:3vw;letter-spacing:.12em}
+  .roleSub{font-size:4vw;line-height:1.62;margin:4vw 0 4.4vw;max-width:100%}
+  .roleGrid{display:flex;flex-direction:column;gap:4vw;flex:0 0 auto}
+  .roleCard{flex-direction:row;overflow:visible;border-radius:1.6vw}
+  .rolePhoto{flex:0 0 34vw;min-height:34vw;border-bottom:none;border-right:1px solid rgba(63,47,34,.16)}
+  .roleInfo{padding:3.6vw 4vw;flex:1;min-width:0}
+  .roleInfo b{font-size:5.6vw}
+  .roleInfo em{font-size:3vw;margin:1vw 0 2.4vw;letter-spacing:.1em}
+  .roleInfo p{font-size:3.9vw;line-height:1.62}
+  .roleVals{margin-top:3vw;padding-top:2.6vw;gap:1.6vw}
+  .roleVals span{font-size:3vw}
+  .roleVals span b{font-size:5vw}
+  .roleFoot{font-size:3.4vw;margin-top:4vw;padding-bottom:3vw}
+}
 
 </style>
 </head>
@@ -3487,7 +3510,21 @@ function pickRole(r){
   updateStats();
   showScene(1);
 }
-renderRolePick();
+function rolePickBoot(){
+  try { renderRolePick(); } catch (e) {}
+  if (!document.getElementById('roleGrid').children.length){
+    setTimeout(() => {
+      try { renderRolePick(); } catch (e) {}
+      if (!document.getElementById('roleGrid').children.length){
+        document.getElementById('roleGrid').innerHTML =
+          '<div style="grid-column:1/-1;font-family:var(--sans);font-size:1.1vmin;color:#a8473a;line-height:1.7">' +
+          '角色卡没渲染出来。请下拉刷新一次；如果还不行，把手机横过来再试。</div>';
+      }
+    }, 600);
+  }
+}
+rolePickBoot();
+window.addEventListener('load', rolePickBoot);
 
 // ===== 常驻任务条 =====
 function setQBar(id, v){
