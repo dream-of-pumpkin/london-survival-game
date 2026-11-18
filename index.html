@@ -726,7 +726,7 @@ body{
 .roleCard:hover{transform:translateY(-.45vmin);box-shadow:0 1.6vmin 3.4vmin rgba(58,38,18,.26);border-color:#a8473a}
 .rolePhoto{flex:1 1 42%;min-height:9vmin;background-size:cover;background-position:52% 12%;
   border-bottom:1px solid rgba(63,47,34,.16)}
-.roleInfo{padding:1vmin 1.2vmin 1.2vmin}
+.roleInfo{padding:1vmin 1.2vmin 1.2vmin;min-height:0;overflow-y:auto}
 .roleInfo b{display:block;font-size:1.8vmin;letter-spacing:.05em}
 .roleInfo em{display:block;font-style:normal;font-family:var(--sans);font-size:1.02vmin;letter-spacing:.16em;color:#8a7558;margin:.2vmin 0 .7vmin}
 .roleInfo p{font-family:var(--sans);font-size:1.12vmin;line-height:1.62;color:#4c3d2d}
@@ -1198,6 +1198,8 @@ const S = { qi: 0, score: 0, revealed: false, wrong: 0, visa: null, cash: 0 };
 const $ = id => document.getElementById(id);
 
 function showScene(n){
+  const skipBtn = $('skipVisa');
+  if (skipBtn) skipBtn.style.display = S.role ? 'none' : '';
   stopAudio();
   document.querySelectorAll('.scene').forEach(el => {
     if (!el.classList.contains('active')) clearTalkCard(el.id);
@@ -1898,6 +1900,14 @@ function applyVisa(kind, score){
 
 // 跳过海关：直接选身份
 $('skipVisa').addEventListener('click', () => {
+  if (S.role){
+    $('rolePick').classList.add('off');
+    showScene(3);
+    $('s3text').style.display = '';
+    $('belt').classList.remove('gone');
+    $('belt').style.display = '';
+    return;
+  }
   renderRolePick();
   $('rolePick').classList.remove('off');
 });
@@ -3530,6 +3540,8 @@ function renderRolePick(){
 }
 function pickRole(r){
   S.role = r;
+  const skipBtn = $('skipVisa');
+  if (skipBtn) skipBtn.style.display = 'none';
   S.visa = r.visa;
   S.cash = r.cash;
   S.score = r.visa === 'student' ? 10 : 4;
