@@ -880,6 +880,27 @@ body{
 .rpThumb .tx .st i{width:.75vmin;height:.75vmin;margin-right:.2vmin}
 .rpThumb.on{box-shadow:inset 0 0 0 .2vmin #2f3a44;border-color:#2f3a44}
 
+/* ===== 进场先看地方：入门按钮 ===== */
+.enterBar{position:absolute;left:50%;top:8.6vmin;transform:translateX(-50%);z-index:17;display:none;align-items:center;gap:1vmin}
+.enterBar.on{display:flex}
+.enterBtn{display:flex;flex-direction:column;align-items:flex-start;gap:.4vmin;padding:1.1vmin 2.2vmin;
+  background:linear-gradient(180deg,rgba(249,242,224,.97),rgba(236,224,198,.96));
+  border:1px solid rgba(63,47,34,.52);box-shadow:0 1.1vmin 2.8vmin rgba(0,0,0,.42);
+  cursor:pointer;font-family:var(--serif);color:#2b2118;text-align:left}
+.enterBtn b{font-size:1.75vmin;letter-spacing:.06em;font-weight:600}
+.enterBtn i{font-family:var(--sans);font-style:normal;font-size:1.02vmin;letter-spacing:.1em;color:#7d6a4f}
+.enterGhost{padding:1.25vmin 1.5vmin;border:1px solid rgba(238,232,218,.42);background:rgba(16,22,28,.72);
+  color:#e8dcc4;font-family:var(--sans);font-size:1.08vmin;letter-spacing:.05em;cursor:pointer}
+.enterGhost:hover{background:rgba(24,32,40,.82)}
+.scene.viewOnly .sightCard{display:none}
+.scene.intro .talk{display:none}
+.scene.intro .spotHot{display:none}
+.scene.intro .learnCard{display:none}
+.scene.intro .learnLayer{display:none}
+.scene.intro .cafeMenu{display:none}
+.scene.intro .shopMenu{display:none}
+.scene.intro .clothMenu{display:none}
+
 </style>
 </head>
 <body>
@@ -1093,6 +1114,10 @@ body{
         <span class="progress" id="learnProg"></span>
       </div>
     </div>
+    <div class="enterBar" id="spotEnterBar">
+      <button class="enterBtn" id="spotEnter"><b id="spotEnterTitle">开口说话</b><i id="spotEnterSub">跟这里的人说第一句话</i></button>
+      <button class="enterGhost" id="spotBackTop">← 回街区</button>
+    </div>
     <div class="cafeMenu" id="cafeMenu" aria-label="咖啡店菜单"></div>
     <div class="shopMenu" id="shopMenu" aria-label="商店菜单"></div>
     <button class="spotHot" id="spotHot">点这里</button>
@@ -1139,6 +1164,10 @@ body{
     <div class="hud">
       <div class="left"><span class="badge" id="sightPlace">—</span><span class="item">第 <b id="sightDay">1</b> 天</span></div>
       <div class="left"><span class="item">现金 £<b id="sightCash">—</b></span><span class="item" id="sightActText">行动 2</span></div>
+    </div>
+    <div class="enterBar" id="sightEnterBar">
+      <button class="enterBtn" id="sightEnter"><b>开始参观</b><i>START THE TOUR · 先看看这里，再听讲解</i></button>
+      <button class="enterGhost" id="sightBackTop">← 回地图</button>
     </div>
     <div class="sightCard">
       <div class="scName"><span id="scName">—</span><em id="scEn"></em></div>
@@ -1276,6 +1305,8 @@ function showScene(n){
     el.classList.remove('active');
   });
   $('s' + n).classList.add('active');
+  if (n !== 8){ $('s8').classList.remove('intro'); $('spotEnterBar').classList.remove('on'); }
+  if (n !== 9){ $('s9').classList.remove('viewOnly'); $('sightEnterBar').classList.remove('on'); }
   showStats(n === 7 ? 'hub' : (n === 8 ? 'spot' : 'off'));
   const tip = $('tip');
   tip.style.display = (n === 2 || n === 9) ? 'none' : 'block';
@@ -3047,6 +3078,8 @@ $('cafeMenu').addEventListener('click', e => {
 });
 
 function runSpot(key){
+  $('s8').classList.remove('intro');
+  $('spotEnterBar').classList.remove('on');
   spotSession.key = key;
   spotSession.step = 0;
   if (key === 'sleep' && S.sleptBefore) spotSession.step = 3;
@@ -3069,7 +3102,35 @@ function runSpot(key){
   $('s8').classList.remove('cafeMode');
   if (sp.learn && !sp.learnAfterTalk) renderSpotLearn();
   else renderSpotIdle();
+  const ENTER_TXT = {
+    market: ['开口说话', 'TALK · 跟老板说你要买什么'],
+    shop: ['开口说话', 'TALK · 跟收银员说你要结账'],
+    tube: ['开口说话', 'TALK · 跟站务员买一张票'],
+    kitchen: ['开口说话', 'TALK · 问老板缺不缺人手'],
+    kitchenT: ['开口说话', 'TALK · 问老板缺不缺人手'],
+    toilet: ['开始点读', 'LOOK AROUND · 点画面上的小圆点'],
+    sleep: ['上床', 'GO TO BED · 走完这一天']
+  };
+  const et = ENTER_TXT[key] || ['看看这里', 'TAKE A LOOK'];
+  $('spotEnterTitle').textContent = et[0];
+  $('spotEnterSub').textContent = et[1];
+  $('spotEnterBar').classList.add('on');
+  $('s8').classList.add('intro');
+  spotSession.startMode = (sp.learn && !sp.learnAfterTalk) ? 'learn' : 'talk';
 }
+
+$('spotEnter').addEventListener('click', () => {
+  $('s8').classList.remove('intro');
+  $('spotEnterBar').classList.remove('on');
+  if (spotSession.startMode === 'talk') startSpotTalk();
+});
+$('spotBackTop').addEventListener('click', () => {
+  if (spotSession.key === 'sleep'){ endDay(); return; }
+  $('s8').classList.remove('intro');
+  $('spotEnterBar').classList.remove('on');
+  showScene(7);
+  renderHub();
+});
 
 const HOT = {
   coffee: { label: '看菜单 · 点单', en: 'Tap the barista to order.', cn: '点右边的店员，打开立牌菜单。' },
@@ -3118,6 +3179,8 @@ function startSpotTalk(){
 $('spotHot').addEventListener('click', startSpotTalk);
 
 function renderSpotStep(){
+  $('s8').classList.remove('intro');
+  $('spotEnterBar').classList.remove('on');
   $('spotHot').classList.remove('on');
   $('learnLayer').classList.remove('on');
   const sp = SPOTS[spotSession.key];
@@ -3489,11 +3552,14 @@ function visitSight(id){
     wbox.appendChild(b);
   });
   updateDayHud();
+  $('s9').classList.add('viewOnly');
+  $('sightEnterBar').classList.add('on');
   showScene(9);
-  speak(g.line, null, 'NARRATOR');
 }
 
 function backToMap(){
+  $('s9').classList.remove('viewOnly');
+  $('sightEnterBar').classList.remove('on');
   showScene(7);
   renderHub();
   $('mapWrap').classList.add('show');
@@ -3501,6 +3567,12 @@ function backToMap(){
   setMapLevel(lastCityMap);
 }
 
+$('sightEnter').addEventListener('click', () => {
+  $('s9').classList.remove('viewOnly');
+  $('sightEnterBar').classList.remove('on');
+  if (curSight) speak(SIGHTS[curSight].line, null, 'NARRATOR');
+});
+$('sightBackTop').addEventListener('click', backToMap);
 $('scSay').addEventListener('click', () => { if (curSight) speak(SIGHTS[curSight].line, null, 'NARRATOR'); });
 $('scBack').addEventListener('click', backToMap);
 
