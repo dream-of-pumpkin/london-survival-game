@@ -1215,6 +1215,77 @@ body{
 .mapinner{box-shadow:0 0 0 1px rgba(201,162,39,.28),0 2vmin 6vmin rgba(0,0,0,.55)}
 .mapcanvas,.mapbody .mapcanvas{filter:brightness(.94) saturate(.9)}
 
+/* ===== HUB 街区首页 · 方案 A：三栏仪表盘 ===== */
+body.inHub .stats{left:1.9vmin;top:6.9vmin;width:15.6vmin;padding:1.05vmin 1.2vmin;gap:.8vmin;
+  background:rgba(14,19,24,.7);border:0;border-top:1px solid var(--v5-bd);border-radius:0;
+  backdrop-filter:blur(4px);z-index:22}
+body.inHub .stats .stRow{font-size:1.15vmin;letter-spacing:.02em}
+body.inHub .stats .stBar{height:.5vmin}
+#s7 .hud{padding:1.1vmin 2.2vmin 2.2vmin}
+#s7 .hud .hActTop{display:none}
+
+#s7 .haAct{position:absolute;left:1.9vmin;top:20.4vmin;width:15.6vmin;z-index:22;
+  padding:.9vmin 1.2vmin 1.05vmin;background:rgba(14,19,24,.66);border-top:1px solid rgba(201,162,39,.22);
+  backdrop-filter:blur(3px)}
+#s7 .haT{font-family:var(--sans);font-size:1.1vmin;letter-spacing:.2em;color:rgba(243,237,226,.5)}
+#s7 .haT b{font-family:var(--serif);font-size:1.5vmin;color:#f6ecd6;letter-spacing:0;margin-left:.4vmin}
+#s7 .haDots{display:flex;gap:.6vmin;margin-top:.8vmin}
+#s7 .haDots i{width:1.32vmin;height:1.32vmin;background:rgba(243,237,226,.16);transform:rotate(45deg)}
+#s7 .haDots i.on{background:var(--v5-gold);box-shadow:0 0 1.2vmin rgba(201,162,39,.45)}
+
+#s7 .haRent{position:absolute;left:1.9vmin;bottom:7.9vmin;width:15.6vmin;z-index:22;
+  font-size:1.08vmin;line-height:1.6;color:rgba(243,237,226,.44);letter-spacing:.02em}
+
+#s7 .opts.spotStrip{position:absolute;left:18.4vmin;right:18.4vmin;top:6.9vmin;bottom:7.9vmin;
+  display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:.9vmin;
+  padding:0;background:none;z-index:20}
+#s7 .opts:not(.spotStrip){position:absolute;left:18.4vmin;right:18.4vmin;top:6.9vmin;bottom:7.9vmin;
+  display:flex;align-items:center;justify-content:center;z-index:20}
+#s7 .spotCard{position:relative;display:block;padding:0;overflow:hidden;
+  border:1px solid rgba(243,237,226,.16);background:#0f141a;cursor:pointer}
+#s7 .spotCard .im{position:absolute;inset:0;background-size:cover;background-position:center 62%;transition:filter .2s}
+#s7 .spotCard .sh{position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(6,9,12,.94) 0%,rgba(6,9,12,.24) 48%,rgba(6,9,12,0) 74%)}
+#s7 .spotCard .meta{position:absolute;left:1.1vmin;right:1.1vmin;bottom:.85vmin;
+  display:flex;flex-direction:column;gap:.15vmin}
+#s7 .spotCard .nm{font-family:var(--serif);font-size:1.9vmin;color:#f8f3e8;letter-spacing:.02em;line-height:1.2}
+#s7 .spotCard .sb{font-size:1.15vmin;color:rgba(243,237,226,.6);letter-spacing:.02em}
+#s7 .spotCard:hover{transform:none;border-color:var(--v5-gold);box-shadow:0 0 0 1px rgba(201,162,39,.35)}
+#s7 .spotCard:hover .im{filter:brightness(1.08)}
+
+#s7 .haRight{position:absolute;right:1.9vmin;top:6.9vmin;width:15.6vmin;display:flex;flex-direction:column;
+  gap:.75vmin;z-index:22}
+#s7 .haBtn{display:flex;flex-direction:column;align-items:flex-start;gap:.2vmin;padding:1.05vmin 1.15vmin;
+  text-align:left;cursor:pointer;background:rgba(14,19,24,.66);border:1px solid rgba(243,237,226,.2);
+  border-radius:0;color:#f3ede2;backdrop-filter:blur(4px);transition:background .16s,border-color .16s}
+#s7 .haBtn b{font-family:var(--serif);font-size:1.65vmin;letter-spacing:.06em;color:#f8f3e8}
+#s7 .haBtn span{font-size:1.05vmin;letter-spacing:.02em;color:rgba(243,237,226,.5)}
+#s7 .haBtn:hover{background:rgba(201,162,39,.16);border-color:var(--v5-gold)}
+#s7 .haBtn.main{background:rgba(201,162,39,.2);border-color:var(--v5-bd)}
+#s7 .haBtn.main b{color:#fbf1cf}
+#s7 .haBtn.main span{color:rgba(243,237,226,.62)}
+
+#s7 .talk{position:absolute;inset:0;padding:0;pointer-events:none;z-index:18}
+#s7 .speech{position:absolute;left:1.9vmin;right:1.9vmin;bottom:1.6vmin;height:4.6vmin;
+  display:flex;align-items:center;gap:1.5vmin;padding:0 1.6vmin;margin:0;overflow:hidden;
+  background:linear-gradient(180deg,rgba(9,13,17,.8),rgba(6,9,12,.94));
+  border:0;border-top:1px solid var(--v5-bd);border-radius:0;box-shadow:0 -.5vmin 2.4vmin rgba(0,0,0,.45);
+  backdrop-filter:blur(4px);pointer-events:auto}
+#s7 .speech .who{flex:none;margin:0;font-size:1.05vmin;letter-spacing:.22em;color:var(--v5-gold)}
+#s7 .speech .en{flex:none;margin:0;font-size:1.75vmin;font-family:var(--serif);color:#f8f3e8;line-height:1.2}
+#s7 .speech .explain{flex:1;min-width:0;margin:0;padding:0;border:0;display:block;overflow:hidden}
+#s7 .speech .explain .cn{margin:0;font-size:1.15vmin;line-height:1.4;color:rgba(243,237,226,.52);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#s7 .hubHint{flex:none;font-size:1.05vmin;letter-spacing:.04em;color:rgba(243,237,226,.34);margin-left:auto}
+
+/* HUB 里收掉与本页无关的浮层，避免压住右栏/卡片 */
+body.inHub .tip{display:none!important}
+body.inHub .questBar{display:none!important}
+body.inHub .mapbtn{display:none!important}
+body.inHub .voicebar{top:27.6vmin;right:1.9vmin;width:15.6vmin;flex-direction:column;gap:.4vmin;z-index:23}
+body.inHub .mapbtn{top:36.6vmin;right:1.9vmin;width:15.6vmin;justify-content:center;z-index:23}
+body.inHub .livebtn{top:36.4vmin;right:1.9vmin;width:15.6vmin;justify-content:center;z-index:23}
+body.inHub .stats .stBar{flex:1 1 auto;width:auto}
 </style>
 </head>
 <body>
@@ -1389,9 +1460,20 @@ body{
     <div class="tint" style="background:linear-gradient(to top,rgba(10,14,18,.62),rgba(10,14,18,.18) 60%)"></div>
     <div class="phaseTint" id="phaseTint"></div>
     <div class="hud">
-      <div class="left"><span class="badge" id="hubVisa">—</span><span class="item">第 <b id="hubDay">1</b> 天</span><span class="item">行动 <b id="hubAct">4</b></span><span class="item" id="hubTime">Morning</span></div>
+      <div class="left"><span class="badge" id="hubVisa">—</span><span class="item">第 <b id="hubDay">1</b> 天</span><span class="item hActTop">行动 <b id="hubAct">4</b></span><span class="item" id="hubTime">Morning</span></div>
       <div class="left"><span class="item">现金 £<b id="hubCash">—</b></span><span class="item" id="hubVisaLeft">签证剩 — 天</span></div>
     </div>
+    <div class="haAct" id="haAct">
+      <div class="haT">行动点 <b id="hubAct2">4</b></div>
+      <div class="haDots" id="hubDots"></div>
+    </div>
+    <div class="haRent" id="hubRent">今晚固定开销：住宿 £—</div>
+    <div class="opts spotStrip" id="hubOpts"></div>
+    <aside class="haRight">
+      <button class="haBtn main" id="hubSleep"><b>睡觉</b><span>结束今天 · 住宿 £—</span></button>
+      <button class="haBtn" id="hubToilet"><b>洗手间</b><span>不耗行动点</span></button>
+      <button class="haBtn" id="hubMap" onclick="openMap()"><b>地图</b><span>看地图 · 出行</span></button>
+    </aside>
     <div class="talk">
       <div class="speech">
         <div class="who" id="hubWho">LONDON · 09:20</div>
@@ -1399,11 +1481,9 @@ body{
         <div class="explain show">
           <div class="cn" id="hubCn">今天还剩 2 个行动点。去哪儿算一点，回青旅睡觉结束这一天。</div>
         </div>
+        <span class="hubHint">点卡片进入</span>
       </div>
-      <div class="opts" id="hubOpts"></div>
-      <div class="toolrow">
-        <button class="small" id="hubToilet">回青旅 · 洗手间（不耗行动点）</button>
-        <button class="small" id="hubSleep">回青旅睡觉 · 结束这一天</button>
+      <div class="toolrow" style="display:none">
         <span class="progress" id="hubProg">第 1 天</span>
       </div>
     </div>
@@ -1619,6 +1699,7 @@ function showScene(n){
     el.classList.remove('active');
   });
   $('s' + n).classList.add('active');
+  document.body.classList.toggle('inHub', n === 7);
   if (n !== 8){ $('s8').classList.remove('intro'); $('spotEnterBar').classList.remove('on'); }
   if (n !== 9){ $('s9').classList.remove('viewOnly'); $('sightEnterBar').classList.remove('on'); }
   showStats(n === 7 ? 'hub' : (n === 8 ? 'spot' : 'off'));
@@ -2737,7 +2818,8 @@ function renderHub(){
     HUB_SPOTS.forEach(s => {
       const b = document.createElement('button');
       b.className = 'spotCard';
-      b.innerHTML = '<span class="thumb" style="background-image:url(\'assets/' + s.img + '\')"></span>' +
+      b.innerHTML = '<span class="im" style="background-image:url(\'assets/' + s.img + '\')"></span>' +
+        '<span class="sh"></span>' +
         '<span class="meta"><span class="nm">' + s.name + '</span>' +
         '<span class="sb">' + s.sub + '</span></span>';
       b.addEventListener('click', () => enterSpot(s.k));
@@ -2746,6 +2828,20 @@ function renderHub(){
   } else {
     box.className = 'opts';
   }
+  const dots = $('hubDots');
+  if (dots){
+    dots.innerHTML = '';
+    for (let i = 0; i < 4; i++){
+      const d = document.createElement('i');
+      if (i < S.act) d.className = 'on';
+      dots.appendChild(d);
+    }
+  }
+  if ($('hubAct2')) $('hubAct2').textContent = Math.max(0, S.act);
+  if ($('hubRent')) $('hubRent').innerHTML =
+    '今晚固定开销<br>住宿 £' + fmt(rent) + ' · 伙食 ' + foodPart + '<br>交通 £' + fmt(TRAVEL_DAY2);
+  if ($('hubSleep')) $('hubSleep').innerHTML =
+    '<b>睡觉</b><span>结束今天 · 住宿 £' + fmt(rent) + '</span>';
   $('hubSleep').style.display = '';
 }
 
