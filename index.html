@@ -1286,6 +1286,8 @@ body.inHub .voicebar{top:27.6vmin;right:1.9vmin;width:15.6vmin;flex-direction:co
 body.inHub .mapbtn{top:36.6vmin;right:1.9vmin;width:15.6vmin;justify-content:center;z-index:23}
 body.inHub .livebtn{top:36.4vmin;right:1.9vmin;width:15.6vmin;justify-content:center;z-index:23}
 body.inHub .stats .stBar{flex:1 1 auto;width:auto}
+.said{display:block;font-size:.88em;opacity:.55;letter-spacing:.02em;margin-bottom:.2em}
+.saidyou{display:block;font-size:1.02em;font-weight:600;margin:.25em 0 .9em}
 </style>
 </head>
 <body>
@@ -1633,9 +1635,9 @@ const QUESTIONS = [
     cn: "下午好，请出示护照。",
     words: "passport 护照 · please 请（办事时最常听到的祈使句）",
     opts: [
-      { t: "Here you are.", ok: true, why: "递东西的标准说法，比 “Give you” 地道得多。" },
-      { t: "Yes, I am fine, thank you.", ok: false, why: "这是回答 “How are you?” 的，答非所问。" },
-      { t: "Sorry, I don't have it.", ok: false, why: "说自己没护照，会被直接请去旁边小屋。" }
+      { t: "Here you are.", zh: "给您（递上护照）。", ok: true, why: "递东西的标准说法，比 “Give you” 地道得多。" },
+      { t: "Yes, I am fine, thank you.", zh: "是的，我很好，谢谢。", ok: false, why: "这是回答 “How are you?” 的，答非所问。" },
+      { t: "Sorry, I don't have it.", zh: "抱歉，我没带在身上。", ok: false, why: "说自己没护照，会被直接请去旁边小屋。" }
     ],
     good: "Alright. Thank you."
   },
@@ -1644,9 +1646,9 @@ const QUESTIONS = [
     cn: "你这次来英国的目的是什么？",
     words: "purpose 目的 · visit 到访 · study 学习（学生签的标准答案）",
     opts: [
-      { t: "I'm here to study at a university in London.", ok: true, why: "一句话说清身份、目的、地点，海关最想听到的结构。" },
-      { t: "I'm here for holiday, but I will find a job.", ok: false, why: "旅游签说自己要打工，是最典型的自曝风险。" },
-      { t: "Tourism, maybe.", ok: false, why: "maybe 一出现，可信度立刻掉一半。" }
+      { t: "I'm here to study at a university in London.", zh: "我是来伦敦读大学的。", ok: true, why: "一句话说清身份、目的、地点，海关最想听到的结构。" },
+      { t: "I'm here for holiday, but I will find a job.", zh: "我来度假，不过我会找份工作。", ok: false, why: "旅游签说自己要打工，是最典型的自曝风险。" },
+      { t: "Tourism, maybe.", zh: "旅游吧，可能。", ok: false, why: "maybe 一出现，可信度立刻掉一半。" }
     ],
     good: "A student. Which university?"
   },
@@ -1655,9 +1657,9 @@ const QUESTIONS = [
     cn: "你打算待多久？",
     words: "intend 打算 · stay 停留 · for 后接时长",
     opts: [
-      { t: "About one year, for my master's degree.", ok: true, why: "给时长，顺手给理由，两个问题一次答完。" },
-      { t: "Until I run out of money.", ok: false, why: "这句会被记进系统，等于承认没有计划。" },
-      { t: "I don't know yet, maybe forever.", ok: false, why: "forever 是入境问答里的禁区词。" }
+      { t: "About one year, for my master's degree.", zh: "大约一年，来读硕士。", ok: true, why: "给时长，顺手给理由，两个问题一次答完。" },
+      { t: "Until I run out of money.", zh: "待到钱花完为止。", ok: false, why: "这句会被记进系统，等于承认没有计划。" },
+      { t: "I don't know yet, maybe forever.", zh: "还不知道，也许永远。", ok: false, why: "forever 是入境问答里的禁区词。" }
     ],
     good: "One year. Fine."
   },
@@ -1666,9 +1668,9 @@ const QUESTIONS = [
     cn: "你住在哪里？",
     words: "stay 住 · accommodation 住处 · campus 校园",
     opts: [
-      { t: "In student accommodation near my campus.", ok: true, why: "有个说法就行，地址记不清可以说在学校宿舍。" },
-      { t: "I will find a hotel when I arrive.", ok: false, why: "“到了再找”等于没有落脚点，海关会追问。" },
-      { t: "At my friend's place, I forget the address.", ok: false, why: "住朋友家可以，但说不出地址很难过。" }
+      { t: "In student accommodation near my campus.", zh: "住学校附近的宿舍。", ok: true, why: "有个说法就行，地址记不清可以说在学校宿舍。" },
+      { t: "I will find a hotel when I arrive.", zh: "到了再找酒店。", ok: false, why: "“到了再找”等于没有落脚点，海关会追问。" },
+      { t: "At my friend's place, I forget the address.", zh: "住朋友家，地址我忘了。", ok: false, why: "住朋友家可以，但说不出地址很难过。" }
     ],
     good: "Student accommodation. Good."
   },
@@ -1677,9 +1679,9 @@ const QUESTIONS = [
     cn: "你有足够的钱养活自己吗？",
     words: "support yourself 养活自己 · enough 足够 · pounds 英镑",
     opts: [
-      { t: "Yes, I have about two thousand pounds.", ok: true, why: "说数字，别说 “a lot”，数字才有说服力。" },
-      { t: "I will find a job at the airport.", ok: false, why: "还没入境就说要找工作，等于自动触发盘查。" },
-      { t: "No, but my family will send some later.", ok: false, why: "“现在没有”会被理解为无法自给。" }
+      { t: "Yes, I have about two thousand pounds.", zh: "有，大概两千英镑。", ok: true, why: "说数字，别说 “a lot”，数字才有说服力。" },
+      { t: "I will find a job at the airport.", zh: "我会在机场找份工作。", ok: false, why: "还没入境就说要找工作，等于自动触发盘查。" },
+      { t: "No, but my family will send some later.", zh: "现在没有，但家里之后会寄过来。", ok: false, why: "“现在没有”会被理解为无法自给。" }
     ],
     good: "Two thousand. That's fine."
   }
@@ -2333,10 +2335,15 @@ function answer(idx, btn){
   speak(o.t, () => resolveAnswer(idx, btn), 'PLAYER');
 }
 
-function showWhy(text){
+function showWrong(idx, o){
+  // 答错=没听懂：把官员刚说的和你答的那句都翻成中文
   const q = QUESTIONS[S.qi];
-  $('cnLine').textContent = q.cn;
-  $('words').innerHTML = q.words + '<br><span style="color:#a8473a;font-weight:600">解析</span>　' + text;
+  $('cnLine').textContent = '官员：' + q.cn;
+  $('words').innerHTML =
+    '<span class="said">Officer: ' + q.en + '</span>' +
+    '<b class="saidyou">你说的：' + (o.zh || '') + '</b>' +
+    '<span class="said">（' + o.t + '）</span>' +
+    q.words + '<br><span style="color:#a8473a;font-weight:600">解析</span>　' + o.why;
   $('explain').classList.add('show');
 }
 
@@ -2347,14 +2354,16 @@ function resolveAnswer(idx, btn){
     btn.classList.add('good');
     S.score += (S.revealed ? 1 : 2);
     updateHud();
-    showWhy(o.why);
+    $('explain').classList.remove('show');
     typeLine($('line'), q.good);
     speak(q.good, () => setTimeout(nextQuestion, 900), 'OFFICER');
   } else {
     btn.classList.add('bad');
     S.wrong++;
-    if (!S.revealed) revealExplain();
-    showWhy(o.why);
+    S.revealed = true;
+    $('btnLost').style.display = 'none';
+    $('btnSkip').style.display = 'inline-block';
+    showWrong(idx, o);
     if (S.wrong >= 2){
       const right = q.opts.findIndex(x => x.ok);
       typeLine($('line'), "Listen carefully. " + q.en);
