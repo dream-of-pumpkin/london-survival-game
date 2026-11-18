@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>背包 · 装备 · 换装 · 十二方案</title>
+<style>
+:root{
+  --paper:#e8e1d2; --paper2:#ded5c2; --ink:#22201c; --ink2:#4a453d;
+  --gold:#c9a227; --dark:#12161a; --dark2:#1b2126; --brick:#a8473a; --blue:#33465f;
+  --line:rgba(34,32,28,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--paper);color:var(--ink)}
+body{
+  font-family:"Songti SC","Noto Serif SC","Source Han Serif SC",serif;
+  background-image:
+    radial-gradient(120% 90% at 20% 0%, #f2ece0 0%, transparent 55%),
+    radial-gradient(90% 70% at 100% 100%, #d8cfbb 0%, transparent 60%);
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:52px 28px 90px}
+header.top{border-bottom:1px solid var(--line);padding-bottom:26px;margin-bottom:38px}
+.kicker{font-size:12px;letter-spacing:.34em;color:#8a8072;text-transform:uppercase}
+h1{font-size:36px;line-height:1.25;letter-spacing:.02em;margin:14px 0 12px;font-weight:600}
+h1 em{font-style:normal;color:var(--brick)}
+.lede{font-size:14.5px;line-height:1.85;color:var(--ink2);max-width:760px}
+.lede b{color:var(--ink);font-weight:600}
+.meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:22px;font-size:12px;color:#7d7365;letter-spacing:.08em}
+
+article.plan{margin:0 0 54px;padding-bottom:40px;border-bottom:1px solid var(--line)}
+.ph{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.no{font-size:13px;letter-spacing:.2em;color:#9a8f7d;border:1px solid var(--line);padding:4px 9px;border-radius:1px}
+.ph h2{font-size:21px;font-weight:600;letter-spacing:.03em}
+.ph .en{font-size:11px;letter-spacing:.24em;color:#9a8f7d;text-transform:uppercase}
+.desc{font-size:13.5px;line-height:1.8;color:var(--ink2);margin:6px 0 16px;max-width:820px}
+
+.stage{
+  position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;
+  container-type:inline-size;font-size:1.16cqw;
+  background:var(--dark);color:#f4eee2;border:1px solid rgba(0,0,0,.35);
+  box-shadow:0 18px 44px -26px rgba(24,20,14,.55);
+  font-family:"Songti SC","Noto Serif SC",serif;
+}
+.stage .fig{position:absolute;object-fit:cover;object-position:50% 18%}
+.pts{list-style:none;margin:16px 0 0;display:flex;gap:26px;flex-wrap:wrap;font-size:12.5px;color:#5d5548}
+.pts li{padding-left:12px;border-left:2px solid rgba(201,162,39,.55)}
+.pts li b{color:var(--ink);font-weight:600}
+
+/* ================= 01 标准装备栏 ================= */
+.p1{background:radial-gradient(120% 100% at 8% 30%,#1d252b 0%,#101418 70%)}
+.p1 .fig{left:0;top:1.2em;width:43%;height:79%;-webkit-mask-image:radial-gradient(78% 92% at 46% 42%,#000 46%,rgba(0,0,0,.5) 72%,transparent 92%);mask-image:radial-gradient(78% 92% at 46% 42%,#000 46%,rgba(0,0,0,.5) 72%,transparent 92%)}
+.p1 .name{position:absolute;left:0;right:3.4em;bottom:2.6em;padding:1em 1.4em 1em 3.4em;font-size:1.15em;letter-spacing:.22em;color:rgba(243,237,226,.55);background:linear-gradient(90deg,rgba(8,11,14,.92) 0%,rgba(8,11,14,.74) 68%,rgba(8,11,14,0) 100%)}
+.p1 .name b{display:block;font-size:2.4em;letter-spacing:.04em;color:#f7f0e1;margin-top:.25em}
+.p1 .slots{position:absolute;right:3em;top:4em;width:31em}
+.p1 .sl{display:flex;align-items:center;gap:1em;padding:.85em 1em;margin-bottom:.55em;background:rgba(10,14,18,.6);border-left:2px solid rgba(201,162,39,.5)}
+.p1 .sl i{flex:none;width:12.5em;font-style:normal;font-size:.92em;letter-spacing:.18em;color:rgba(243,237,226,.58)}
+.p1 .sl b{font-size:1.12em;font-weight:500;color:#f6efe2}
+.p1 .sl s{text-decoration:none;margin-left:auto;font-size:.9em;color:rgba(201,162,39,.78)}
+.p1 .stats{position:absolute;right:3em;left:auto;bottom:3em;width:31em}
+.p1 .bar{margin-bottom:.6em}
+.p1 .bar i{font-style:normal;font-size:.9em;letter-spacing:.16em;color:rgba(243,237,226,.55);display:block;margin-bottom:.28em}
+.p1 .track{height:.55em;background:rgba(243,237,226,.22)}
+.p1 .track u{display:block;height:100%;text-decoration:none}
+.p1 .t1 u{width:72%;background:#c8a049}.p1 .t2 u{width:64%;background:#6f7ea8}.p1 .t3 u{width:58%;background:#8f9c6a}
+.p1 .hd{position:absolute;left:3em;top:2.4em;font-size:.95em;letter-spacing:.26em;color:rgba(201,162,39,.8)}
+
+/* ================= 02 衣柜双栏 ================= */
+.p2{background:linear-gradient(180deg,#f0e9db,#dcd2be);color:#232019}
+.p2 .hd{position:absolute;left:2.6em;top:2em;font-size:1em;letter-spacing:.3em;color:#8c8069}
+.p2 .fig{left:31%;top:5.4%;width:38%;height:84%;object-position:50% 16%;-webkit-mask-image:radial-gradient(72% 86% at 50% 44%,#000 42%,transparent 88%);mask-image:radial-gradient(72% 86% at 50% 44%,#000 42%,transparent 88%)}
+.p2 .col{position:absolute;top:5.6em;bottom:4em;width:26%;display:flex;flex-direction:column;gap:.5em}
+.p2 .l{left:2.6em}.p2 .r{right:2.6em}
+.p2 .ct{font-size:.9em;letter-spacing:.24em;color:#8c8069;margin-bottom:.4em}
+.p2 .row{display:flex;align-items:center;gap:.7em;padding:.62em .7em;background:rgba(255,255,255,.55);border:1px solid rgba(34,32,28,.12)}
+.p2 .row.on{background:#232019;color:#f0e9db;border-color:#232019}
+.p2 .row .dot{width:.6em;height:.6em;background:#b9ab8e;flex:none}
+.p2 .row.on .dot{background:var(--gold)}
+.p2 .row em{font-style:normal;font-size:1.02em}
+.p2 .row s{text-decoration:none;margin-left:auto;font-size:.84em;opacity:.55}
+.p2 .wear{position:absolute;left:34%;bottom:1.9em;width:32%;display:flex;gap:.6em}
+.p2 .btn{flex:1;text-align:center;padding:.8em;font-size:1em;letter-spacing:.14em;background:#232019;color:#f0e9db}
+.p2 .btn.ghost{background:transparent;color:#232019;border:1px solid rgba(34,32,28,.3)}
+
+/* ================= 03 杂志跨页 ================= */
+.p3{background:#12161a;display:flex}
+.p3 .left{position:relative;width:44%;height:100%;background:#0d1114}
+.p3 .left .fig{left:0;top:0;width:100%;height:100%;object-position:50% 14%;filter:brightness(.95)}
+.p3 .left:after{content:"";position:absolute;inset:auto 0 0 0;height:38%;background:linear-gradient(to top,rgba(13,17,20,.9),transparent)}
+.p3 .left .cap{position:absolute;left:2.2em;bottom:2.4em;font-size:1.2em;letter-spacing:.2em;color:rgba(243,237,226,.7);z-index:2}
+.p3 .right{flex:1;background:var(--paper);color:#22201c;padding:3.2em 3em;display:flex;flex-direction:column}
+.p3 .rp{font-size:.86em;letter-spacing:.28em;color:#a09580}
+.p3 .rt{font-size:2.1em;line-height:1.3;margin:.4em 0 .2em;font-weight:600}
+.p3 .rs{font-size:.95em;color:#6c6252;margin-bottom:1.6em}
+.p3 .kv{display:flex;justify-content:space-between;font-size:.95em;padding:.55em 0;border-bottom:1px solid var(--line)}
+.p3 .kv s{text-decoration:none;color:#8c8271}
+.p3 .rowset{display:flex;gap:.6em;margin-top:auto}
+.p3 .thumb{flex:1;aspect-ratio:1/1.3;border:1px solid rgba(34,32,28,.2);background:#d7cdb9;position:relative;overflow:hidden}
+.p3 .thumb img{width:100%;height:100%;object-fit:cover;object-position:50% 14%;filter:saturate(.9)}
+.p3 .thumb.on{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.p3 .thumb span{position:absolute;left:0;right:0;bottom:0;background:rgba(18,22,26,.8);color:#f0e9db;font-size:.72em;padding:.3em;letter-spacing:.08em}
+
+/* ================= 04 行李箱平铺 ================= */
+.p4{background:linear-gradient(180deg,#151a1f 0 48%,#0e1216 48% 100%)}
+.p4 .fig{left:0;top:0;width:36%;height:50%;object-position:50% 16%;-webkit-mask-image:radial-gradient(80% 92% at 46% 40%,#000 44%,transparent 86%);mask-image:radial-gradient(80% 92% at 46% 40%,#000 44%,transparent 86%)}
+.p4 .info{position:absolute;left:38%;top:5em;width:56%}
+.p4 .info h3{font-size:1.7em;font-weight:500;letter-spacing:.06em}
+.p4 .info p{font-size:.95em;color:rgba(243,237,226,.55);margin-top:.5em;line-height:1.7}
+.p4 .bag{position:absolute;left:4em;right:4em;bottom:2.6em;display:grid;grid-template-columns:repeat(4,1fr);gap:.75em}
+.p4 .cell{position:relative;height:7.4em;background:#1c242b;border:1px solid rgba(243,237,226,.14);display:flex;flex-direction:column;justify-content:flex-end;padding:.6em;overflow:hidden}
+.p4 .cell img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
+.p4 .cell b{position:relative;font-size:.95em;font-weight:500}
+.p4 .cell s{position:relative;text-decoration:none;font-size:.8em;color:rgba(243,237,226,.5)}
+.p4 .cell .tag2{position:absolute;right:.4em;top:.4em;font-size:.72em;letter-spacing:.12em;color:#f7e9bd;background:rgba(201,162,39,.28);padding:.14em .4em}
+.p4 .cell.empty{border-style:dashed;display:flex;align-items:center;justify-content:center;color:rgba(243,237,226,.3);font-size:.9em;letter-spacing:.16em}
+.p4 .lid{position:absolute;left:3em;top:50%;font-size:.9em;letter-spacing:.3em;color:rgba(201,162,39,.7)}
+
+/* ================= 05 环形装备轮 ================= */
+.p5{background:radial-gradient(circle at 50% 52%,#1d252b 0%,#0d1114 62%)}
+.p5 .fig{left:50%;top:50%;width:33%;height:74%;transform:translate(-50%,-50%);object-position:50% 18%;-webkit-mask-image:radial-gradient(70% 80% at 50% 46%,#000 40%,transparent 84%);mask-image:radial-gradient(70% 80% at 50% 46%,#000 40%,transparent 84%)}
+.p5 .ring{position:absolute;left:50%;top:50%;width:30em;height:30em;transform:translate(-50%,-50%);border-radius:50%;border:1px dashed rgba(201,162,39,.28)}
+.p5 .node{position:absolute;left:50%;top:50%;width:9.6em;margin-left:-4.8em;margin-top:-2.2em;text-align:center}
+.p5 .node .k{font-size:.76em;letter-spacing:.18em;color:rgba(243,237,226,.55)}
+.p5 .node b{display:block;font-size:1.02em;font-weight:500;margin-top:.2em;color:#f6efe2}
+.p5 .n1{transform:rotate(0deg) translateY(-15em) rotate(0deg)}
+.p5 .n2{transform:rotate(60deg) translateY(-15em) rotate(-60deg)}
+.p5 .n3{transform:rotate(120deg) translateY(-15em) rotate(-120deg)}
+.p5 .n4{transform:rotate(180deg) translateY(-15em) rotate(-180deg)}
+.p5 .n5{transform:rotate(240deg) translateY(-15em) rotate(-240deg)}
+.p5 .n6{transform:rotate(300deg) translateY(-15em) rotate(-300deg)}
+.p5 .stats{position:absolute;left:3.4em;bottom:3em;display:flex;gap:1.6em}
+.p5 .st{font-size:.86em;letter-spacing:.16em;color:rgba(243,237,226,.56)}
+.p5 .st b{display:block;font-size:1.5em;letter-spacing:0;color:#f6efe2;margin-top:.2em}
+
+/* ================= 06 三折屏 ================= */
+.p6{display:flex;background:#0f1418}
+.p6 .col{position:relative}
+.p6 .c1{width:34%}
+.p6 .c2{width:34%;background:#171e24;border-left:1px solid rgba(243,237,226,.08);border-right:1px solid rgba(243,237,226,.08)}
+.p6 .c3{flex:1;background:#12161a}
+.p6 .c1 .fig{left:0;top:0;width:100%;height:100%;object-position:50% 16%;-webkit-mask-image:radial-gradient(74% 88% at 50% 44%,#000 44%,transparent 88%);mask-image:radial-gradient(74% 88% at 50% 44%,#000 44%,transparent 88%)}
+.p6 .ct{position:absolute;left:1.8em;top:2em;font-size:.84em;letter-spacing:.26em;color:rgba(201,162,39,.75)}
+.p6 .grid2{position:absolute;left:1.8em;right:1.8em;top:5.4em;display:grid;grid-template-columns:1fr 1fr;gap:.7em}
+.p6 .ic{height:5.4em;border:1px solid rgba(243,237,226,.14);background:#1b232a;display:flex;flex-direction:column;justify-content:flex-end;padding:.5em;gap:.16em}
+.p6 .ic b{font-size:.92em;font-weight:500}
+.p6 .ic s{text-decoration:none;font-size:.74em;color:rgba(243,237,226,.58)}
+.p6 .ic.on{border-color:var(--gold);background:#26303a}
+.p6 .mirror{position:absolute;left:2em;right:2em;top:5.2em;height:15.6em;border:1px solid rgba(201,162,39,.4);background:#0b1014;overflow:hidden}
+.p6 .mirror img{width:100%;height:100%;object-fit:cover;object-position:50% 14%}
+.p6 .mirror span{position:absolute;left:0;bottom:0;right:0;padding:.5em .7em;font-size:.8em;background:linear-gradient(to top,rgba(8,11,14,.9),transparent)}
+.p6 .opt{position:absolute;left:2em;right:2em;bottom:2.4em;display:flex;gap:.6em}
+.p6 .opt div{flex:1;padding:.7em;text-align:center;font-size:.9em;border:1px solid rgba(243,237,226,.2);color:rgba(243,237,226,.75)}
+
+/* ================= 07 手账活页 ================= */
+.p7{background:#efe8d8;color:#26231c}
+.p7 .grain{position:absolute;inset:0;opacity:.5;background-image:radial-gradient(rgba(120,105,80,.16) 1px,transparent 1px);background-size:5px 5px}
+.p7 .photo{position:absolute;left:3.4em;top:2.4em;width:25em;padding:.7em .7em 2.6em;background:#fbf7ee;box-shadow:0 10px 24px -14px rgba(40,34,24,.5);transform:rotate(-2.4deg)}
+.p7 .photo img{width:100%;height:23em;object-fit:cover;object-position:50% 16%}
+.p7 .photo em{position:absolute;left:.8em;bottom:.7em;font-style:normal;font-size:.92em;color:#6d6455}
+.p7 .list{position:absolute;left:30em;right:3.4em;top:3em}
+.p7 .lh{font-size:.9em;letter-spacing:.22em;color:#8c8069;margin-bottom:.6em}
+.p7 .li{display:flex;align-items:baseline;gap:.7em;padding:.46em 0;border-bottom:1px dashed rgba(38,35,28,.22);font-size:1.02em}
+.p7 .li s{text-decoration:none;margin-left:auto;font-size:.84em;color:#8c8271}
+.p7 .li b{font-weight:600}
+.p7 .today{position:absolute;left:3.4em;right:3.4em;bottom:2.6em;border:1px dashed rgba(38,35,28,.4);padding:.8em 1em;display:flex;align-items:center;gap:1em}
+.p7 .today span{font-size:.84em;letter-spacing:.2em;color:#8c8069}
+.p7 .today b{font-size:1.05em;font-weight:600}
+.p7 .today .go{margin-left:auto;background:#26231c;color:#efe8d8;padding:.5em 1em;font-size:.9em;letter-spacing:.12em}
+
+/* ================= 08 衣架横栏 ================= */
+.p8{background:linear-gradient(180deg,#17202a 0%,#0d1116 100%)}
+.p8 .tmask{position:absolute;left:0;right:0;top:0;height:24em;background:radial-gradient(60% 90% at 50% 20%,rgba(201,162,39,.1),transparent 70%)}
+.p8 .fig{left:50%;top:-3em;width:25%;height:29em;transform:translateX(-50%);object-position:50% 12%;-webkit-mask-image:radial-gradient(70% 86% at 50% 42%,#000 44%,transparent 86%);mask-image:radial-gradient(70% 86% at 50% 42%,#000 44%,transparent 86%)}
+.p8 .who{position:absolute;left:3.2em;top:2em;font-size:.82em;letter-spacing:.24em;color:rgba(243,237,226,.62)}
+.p8 .rail{position:absolute;left:3.2em;right:3.2em;top:25.4em;height:.1em;background:rgba(201,162,39,.4)}
+.p8 .rack{position:absolute;left:3.2em;right:3.2em;top:26em;display:flex;gap:.9em}
+.p8 .hg{flex:1;display:flex;flex-direction:column;align-items:center}
+.p8 .hook{width:1em;height:1em;border:1px solid rgba(243,237,226,.34);border-bottom:0;border-radius:.9em .9em 0 0;margin-bottom:.15em}
+.p8 .cl{width:100%;height:12.4em;background:#1b232a;border:1px solid rgba(243,237,226,.12);position:relative;overflow:hidden}
+.p8 .hg.on .cl{border-color:var(--gold);box-shadow:0 0 0 1px rgba(201,162,39,.5)}
+.p8 .cl img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 14%;opacity:.4;filter:saturate(.85)}
+.p8 .hg.on .cl img{opacity:.62}
+.p8 .cl b{position:absolute;left:.55em;bottom:1.5em;font-size:.92em;font-weight:500;color:#f6efe2}
+.p8 .cl s{position:absolute;left:.55em;bottom:.55em;text-decoration:none;font-size:.76em;color:rgba(243,237,226,.5)}
+.p8 .foot{position:absolute;left:3.2em;right:3.2em;bottom:2.2em;display:flex;align-items:center;gap:1.4em;font-size:.86em;letter-spacing:.14em;color:rgba(243,237,226,.58)}
+.p8 .foot b{color:#f7e9bd;letter-spacing:.06em}
+
+/* ================= 09 角色档案 · 装备页 ================= */
+.p9{display:flex;background:#11161a}
+.p9 .tabs{width:8.6em;padding:2.4em 0 0;display:flex;flex-direction:column;gap:.4em;border-right:1px solid rgba(243,237,226,.1)}
+.p9 .tab{padding:.85em 1.1em;font-size:.84em;letter-spacing:.16em;color:rgba(243,237,226,.55)}
+.p9 .tab.on{background:rgba(201,162,39,.16);color:#f7e9bd;box-shadow:inset 2px 0 0 var(--gold)}
+.p9 .figc{position:relative;flex:1;overflow:hidden;background:radial-gradient(80% 90% at 50% 30%,#1d252c,#0d1114)}
+.p9 .figc img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:86%;height:120%;object-fit:cover;object-position:50% 18%;-webkit-mask-image:radial-gradient(66% 78% at 50% 46%,#000 44%,transparent 86%);mask-image:radial-gradient(66% 78% at 50% 46%,#000 44%,transparent 86%)}
+.p9 .figc .lvl{position:absolute;left:1.6em;bottom:1.8em;font-size:.82em;letter-spacing:.2em;color:rgba(243,237,226,.56)}
+.p9 .side{width:22em;padding:2.6em 2em;background:rgba(10,14,18,.72);border-left:1px solid rgba(243,237,226,.1)}
+.p9 .side .k{font-size:.78em;letter-spacing:.24em;color:rgba(201,162,39,.75);margin-bottom:.5em}
+.p9 .side h3{font-size:1.7em;font-weight:500;margin-bottom:.9em}
+.p9 .eq{display:flex;justify-content:space-between;font-size:.9em;padding:.5em 0;border-bottom:1px solid rgba(243,237,226,.1)}
+.p9 .eq s{text-decoration:none;color:rgba(243,237,226,.5)}
+.p9 .mrow{display:flex;justify-content:space-between;margin-top:1.2em}
+.p9 .m{text-align:center}
+.p9 .m b{display:block;font-size:1.6em;color:#f7e9bd}
+.p9 .m i{font-style:normal;font-size:.76em;letter-spacing:.16em;color:rgba(243,237,226,.56)}
+
+/* ================= 10 清单表 ================= */
+.p10{display:flex;background:#0f1418}
+.p10 .person{width:23em;position:relative;background:radial-gradient(80% 90% at 50% 26%,#1c242b,#0b0f13);border-right:1px solid rgba(243,237,226,.1)}
+.p10 .person img{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:104%;height:78%;object-fit:cover;object-position:50% 16%;-webkit-mask-image:radial-gradient(64% 76% at 50% 44%,#000 44%,transparent 86%);mask-image:radial-gradient(64% 76% at 50% 44%,#000 44%,transparent 86%)}
+.p10 .person .now{position:absolute;left:1.4em;right:1.4em;bottom:1.4em;font-size:.78em;line-height:1.7;letter-spacing:.06em;color:rgba(243,237,226,.6);border-top:1px solid rgba(201,162,39,.28);padding-top:.6em}
+.p10 .person .now b{color:#f7e9bd}
+.p10 .tbl{flex:1;padding:2.2em 2.4em}
+.p10 .th{font-size:.78em;letter-spacing:.24em;color:rgba(201,162,39,.75);margin-bottom:.7em}
+.p10 table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:.9em}
+.p10 th{text-align:left;font-weight:400;font-size:.74em;letter-spacing:.18em;color:rgba(243,237,226,.55);padding:0 0 .6em;border-bottom:1px solid rgba(243,237,226,.16)}
+.p10 td{padding:1.02em 0;border-bottom:1px solid rgba(243,237,226,.08);color:rgba(243,237,226,.82)}
+.p10 td.worn{color:#f7e9bd}
+.p10 td small{display:block;font-size:.7em;color:rgba(243,237,226,.56);letter-spacing:.06em}
+.p10 .sum{display:flex;gap:1.6em;margin-top:1.8em;font-size:.8em;letter-spacing:.14em;color:rgba(243,237,226,.58)}
+.p10 .sum b{color:#f7e9bd}
+
+/* ================= 11 商店 → 衣柜 ================= */
+.p11{display:flex;background:#101518}
+.p11 .shop{width:48%;position:relative;background:#151c22}
+.p11 .shop .hd2,.p11 .you .hd2{position:absolute;left:2em;top:1.6em;font-size:.82em;letter-spacing:.24em;color:rgba(201,162,39,.75)}
+.p11 .goods{position:absolute;left:2em;right:2em;top:4.4em;bottom:2em;display:grid;grid-template-columns:1fr 1fr;gap:.7em}
+.p11 .gd{position:relative;background:#1d252c;box-shadow:inset 0 -3.4em 3em rgba(6,9,12,.9);border:1px solid rgba(243,237,226,.12);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:.7em}
+.p11 .gd img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;opacity:.34}
+.p11 .gd b{position:relative;font-size:.94em;font-weight:500;align-self:flex-start;background:rgba(6,9,12,.72);padding:.12em .34em}
+.p11 .gd s{position:relative;text-decoration:none;font-size:.78em;color:rgba(243,237,226,.62);align-self:flex-start;background:rgba(6,9,12,.72);padding:.1em .34em;margin-top:.15em}
+.p11 .gd .pr{position:absolute;right:.5em;top:.45em;font-size:.8em;color:#f7e9bd}
+.p11 .sep{width:1px;background:linear-gradient(180deg,transparent,rgba(201,162,39,.5),transparent)}
+.p11 .you{flex:1;position:relative}
+.p11 .you img{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:86%;height:92%;object-fit:cover;object-position:50% 16%;-webkit-mask-image:radial-gradient(66% 80% at 50% 44%,#000 44%,transparent 86%);mask-image:radial-gradient(66% 80% at 50% 44%,#000 44%,transparent 86%)}
+.p11 .you .cur{position:absolute;left:1.6em;right:1.6em;bottom:1.4em;display:flex;gap:.5em;font-size:.8em;color:rgba(243,237,226,.6)}
+.p11 .you .cur span{padding:.4em .6em;border:1px solid rgba(243,237,226,.18);background:rgba(10,14,18,.5)}
+
+/* ================= 12 电影字幕 · 装备条 ================= */
+.p12{background:#0b0f13}
+.p12 .bg{position:absolute;inset:0;background:url("../assets/scene-street.jpg") center/cover no-repeat;filter:brightness(.6) saturate(.8)}
+.p12 .veil{position:absolute;inset:0;background:linear-gradient(100deg,rgba(8,11,14,.86) 0%,rgba(8,11,14,.5) 46%,rgba(8,11,14,.22) 100%)}
+.p12 .fig{right:5em;bottom:7.4em;width:23em;height:30em;object-position:50% 12%;-webkit-mask-image:radial-gradient(70% 84% at 50% 46%,#000 44%,transparent 88%);mask-image:radial-gradient(70% 84% at 50% 46%,#000 44%,transparent 88%)}
+.p12 .six{position:absolute;left:3em;top:3em;display:flex;gap:.5em}
+.p12 .s6{width:6.4em;padding:.55em .6em;background:rgba(9,13,17,.7);border-top:1px solid rgba(201,162,39,.3);backdrop-filter:blur(3px)}
+.p12 .s6 i{font-style:normal;display:block;font-size:.72em;letter-spacing:.16em;color:rgba(243,237,226,.56)}
+.p12 .s6 b{display:block;font-size:.86em;font-weight:500;margin-top:.24em;color:#f6efe2}
+.p12 .sub{position:absolute;left:2.4em;right:2.4em;bottom:2em;padding:1.15em 1.5em;background:linear-gradient(180deg,rgba(9,13,17,.82),rgba(6,9,12,.94));border-top:1px solid rgba(201,162,39,.34)}
+.p12 .sub span{font-size:.76em;letter-spacing:.24em;color:rgba(201,162,39,.85)}
+.p12 .sub em{display:block;font-style:normal;font-size:1.32em;line-height:1.35;margin-top:.35em;color:#f8f3e8}
+.p12 .sub p{font-size:.88em;margin-top:.55em;color:rgba(243,237,226,.55);letter-spacing:.04em}
+.p12 .sub .act{margin-top:.7em;display:flex;gap:.6em}
+.p12 .sub .act div{font-size:.8em;padding:.4em .8em;border:1px solid rgba(243,237,226,.24);color:rgba(243,237,226,.8)}
+
+/* 全身立绘的取景（覆盖上面各处的半身取景） */
+.p1 .fig,.p2 .fig,.p4 .fig,.p5 .fig,.p6 .c1 .fig,.p8 .fig,.p11 .you img,.p12 .fig,
+.p9 .figc img,.p10 .person img,.p6 .mirror img,.p3 .left .fig{object-position:50% 36%}
+.p3 .thumb img,.p4 .cell img,.p6 .ic img,.p11 .gd img,.p8 .cl img{object-position:50% 18%}
+/* 浅底水彩立绘与暗场／纸面融合 */
+.p1 .fig,.p4 .fig,.p5 .fig,.p6 .c1 .fig,.p6 .mirror img,.p8 .fig,.p11 .you img,.p10 .person img,
+.p9 .figc img,.p12 .fig,.p2 .fig,.p3 .left .fig,.p7 .fig{filter:drop-shadow(0 .4em .8em rgba(0,0,0,.34)) saturate(.98) contrast(1.02);mix-blend-mode:normal}
+.p10 .gainhd{font-size:.78em;letter-spacing:.24em;color:rgba(201,162,39,.75);margin:2.2em 0 .8em}
+.p10 .gain{display:flex;gap:.8em}
+.p10 .gc{flex:1;padding:.8em .9em;background:rgba(201,162,39,.07);border-left:2px solid rgba(201,162,39,.5)}
+.p10 .gc b{font-size:.94em;font-weight:500;color:#f7e9bd}
+.p10 .gc s{display:block;text-decoration:none;font-size:.76em;margin-top:.28em;color:rgba(243,237,226,.5);line-height:1.5}
+body{overflow-x:hidden}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="kicker">London Survival · Inventory &amp; Outfit UI</div>
+  <h1>背包 / 装备 / 换装 &nbsp;<em>十二方案</em></h1>
+  <p class="lede">
+    同一个信息内核，十二种装法：<b>左边人物（今天穿什么）· 中间或右侧装备清单（身上有什么、刚拿到什么）· 一套初始装备</b>（留学生＝校服开衫＋帆布包、游客＝风衣＋相机、背包客＝冲锋衣＋大包）。到服装店买到的衣服进入衣柜，选中即换装，属性（保暖／体面／舒适）立刻跟着变。
+    <br>方案 1–6 是暗房电影感（贴合现在线上的「方案五 · 电影字幕」皮肤），7–12 掺了手账、杂志、表格等纸质语言，方便挑一个日后全站统一。
+  </p>
+  <div class="meta"><span>十六比九 · 横屏</span><span>三人均为全身水彩立绘（已去底）</span><span>服装店买完即当场换装</span></div>
+</header>
+
+<main>
+
+<!-- ======================= 01 ======================= -->
+<article class="plan">
+  <div class="ph"><span class="no">01</span><h2>标准装备栏</h2><span class="en">Equipment Panel</span></div>
+  <p class="desc">最直接的 RPG 装法：左半幅人物半身，右半幅六行装备槽（外套／内搭／下装／鞋／包／配饰），每行右侧挂一条属性加成。左下角是保暖／体面／舒适三条横杠。</p>
+  <div class="stage p1">
+    <div class="hd">WARDROBE · 今日穿搭</div>
+    <img class="fig" src="../assets/role-student-cut.png" alt="留学生立绘">
+    <div class="name">留学生 · THE STUDENT<b>深蓝开衫</b></div>
+    <div class="slots">
+      <div class="sl"><i>外套</i><b>学生开衫</b><s>保暖 +3</s></div>
+      <div class="sl"><i>内搭</i><b>白衬衫</b><s>体面 +2</s></div>
+      <div class="sl"><i>下装</i><b>深色长裤</b><s>—</s></div>
+      <div class="sl"><i>鞋</i><b>帆布鞋</b><s>舒适 +1</s></div>
+      <div class="sl"><i>包</i><b>旧帆布包</b><s>容量 6</s></div>
+      <div class="sl"><i>配饰</i><b>空</b><s>—</s></div>
+    </div>
+    <div class="stats">
+      <div class="bar t1"><i>保暖 WARM</i><span class="track"><u></u></span></div>
+      <div class="bar t2"><i>体面 TIDY</i><span class="track"><u></u></span></div>
+      <div class="bar t3"><i>舒适 COMFORT</i><span class="track"><u></u></span></div>
+    </div>
+  </div>
+  <ul class="pts">
+    <li>人物：<b>左 44% 满高，柔和遮罩融进暗底</b></li>
+    <li>装备：<b>右侧六行，含属性加成</b></li>
+    <li>换装：<b>点任一行弹「衣柜」列表</b></li>
+  </ul>
+</article>
+
+<!-- ======================= 02 ======================= -->
+<article class="plan">
+  <div class="ph"><span class="no">02</span><h2>衣柜双栏</h2><span class="en">Wardrobe Columns</span></div>
+  <p class="desc">纸白底，人物居中，左栏是「衣柜分类」（外套／上衣／下装／鞋／包），右栏是「今日上身」清单与刚买到的衣物。底部两个动作：换这一套 / 只换一件。适合服装店刚买完东西回来试穿。</p>
+  <div class="stage p2">
+    <div class="hd">WARDROBE · 衣柜</div>
+    <img class="fig" src="../assets/role-student-cut.png" alt="留学生立绘">
+    <div class="col l">
+      <div class="ct">衣柜 · 外套 4</div>
+      <div class="row on"><span class="dot"></span><em>学生开衫</em><s>穿着</s></div>
+      <div class="row"><span class="dot"></span><em>羊毛大衣</em><s>£48</s></div>
+      <div class="row"><span class="dot"></span><em>防雨冲锋衣</em><s>£36</s></div>
+      <div class="row"><span class="dot"></span><em>二手羽绒</em><s>£22</s></div>
+    </div>
+    <div class="col r">
+      <div class="ct">今日上身 · TODAY</div>
+      <div class="row on"><span class="dot"></span><em>白衬衫</em><s>体面 +2</s></div>
+      <div class="row"><span class="dot"></span><em>深色长裤</em><s>—</s></div>
+      <div class="row"><span class="dot"></span><em>帆布鞋</em><s>舒适 +1</s></div>
+      <div class="row"><span class="dot"></span><em>旧帆布包</em><s>容量 6</s></div>
+    </div>
+    <div class="wear"><div class="btn">换这一套</div><div class="btn ghost">只换一件</div></div>
+  </div>
+  <ul class="pts">
+    <li>人物：<b>正中，左右对称</b></li>
+    <li>装备：<b>左衣柜、右上身</b></li>
+    <li>换装：<b>点左栏任一件即上身</b></li>
+  </ul>
+</article>
+
+<!-- ======================= 03 ======================= -->
+<article class="plan">
+  <div class="ph"><span class="no">03</span><h2>杂志跨页</h2><span class="en">Editorial Spread</span></div>
+  <p class="desc">左半页出血人物照，右半页纸白文字页：套装名、三条属性、装备细则，最底一排套装缩略（像杂志内页的可翻页样）。更像「穿搭杂志」而不是游戏面板。</p>
+  <div class="stage p3">
+    <div class="left">
+      <img class="fig" src="../assets/role-student-cut.png" alt="留学生立绘">
+      <span class="cap">LOOK 01 · 开学第一天</span>
+    </div>
+    <div class="right">
+      <div class="rp">TODAY'S OUTFIT</div>
+      <div class="rt">学生开衫<br>与一只旧帆布包</div>
+      <div class="rs">保暖 3 · 体面 2 · 舒适 1 &nbsp;|&nbsp; 三件套</div>
+      <div class="kv"><span>外套</span><s>学生开衫 · 深蓝</s></div>
+      <div class="kv"><span>内搭</span><s>白衬衫</s></div>
+      <div class="kv"><span>下装</span><s>深色长裤</s></div>
+      <div class="kv"><span>包</span><s>旧帆布包 · 容量 6</s></div>
+      <div class="rowset">
+        <div class="thumb on"><img src="../assets/role-student-cut.png" alt=""><span>开学</span></div>
+        <div class="thumb"><img src="../assets/role-tourist-cut.png" alt=""><span>出门</span></div>
+        <div class="thumb"><img src="../assets/role-backpacker-cut.png" alt=""><span>防雨</span></div>
+      </div>
+    </div>
+  </div>
+  <ul class="pts">
+    <li>人物：<b>左页整幅出血</b></li>
+    <li>装备：<b>右页文字细则</b></li>
+    <li>换装：<b>底部缩略换 LOOK</b></li>
+  </ul>
+</article>
+
+<!-- ======================= 04 ======================= -->
+<article class="plan">
+  <div class="ph"><span class="no">04</span><h2>行李箱平铺</h2><span class="en">Open Suitcase</span></div>
+  <p class="desc">背包＝摊开的行李箱。上半是人物与当前套装说明，下半 4×2 八格平铺，格子里是衣物实拍小图，右上角挂「已穿／在包里／已卖」标签。空位保留虚线格，一眼看出还剩多少空间。</p>
+  <div class="stage p4">
+    <img class="fig" src="../assets/role-student-cut.png" alt="留学生立绘">
+    <div class="info">
+      <h3>开着的行李箱 · 6 / 8 格</h3>
+      <p>你现在穿着学生开衫、白衬衫、深色长裤和帆布鞋。包里还有一件防雨冲锋衣、一把伞。</p>
+    </div>
+    <div class="lid">PACKED · 行李</div>
+    <div class="bag">
+      <div class="cell"><img src="../assets/role-student-cut.png" alt=""><span class="tag2">已穿</span><b>学生开衫</b><s>保暖 +3</s></div>
+      <div class="cell"><img src="../assets/role-student-cut.png" alt=""><b>白衬衫</b><s>体面 +2</s></div>
+      <div class="cell"><img src="../assets/role-student-cut.png" alt=""><b>防雨冲锋衣</b><s>保暖 +2 · 防雨</s></div>
+      <div class="cell"><img src="../assets/role-student-cut.png" alt=""><b>折叠伞</b><s>下雨 -1 理智</s></div>
+      <div class="cell"><img src="../assets/role-student-cut.png" alt=""><b>帆布鞋</b><s>舒适 +1</s></div>
+      <div class="cell"><img src="../assets/role-tourist-cut.png" alt=""><b>旧帆布包</b><s>容量 6</s></div>
+      <div class="cell empty">空位</div>
+      <div class="cell empty">空位</div>
+    </div>
+  </div>
+  <ul class="pts">
+    <li>人物：<b>左上，与说明同区</b></li>
+    <li>装备：<b>下半 4×2 平铺格</b></li>
+    <li>换装：<b>点格→穿上／收入包</b></li>
+  </ul>
+</article>
+
+<!-- ======================= 05 ======================= -->
+<article class="plan">
+  <div class="ph"><span class="no">05</span><h2>环形装备轮</h2><span class="en">Radial Loadout</span></div>
+  <p class="desc">人物居中，六个装备位沿虚线圆周均匀分布，像钟面。左下角三枚大数字是保暖／体面／舒适。适合做成「换一件，周围数字跟着跳」的动态反馈。</p>
+  <div class="stage p5">
+    <img class="fig" src="../assets/role-student-cut.png" alt="留学生立绘">
+    <div class="ring"></div>
+    <div class="node n1"><span class="k">外套</span><b>学生开衫</b></div>
+    <div class="node n2"><span class="k">内搭</span><b>白衬衫</b></div>
+    <div class="node n3"><span class="k">下装</span><b>深色长裤</b></div>
+    <div class="node n4"><span class="k">鞋</span><b>帆布鞋</b></div>
+    <div class="node n5"><span class="k">包</span><b>旧帆布包</b></div>
+    <div class="node n6"><span class="k">配饰</span><b>空</b></div>
+    <div class="stats">
+      <div class="st">保暖<b>3</b></div><div class="st">体面<b>2</b></div><div class="st">舒适<b>1</b></div>
+    </div>
+  </div>
+  <ul class="pts">
+    <li>人物：<b>圆心，最大一块</b></li>
+    <li>装备：<b>六点位环绕</b></li>
+    <li>换装：<b>点圆周任一位换</b></li>
+  </ul>
+</article>
+
+<!-- ======================= 06 ======================= -->
+<article class="plan">
+  <div class="ph"><span class="no">06</span><h2>三折屏</h2><span class="en">Triptych</span></div>
+  <p class="desc">三竖条：左人物、中背包格（两列）、右试衣镜。镜子里是换装预览，镜下方三个候选按钮，点哪个镜中人换哪件。逻辑最像「换装小游戏」，也最适合服装店试衣间。</p>
+  <div class="stage p6">
+    <div class="col c1">
+      <img class="fig" src="../assets/role-student-cut.png" alt="留学生立绘">
+      <div class="ct">YOU</div>
+    </div>
+    <div class="col c2">
+      <div class="ct">BAG · 包里的东西</div>
+      <div class="grid2">
+        <div class="ic on"><b>学生开衫</b><s>已穿</s></div>
+        <div class="ic"><b>羊毛大衣</b><s>£48</s></div>
+        <div class="ic"><b>防雨冲锋衣</b><s>保暖 +2</s></div>
+        <div class="ic"><b>帆布鞋</b><s>舒适 +1</s></div>
+        <div class="ic"><b>折叠伞</b><s>下雨用</s></div>
+        <div class="ic"><b>旧帆布包</b><s>容量 6</s></div>
+      </div>
+    </div>
+    <div class="col c3">
+      <div class="ct">MIRROR · 试衣镜</div>
+      <div class="mirror">
+        <img src="../assets/role-student-cut.png" alt="">
+        <span>正在试：羊毛大衣 · 保暖 4 体面 3</span>
+      </div>
+      <div class="opt"><div>不要</div><div>就这件</div><div>再看看</div></div>
+    </div>
+  </div>
+  <ul class="pts">
+    <li>人物：<b>左条窄幅</b></li>
+    <li>装备：<b>中格 + 右镜</b></li>
+    <li>换装：<b>点格→镜中试穿</b></li>
+  </ul>
+</article>
+
+<!-- ======================= 07 ======================= -->
+<article class="plan">
+  <div class="ph"><span class="no">07</span><h2>手账活页</h2><span class="en">Travel Journal</span></div>
+  <p class="desc">整页纸感：左上一张微微倾斜的拍立得（今天的人），右侧是手写风清单（每件东西「什么时候拿到的」），底部一行「今日穿搭」打卡框。最像她自己会发朋友圈的那一页。</p>
+  <div class="stage p7">
+    <div class="grain"></div>
+    <div class="photo">
+      <img src="../assets/role-student-cut.png" alt="留学生立绘">
+      <em>第 2 天 · 青旅门口</em>
+    </div>
+    <div class="list">
+      <div class="lh">身上带着 · THINGS I HAVE</div>
+      <div class="li"><b>学生开衫</b><s>开学那天穿的</s></div>
+      <div class="li"><b>白衬衫</b><s>初始装备</s></div>
+      <div class="li"><b>深色长裤</b><s>初始装备</s></div>
+      <div class="li"><b>帆布鞋</b><s>走了很多路</s></div>
+      <div class="li"><b>旧帆布包</b><s>装着护照和 £2,000</s></div>
+      <div class="li"><b>防雨冲锋衣</b><s>第 2 天 · 二手衣铺 £36</s></div>
+    </div>
+    <div class="today"><span>今日穿搭</span><b>开衫 + 长裤 + 帆布鞋</b><div class="go">写一笔</div></div>
+  </div>
+  <ul class="pts">
+    <li>人物：<b>拍立得贴纸式</b></li>
+    <li>装备：<b>右侧手写清单</b></li>
+    <li>换装：<b>底部「写一笔」进衣柜</b></li>
+  </ul>
+</article>
+
+<!-- ======================= 08 ======================= -->
+<article class="plan">
+  <div class="ph"><span class="no">08</span><h2>衣架横栏</h2><span class="en">Hanging Rail</span></div>
+  <p class="desc">把衣柜做成真实的衣架：人物缩在上半，下面一根金线横杆挂着五件衣服，衣架上带钩子，正穿的那件有金色框。点哪件就挂到身上，底部一行小字报当前数值。最直白，也最像「试衣间」。</p>
+  <div class="stage p8">
+    <div class="tmask"></div>
+    <img class="fig" src="../assets/role-student-cut.png" alt="留学生立绘">
+    <div class="who">留学生 · 保暖 3 体面 2 舒适 1</div>
+    <div class="rail"></div>
+    <div class="rack">
+      <div class="hg on"><span class="hook"></span><div class="cl"><img src="../assets/role-student-cut.png" alt=""><b>学生开衫</b><s>正在穿</s></div></div>
+      <div class="hg"><span class="hook"></span><div class="cl"><img src="../assets/role-student-cut.png" alt=""><b>羊毛大衣</b><s>£48</s></div></div>
+      <div class="hg"><span class="hook"></span><div class="cl"><img src="../assets/role-student-cut.png" alt=""><b>防雨冲锋衣</b><s>£36</s></div></div>
+      <div class="hg"><span class="hook"></span><div class="cl"><img src="../assets/role-student-cut.png" alt=""><b>二手羽绒</b><s>£22</s></div></div>
+      <div class="hg"><span class="hook"></span><div class="cl"><img src="../assets/role-student-cut.png" alt=""><b>旧帆布包</b><s>容量 6</s></div></div>
+    </div>
+    <div class="foot"><span>衣架 · 5 件</span><b>点衣服即换 · 换上会掉 1 个行动点</b></div>
+  </div>
+  <ul class="pts">
+    <li>人物：<b>上方居中，小而完整</b></li>
+    <li>装备：<b>一根横杆挂全部</b></li>
+    <li>换装：<b>点衣架上的衣服</b></li>
+  </ul>
+</article>
+
+<!-- ======================= 09 ======================= -->
+<article class="plan">
+  <div class="ph"><span class="no">09</span><h2>角色档案 · 装备页</h2><span class="en">Character Sheet</span></div>
+  <p class="desc">直接延续你现在这版「角色档案」：左侧三条竖 tab 换成 角色／装备／行李，中间大立绘，右侧是资料卡。这一版改动成本最低，等于给现有档案页多挂一页，风格天然统一。</p>
+  <div class="stage p9">
+    <div class="tabs">
+      <div class="tab">角色信息<br><small style="font-size:.72em;letter-spacing:.1em">CHARACTER</small></div>
+      <div class="tab on">装备<br><small style="font-size:.72em;letter-spacing:.1em">EQUIPMENT</small></div>
+      <div class="tab">行李<br><small style="font-size:.72em;letter-spacing:.1em">LUGGAGE</small></div>
+    </div>
+    <div class="figc">
+      <img src="../assets/role-student-cut.png" alt="留学生立绘">
+      <div class="lvl">留学生 · 第 2 天 · 伦敦</div>
+    </div>
+    <div class="side">
+      <div class="k">OUTFIT · 今日穿搭</div>
+      <h3>学生开衫</h3>
+      <div class="eq"><span>内搭</span><s>白衬衫</s></div>
+      <div class="eq"><span>下装</span><s>深色长裤</s></div>
+      <div class="eq"><span>鞋</span><s>帆布鞋</s></div>
+      <div class="eq"><span>包</span><s>旧帆布包 · 6 格</s></div>
+      <div class="eq"><span>配饰</span><s>空</s></div>
+      <div class="mrow">
+        <div class="m"><b>3</b><i>保暖</i></div>
+        <div class="m"><b>2</b><i>体面</i></div>
+        <div class="m"><b>1</b><i>舒适</i></div>
+      </div>
+    </div>
+  </div>
+  <ul class="pts">
+    <li>人物：<b>中间大立绘，同现有档案页</b></li>
+    <li>装备：<b>右资料卡逐条</b></li>
+    <li>换装：<b>点任一条进衣柜</b></li>
+  </ul>
+</article>
+
+<!-- ======================= 10 ======================= -->
+<article class="plan">
+  <div class="ph"><span class="no">10</span><h2>清单表</h2><span class="en">Item Ledger</span></div>
+  <p class="desc">几乎不用图像，全靠一张表：装备名／保暖／体面／价格／状态。左边窄栏一张小人物与「今日上身」三行。极简、信息密度最高，适合把「保暖／体面／价格」当策略来玩的版本。</p>
+  <div class="stage p10">
+    <div class="person">
+      <img src="../assets/role-student-cut.png" alt="留学生立绘">
+      <div class="now">今日上身<br><b>开衫 · 白衬衫 · 长裤 · 帆布鞋</b></div>
+    </div>
+    <div class="tbl">
+      <div class="th">EQUIPMENT · 全部装备</div>
+      <table>
+        <colgroup><col style="width:34%"><col style="width:16%"><col style="width:16%"><col style="width:18%"><col style="width:16%"></colgroup>
+        <thead><tr><th>名称</th><th>保暖</th><th>体面</th><th>价格</th><th>状态</th></tr></thead>
+        <tbody>
+          <tr><td class="worn">学生开衫<small>外套 · 初始</small></td><td>3</td><td>2</td><td>—</td><td>已穿</td></tr>
+          <tr><td>白衬衫<small>内搭 · 初始</small></td><td>1</td><td>2</td><td>—</td><td>已穿</td></tr>
+          <tr><td>羊毛大衣<small>外套 · 二手</small></td><td>4</td><td>3</td><td>£48</td><td>包里</td></tr>
+          <tr><td>防雨冲锋衣<small>外套 · 防水</small></td><td>2</td><td>1</td><td>£36</td><td>包里</td></tr>
+          <tr><td>帆布鞋<small>鞋 · 初始</small></td><td>0</td><td>1</td><td>—</td><td>已穿</td></tr>
+          <tr><td>旧帆布包<small>包 · 容量 6</small></td><td>0</td><td>1</td><td>—</td><td>已穿</td></tr>
+        </tbody>
+      </table>
+      <div class="sum"><span>保暖 <b>3</b></span><span>体面 <b>2</b></span><span>舒适 <b>1</b></span><span>容量 <b>3 / 6</b></span></div>
+      <div class="gainhd">刚刚获得 · JUST GAINED</div>
+      <div class="gain"><div class="gc"><b>羊毛大衣</b><s>第 2 天 · 二手衣铺 £48 · 保暖 +4</s></div><div class="gc"><b>防雨冲锋衣</b><s>第 2 天 · 慈善店 £36 · 下雨不掉血</s></div><div class="gc"><b>帆布托特包</b><s>容量 6 → 8 · 多装两件</s></div></div>
+    </div>
+  </div>
+  <ul class="pts">
+    <li>人物：<b>左窄栏，只露上半身</b></li>
+    <li>装备：<b>右侧表格全量</b></li>
+    <li>换装：<b>点「状态」列切换</b></li>
+  </ul>
+</article>
+
+<!-- ======================= 11 ======================= -->
+<article class="plan">
+  <div class="ph"><span class="no">11</span><h2>商店 → 衣柜 分屏</h2><span class="en">Shop / Mirror</span></div>
+  <p class="desc">一屏两半：左边是服装店货架（商品卡带价签），中间金线分隔，右边是你自己与今日穿搭。买完的东西直接出现在右半边，当场就能穿上——服装店那一段只需要这一个界面，不用来回切场景。</p>
+  <div class="stage p11">
+    <div class="shop">
+      <div class="hd2">CHARITY SHOP · 二手衣铺</div>
+      <div class="goods">
+        <div class="gd"><span class="pr">£48</span><img src="../assets/role-student-cut.png" alt=""><b>羊毛大衣</b><s>保暖 +4</s></div>
+        <div class="gd"><span class="pr">£36</span><img src="../assets/role-student-cut.png" alt=""><b>防雨冲锋衣</b><s>保暖 +2</s></div>
+        <div class="gd"><span class="pr">£22</span><img src="../assets/role-student-cut.png" alt=""><b>二手羽绒</b><s>保暖 +5</s></div>
+        <div class="gd"><span class="pr">£9</span><img src="../assets/role-tourist-cut.png" alt=""><b>毛线帽</b><s>保暖 +1</s></div>
+        <div class="gd"><span class="pr">£12</span><img src="../assets/role-student-cut.png" alt=""><b>旧皮靴</b><s>防雨 · 舒适 +2</s></div>
+        <div class="gd"><span class="pr">£6</span><img src="../assets/role-backpacker-cut.png" alt=""><b>帆布托特包</b><s>容量 8</s></div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="you">
+      <div class="hd2">YOU · 试衣中</div>
+      <img src="../assets/role-student-cut.png" alt="留学生立绘">
+      <div class="cur"><span>学生开衫</span><span>白衬衫</span><span>长裤</span><span>帆布鞋</span></div>
+    </div>
+  </div>
+  <ul class="pts">
+    <li>人物：<b>右半幅，可即时换</b></li>
+    <li>装备：<b>左货架 + 右今日</b></li>
+    <li>换装：<b>买下→右边立刻可选</b></li>
+  </ul>
+</article>
+
+<!-- ======================= 12 ======================= -->
+<article class="plan">
+  <div class="ph"><span class="no">12</span><h2>电影字幕 · 装备条</h2><span class="en">Subtitle Bar</span></div>
+  <p class="desc">完全贴着现在线上的「方案五 · 电影字幕」：街景压暗当底，右上六枚小格是装备，右下是人物，底部一条黑金字幕条写「你今天穿的是……」。最有沉浸感，也最不像面板，适合作主线叙事时的默认状态。</p>
+  <div class="stage p12">
+    <div class="bg"></div>
+    <div class="veil"></div>
+    <img class="fig" src="../assets/role-student-cut.png" alt="留学生立绘">
+    <div class="six">
+      <div class="s6"><i>外套</i><b>学生开衫</b></div>
+      <div class="s6"><i>内搭</i><b>白衬衫</b></div>
+      <div class="s6"><i>下装</i><b>深色长裤</b></div>
+      <div class="s6"><i>鞋</i><b>帆布鞋</b></div>
+      <div class="s6"><i>包</i><b>旧帆布包</b></div>
+      <div class="s6"><i>配饰</i><b>空</b></div>
+    </div>
+    <div class="sub">
+      <span>OUTFIT · 今日穿搭</span>
+      <em>You're wearing the cardigan you bought before you left.</em>
+      <p>你今天穿的是开学前买的那件开衫，包里塞着护照和 £2,000。要换一身吗？</p>
+      <div class="act"><div>看衣柜</div><div>先这样</div></div>
+    </div>
+  </div>
+  <ul class="pts">
+    <li>人物：<b>右下，只做氛围</b></li>
+    <li>装备：<b>右上六枚小格</b></li>
+    <li>换装：<b>字幕条内「看衣柜」</b></li>
+  </ul>
+</article>
+</main>
+</div>
+</body>
+</html>
