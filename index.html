@@ -901,6 +901,320 @@ body{
 .scene.intro .shopMenu{display:none}
 .scene.intro .clothMenu{display:none}
 
+/* ================= V5 · 电影字幕（全站统一皮肤） ================= */
+:root{
+  --paper:#0d1114;--ink:#f3ede2;--navy:#0b1115;--navy-deep:#070b0e;
+  --brick:#c9a227;--gold:#c9a227;--line:rgba(243,237,226,.24);--moss:#7f8f6a;
+  --v5-gold:#c9a227;--v5-dim:rgba(243,237,226,.6);--v5-faint:rgba(243,237,226,.4);
+  --v5-glass:rgba(9,13,17,.86);--v5-glass2:rgba(6,9,12,.95);
+  --v5-bd:rgba(201,162,39,.34);--v5-bd2:rgba(243,237,226,.16);
+}
+/* 场景：压暗 + 顶暗→中透→底极暗 */
+.scene .bg{filter:brightness(.84) saturate(.9) contrast(1.03)}
+.scene .tint{background:linear-gradient(180deg,rgba(5,8,11,.54) 0%,rgba(5,8,11,.10) 40%,rgba(4,7,10,.86) 100%)!important}
+.phaseTint{opacity:.22!important}
+
+/* HUD */
+.hud{opacity:.95;background:linear-gradient(to bottom,rgba(5,8,11,.88),rgba(5,8,11,0));padding:1.3vmin 2vmin 2.6vmin}
+.hud .badge{font-family:var(--serif);font-size:1.52vmin;letter-spacing:.16em;padding:.18vmin 0 .18vmin .9vmin;border:0;border-left:2px solid var(--v5-gold);border-radius:0;background:none;color:#f8f3e8}
+.hud .item{font-family:var(--sans);font-size:1.32vmin;letter-spacing:.09em;color:rgba(243,237,226,.74)}
+.hud .item b{color:var(--v5-gold);font-weight:600}
+
+/* 字幕条（对话） */
+.speech{background:linear-gradient(180deg,var(--v5-glass),var(--v5-glass2));border:0;border-top:1px solid var(--v5-bd);border-radius:0;
+  padding:2.1vmin 2.8vmin 2vmin;box-shadow:0 1.6vmin 4vmin rgba(0,0,0,.56);backdrop-filter:blur(4px)}
+.speech .who{font-family:var(--sans);font-size:1.16vmin;letter-spacing:.3em;color:var(--v5-gold);margin-bottom:1vmin}
+.speech .en{font-family:var(--serif);font-size:2.25vmin;line-height:1.55;color:#f8f3e8}
+.explain{border-top:1px dashed rgba(243,237,226,.2);color:rgba(243,237,226,.7)}
+.explain .cn{font-family:var(--sans);font-size:1.5vmin;line-height:1.7;color:rgba(243,237,226,.62)}
+.explain .words{color:rgba(243,237,226,.5);font-size:1.36vmin}
+.explain .words b{color:var(--v5-gold);font-weight:500}
+
+/* 选项 */
+.opt{background:rgba(9,13,17,.76);border:0;border-left:2px solid rgba(201,162,39,.46);border-radius:0;
+  color:#f3ede2;font-size:1.66vmin;padding:1.05vmin 1.5vmin;backdrop-filter:blur(3px)}
+.opt:hover{background:rgba(201,162,39,.14);border-left-color:var(--v5-gold);transform:translateX(.35vmin)}
+.opt .sub{color:rgba(243,237,226,.46)}
+.opt.good{border-left-color:#7f8f6a;background:rgba(28,42,28,.72)}
+.opt.bad{border-left-color:#b4534a;background:rgba(62,26,24,.74)}
+.opt.dim{opacity:.32}
+.opt.pick{outline:1px solid var(--v5-gold);outline-offset:0}
+.opt.has-ico .ico img{filter:drop-shadow(0 .3vmin .7vmin rgba(0,0,0,.5))}
+
+/* 状态 */
+.stats{background:rgba(9,13,17,.6);border:0;border-left:2px solid rgba(201,162,39,.3);border-radius:0;
+  backdrop-filter:blur(3px);padding:.9vmin 1.2vmin 1vmin}
+.stRow{color:#f0e9da;font-size:1.06vmin;letter-spacing:.06em}
+.stLb{color:rgba(243,237,226,.58)}
+.stIco{background:rgba(243,237,226,.14);color:#f8f3e8}
+.stIco.hungry{background:#8c5a28}
+.stIco.life{background:#8c3a33}
+.stIco.mind{background:#3d5566}
+.stBar{background:rgba(243,237,226,.12);height:.5vmin;border-radius:0}
+.stats b{color:var(--v5-gold)}
+
+/* 常驻任务条 */
+.questBar{background:rgba(9,13,17,.74);border:0;border-top:1px solid var(--v5-bd);border-radius:0;color:#ece5d5}
+.qbT{color:var(--v5-gold);letter-spacing:.26em}
+.qbGoal{color:rgba(243,237,226,.86)}
+.qbRow{color:rgba(243,237,226,.72)}
+.qbRow i{background:rgba(243,237,226,.14);border-radius:0}
+.qbWear{color:rgba(243,237,226,.5)}
+.qbLine{background:rgba(243,237,226,.18)}
+
+/* 景点讲解卡 */
+.sightCard{background:linear-gradient(180deg,rgba(7,10,13,.9),rgba(5,8,11,.97));border:0;border-top:1px solid var(--v5-bd);
+  border-radius:0;box-shadow:0 -.6vmin 3.4vmin rgba(0,0,0,.55);color:#f3ede2;padding:2.2vmin 2.8vmin 1.8vmin}
+.sightCard .scName{font-size:2.35vmin;color:#faf5ea}
+.sightCard .scName em{color:var(--v5-gold);opacity:.92;letter-spacing:.2em}
+.sightCard .scLine{color:#f8f3e8;font-size:2vmin}
+.sightCard .scCn{color:rgba(243,237,226,.6);font-family:var(--sans);font-size:1.42vmin}
+.sightCard .scWord{background:none;border:0;border-bottom:1px solid rgba(243,237,226,.26);border-radius:0;color:#f3ede2;padding:.5vmin .2vmin}
+.sightCard .scWord:hover{border-bottom-color:var(--v5-gold);color:var(--v5-gold);background:none}
+.sightCard .scWord b{color:rgba(243,237,226,.42);opacity:1}
+.sightCard .scMeta{color:rgba(243,237,226,.46)}
+
+/* 点读卡 */
+.learnCard{background:rgba(9,13,17,.93);border:0;border-left:2px solid var(--v5-bd);border-radius:0;color:#f3ede2;
+  box-shadow:0 1.6vmin 4vmin rgba(0,0,0,.55);backdrop-filter:blur(4px)}
+.learnCard .lwWho{color:var(--v5-gold);letter-spacing:.24em}
+.learnCard .lwEn{color:#f8f3e8}
+.learnCard .lwCn{color:rgba(243,237,226,.58)}
+.learnCard .progress{color:rgba(243,237,226,.46)}
+
+/* 三店菜单 + 咖啡馆 + 服装店 */
+.shopMenu,.cafeMenu,.clothMenu{background:linear-gradient(178deg,rgba(14,19,24,.94),rgba(7,10,13,.97));
+  border:0;border-left:1px solid var(--v5-bd);border-radius:0;box-shadow:-1vmin 0 4.4vmin rgba(0,0,0,.62);color:#f3ede2}
+.cmHead{background:none;border-bottom:1px solid var(--v5-bd);color:#faf5ea;padding:1.4vmin 1.8vmin 1.15vmin}
+.cmHead b{font-family:var(--serif);font-size:1.92vmin;letter-spacing:.1em}
+.cmHead i{color:var(--v5-gold);opacity:.82;letter-spacing:.24em;font-size:1vmin}
+.cmTabs{background:none;padding:.9vmin 1.1vmin .2vmin;gap:.5vmin}
+.cmTab{background:none;border:0;border-bottom:1px solid rgba(243,237,226,.2);border-radius:0;color:rgba(243,237,226,.54);
+  font-size:1.1vmin;letter-spacing:.08em;padding:.55vmin .2vmin}
+.cmTab.on{background:none;color:var(--v5-gold);font-weight:600;border-bottom:1px solid var(--v5-gold);box-shadow:none}
+.cmNote{color:rgba(243,237,226,.42)}
+.cmNote.cmEnd{border-top:1px dashed rgba(243,237,226,.18);color:rgba(243,237,226,.4)}
+.cmCard{background:rgba(243,237,226,.045);border:0;border-bottom:1px solid rgba(243,237,226,.1);border-radius:0;color:#f3ede2}
+.cmCard:hover{background:rgba(201,162,39,.1);border-bottom-color:var(--v5-bd);transform:none;box-shadow:none}
+.cmCard .nm{color:#f6f1e6}
+.cmCard .en{color:rgba(243,237,226,.44)}
+.cmCard .pr{color:var(--v5-gold)}
+.cmTag{background:rgba(201,162,39,.2);color:#f0dfa8;border-radius:0}
+.cmTag.alt{background:rgba(180,83,74,.22);color:#f0c8c2}
+.cmFoot{border-top:1px solid var(--v5-bd);background:none}
+.cmFoot .stat{color:rgba(243,237,226,.5)}
+.cmBtn{background:none;border:0;border-bottom:1px solid rgba(243,237,226,.3);border-radius:0;color:#f3ede2}
+.cmBtn:hover{background:rgba(201,162,39,.12)}
+.cmBtn.primary{background:rgba(201,162,39,.16);border-bottom-color:var(--v5-gold);color:#f6e6b6;border-radius:0}
+.cmBtn.primary:hover{background:rgba(201,162,39,.26)}
+.cmDone .dk{color:var(--v5-gold);letter-spacing:.22em}
+.cmDone .t1{color:#f8f3e8}
+.cmDone .t2{color:rgba(243,237,226,.6)}
+.cmDone .rec{color:rgba(243,237,226,.5);border-top:1px dashed rgba(243,237,226,.2)}
+.cmDone .delta{color:#a8c08e}
+.cmDone .delta.bad{color:#e08c82}
+.cmSpecTop{border-bottom:1px solid rgba(243,237,226,.16)}
+.cmSpecTop .big{background:none;border:1px solid rgba(243,237,226,.14);border-radius:0}
+.cmSpecTop h4{color:#f7f2e7}
+.cmSpecTop .e2{color:rgba(243,237,226,.46)}
+.cmSpecTop .pp{color:var(--v5-gold)}
+.cmRow .lb{color:rgba(243,237,226,.5)}
+.cmChip{background:none;border:1px solid rgba(243,237,226,.28);border-radius:0;color:#f3ede2}
+.cmChip:hover{border-color:var(--v5-gold)}
+.cmChip.on{background:rgba(201,162,39,.22);border-color:var(--v5-gold);color:#f8edbf}
+
+/* 进场按钮 / 小按钮 */
+.enterBtn{background:linear-gradient(180deg,rgba(9,13,17,.9),rgba(5,8,11,.96));border:1px solid var(--v5-bd);
+  box-shadow:0 1.2vmin 3vmin rgba(0,0,0,.5);color:#f8f3e8;padding:1.3vmin 2.6vmin}
+.enterBtn b{font-family:var(--serif);font-size:1.85vmin;letter-spacing:.12em;color:#faf5ea}
+.enterBtn i{color:var(--v5-gold);opacity:.85;letter-spacing:.14em}
+.enterGhost{border:1px solid rgba(243,237,226,.3);background:rgba(9,13,17,.72);color:rgba(243,237,226,.8)}
+.enterGhost:hover{background:rgba(201,162,39,.14);border-color:var(--v5-gold)}
+.small{background:none;border:0;border-bottom:1px solid rgba(243,237,226,.32);border-radius:0;color:#f3ede2;
+  letter-spacing:.1em;padding:.55vmin 1vmin}
+.small:hover{background:none;color:var(--v5-gold);border-bottom-color:var(--v5-gold)}
+.btn{background:rgba(201,162,39,.14);border:1px solid var(--v5-bd);border-radius:0;color:#f8f3e8;letter-spacing:.14em}
+.btn:hover{background:rgba(201,162,39,.24);border-color:var(--v5-gold)}
+.btn.ghost{background:none;border-color:rgba(243,237,226,.3)}
+.progress{color:rgba(243,237,226,.5)}
+.spotHot{background:rgba(9,13,17,.78);border:1px solid var(--v5-bd);border-radius:0;color:#f3ede2}
+.spotHot:hover{background:rgba(201,162,39,.16)}
+
+/* 街区图谱卡 */
+.spotCard{background:rgba(9,13,17,.82);border:0;border-bottom:1px solid var(--v5-bd);border-radius:0;color:#f3ede2;backdrop-filter:blur(3px)}
+.spotCard .meta{background:none}
+.spotCard .nm{color:#f8f3e8;font-size:1.55vmin}
+.spotCard .sb{color:rgba(243,237,226,.48)}
+.spotCard:hover{transform:none;border-bottom-color:var(--v5-gold);box-shadow:0 0 0 1px rgba(201,162,39,.22);}
+
+/* 结局 */
+.card{background:rgba(5,8,11,.8)}
+.sheet{background:linear-gradient(180deg,rgba(11,16,20,.96),rgba(5,8,11,.98));border:0;border-top:1px solid var(--v5-bd);
+  border-radius:0;box-shadow:0 2vmin 6vmin rgba(0,0,0,.72);color:#f3ede2}
+.sheet h1{color:#faf5ea;font-size:3.4vmin;letter-spacing:.1em}
+.sheet .rule{background:rgba(243,237,226,.2)}
+.sheet dt{color:rgba(243,237,226,.46);font-size:1.5vmin;letter-spacing:.12em}
+.sheet dd{color:#f6f1e6}
+.sheet dd.big{color:var(--v5-gold);font-size:2.4vmin}
+.sheet .note{color:rgba(243,237,226,.58);border-top:1px dashed rgba(243,237,226,.2)}
+.sheet .acts .btn{background:rgba(201,162,39,.16);border-color:var(--v5-bd);color:#f8f3e8}
+
+/* 地图 */
+.mapwrap{background:rgba(4,7,10,.96)}
+.maphead{border-bottom:1px solid rgba(243,237,226,.14)}
+.mapinfo{background:rgba(9,13,17,.9);border:0;border-left:1px solid var(--v5-bd);border-radius:0}
+.mapinfo h2{color:#f8f3e8}
+.mapinfo .en{color:var(--v5-gold);letter-spacing:.14em}
+.mapinfo p{color:rgba(243,237,226,.68)}
+.mapinfo .legend{color:rgba(243,237,226,.44);border-top:1px dashed rgba(243,237,226,.18)}
+.mapinfo .go{background:none;border:1px solid var(--v5-bd);border-radius:0;color:var(--v5-gold);letter-spacing:.12em}
+.mapinfo .go:hover{background:rgba(201,162,39,.16)}
+.mbtn{background:none;border:1px solid rgba(243,237,226,.26);border-radius:0;color:#f3ede2}
+.mbtn:hover{background:rgba(201,162,39,.12)}
+.mapfoot{color:rgba(243,237,226,.4)}
+.pin{background:var(--v5-gold);border:2px solid #090d11;box-shadow:0 0 0 0 rgba(201,162,39,.42)}
+.pin:hover{background:#d8b24a}
+.pin.on{background:var(--v5-gold);border-color:#f7f3e9}
+.pin .label{background:rgba(9,13,17,.9);color:#f3ede2;border-radius:0;font-size:1.1vmin}
+.pin.dark .label{background:rgba(9,13,17,.9);color:#f3ede2}
+.pin.sight .label{background:rgba(9,13,17,.9);border-color:var(--v5-bd);color:#f0dfa8}
+.pin.sight.on{background:var(--v5-gold);border-color:#f7f3e9}
+
+/* 角色档案 */
+.roleWrap{background:radial-gradient(122% 92% at 50% 0%,#131b21,#0a0f13 62%,#05080b);color:#f3ede2}
+.roleWrap:after{background:radial-gradient(70% 55% at 18% 12%,rgba(201,162,39,.09),rgba(201,162,39,0) 70%),
+  radial-gradient(60% 45% at 88% 90%,rgba(201,162,39,.06),rgba(201,162,39,0) 72%)}
+.rpTop{border-bottom:1px solid var(--v5-bd)}
+.rpKicker{color:var(--v5-gold);letter-spacing:.34em}
+.rpMeta{color:rgba(243,237,226,.56)}
+.rpMeta em{color:var(--v5-gold)}
+.rpRes span{color:rgba(243,237,226,.42)}
+.rpRes b{color:#f8f3e8}
+.rpRes.red b{color:#e08c82}
+.rpCode{background:rgba(0,0,0,.42);color:rgba(243,237,226,.7)}
+.rpSeal{border-color:rgba(201,162,39,.72);color:var(--v5-gold);background:rgba(201,162,39,.06);
+  box-shadow:inset 0 0 0 .22vmin rgba(201,162,39,.1)}
+.rpTab{background:rgba(243,237,226,.04);border:0;border-left:2px solid transparent;border-radius:0}
+.rpTab b{color:rgba(243,237,226,.86)}
+.rpTab i{color:rgba(243,237,226,.34)}
+.rpTab.on{background:rgba(201,162,39,.14);border-left-color:var(--v5-gold)}
+.rpTab.on b{color:#faf5ea}
+.rpTab.on i{color:var(--v5-gold)}
+.rpArt{border:1px solid rgba(201,162,39,.24);background:#0a0e12}
+.rpArtBg{filter:brightness(.92) saturate(.94)}
+.rpArtShade{background:linear-gradient(to top,rgba(3,6,9,.92) 0%,rgba(3,6,9,.28) 44%,rgba(3,6,9,0) 64%)}
+.rpArtName b{color:#fdf7e9}
+.rpArtName i{color:var(--v5-gold);opacity:.9}
+.rpInfo::-webkit-scrollbar-thumb{background:rgba(201,162,39,.3)}
+.rpCard{background:rgba(243,237,226,.04);border:0;border-top:1px solid rgba(243,237,226,.16);border-radius:0}
+.rpCard h4{color:var(--v5-gold);letter-spacing:.2em}
+.rpCard h4 span{color:rgba(243,237,226,.34)}
+.rpRow{color:rgba(243,237,226,.82);border-bottom:1px dotted rgba(243,237,226,.12)}
+.rpRow span{color:rgba(243,237,226,.44)}
+.rpBar .k{color:rgba(243,237,226,.5)}
+.rpBar .t{background:rgba(243,237,226,.12)}
+.rpNote{color:rgba(243,237,226,.58)}
+.rpStars i{background:rgba(243,237,226,.18)}
+.rpStars i.on{background:var(--v5-gold)}
+.rpPick{background:rgba(201,162,39,.18);border-top:1px solid var(--v5-gold);color:#f8edbf;letter-spacing:.18em;box-shadow:none}
+.rpPick:hover{background:rgba(201,162,39,.28)}
+.rpThumb{background:rgba(243,237,226,.04);border:0;border-bottom:1px solid rgba(243,237,226,.14);border-radius:0}
+.rpThumb .tx b{color:#f6f1e6}
+.rpThumb .tx i{color:rgba(243,237,226,.36)}
+.rpThumb.on{box-shadow:none;border-color:transparent;border-bottom:1px solid var(--v5-gold);background:rgba(201,162,39,.1)}
+
+/* 弹窗 / 身份卡 / 跳过链接 */
+.modal{background:rgba(4,7,10,.8)}
+.modalCard{background:linear-gradient(180deg,rgba(11,16,20,.97),rgba(5,8,11,.98));border:0;border-top:1px solid var(--v5-bd);
+  border-radius:0;color:#f3ede2;box-shadow:0 2vmin 6vmin rgba(0,0,0,.72)}
+.modalTitle{color:#faf5ea;letter-spacing:.1em}
+.modalSub{color:rgba(243,237,226,.55)}
+.idbtn{background:rgba(243,237,226,.05);border:0;border-bottom:1px solid rgba(243,237,226,.16);border-radius:0;color:#f6f1e6}
+.idbtn span{color:rgba(243,237,226,.44)}
+.idbtn:hover{border-bottom-color:var(--v5-gold);transform:none;color:var(--v5-gold)}
+.skipLink{color:rgba(243,237,226,.6);border-bottom:1px solid rgba(243,237,226,.28)}
+.skipLink:hover{color:var(--v5-gold);border-bottom-color:var(--v5-gold)}
+
+/* 开场旁白 */
+.narr p{color:#faf5ea;font-size:2.45vmin}
+.narr small{color:var(--v5-gold);letter-spacing:.24em;opacity:.92}
+
+/* 音量 / 地图 / 在线 小按钮 */
+.vbtn{background:none;border:1px solid rgba(243,237,226,.24);border-radius:0;color:rgba(243,237,226,.82)}
+.vbtn:hover{background:rgba(201,162,39,.12)}
+.mapbtn{background:rgba(9,13,17,.78);border:1px solid var(--v5-bd);border-radius:0;color:#f3ede2}
+.mapbtn:hover{background:rgba(201,162,39,.16)}
+.livebtn{background:none;border:1px solid rgba(243,237,226,.18);border-radius:0;color:rgba(243,237,226,.62)}
+.livebtn:hover{background:rgba(201,162,39,.1);border-color:var(--v5-gold);color:var(--v5-gold)}
+
+/* 右侧按钮排布：语音竖排，地图 / 在线版依次下移，互不压叠 */
+.voicebar{top:4.4vmin;right:1.8vmin;flex-direction:column;align-items:flex-end;gap:.3vmin}
+.mapbtn{top:11.8vmin}
+.livebtn{top:15.6vmin}
+.vpanel{background:linear-gradient(180deg,rgba(11,16,20,.97),rgba(5,8,11,.98));border:0;border-top:1px solid var(--v5-bd);
+  border-radius:0;box-shadow:0 1.6vmin 4vmin rgba(0,0,0,.6);color:#f3ede2}
+.vpanel h3{color:var(--v5-gold);letter-spacing:.16em}
+.vpanel select{background:rgba(243,237,226,.06);border:1px solid rgba(243,237,226,.24);border-radius:0;color:#f3ede2}
+.vpanel .hint{color:rgba(243,237,226,.48)}
+
+/* 立绘：白底柔边，暗场里不留矩形 */
+.portrait,.portrait.soft{
+  filter:drop-shadow(0 .8vmin 2.6vmin rgba(0,0,0,.46)) brightness(.84) saturate(.92) contrast(1.02);
+  mask-image:radial-gradient(88% 86% at 56% 50%,#000 32%,rgba(0,0,0,.72) 52%,rgba(0,0,0,0) 74%);
+  -webkit-mask-image:radial-gradient(88% 86% at 56% 50%,#000 32%,rgba(0,0,0,.72) 52%,rgba(0,0,0,0) 74%);
+  mask-composite:add;-webkit-mask-composite:source-over}
+.spotPortrait{border:0;border-radius:0;box-shadow:none;
+  mask-image:linear-gradient(to bottom,#000 76%,transparent 100%);
+  -webkit-mask-image:linear-gradient(to bottom,#000 76%,transparent 100%)}
+
+/* 画面热区（出口 COFFEE / 地铁 / 出租车等） */
+.hot{background:rgba(9,13,17,.62);border:1px solid rgba(201,162,39,.42);border-radius:0;color:#f6f1e6;
+  text-shadow:0 1px 6px rgba(0,0,0,.7);backdrop-filter:blur(2px)}
+.hot:hover{background:rgba(201,162,39,.2);border-color:var(--v5-gold)}
+.hot::after{border-radius:0;border-color:rgba(201,162,39,.6)}
+.hot .price{color:var(--v5-gold);opacity:1}
+
+/* 右侧 TODAY 窄条：下移避让按钮，加暗底与金线 */
+.questBar{right:1.6vmin;top:21.6vmin;width:23vmin;padding:1vmin 1.2vmin;border:0;
+  border-left:1px solid var(--v5-bd);background:rgba(9,13,17,.82);backdrop-filter:blur(4px)}
+#s7 .tip{display:none}
+
+/* 菜单面板：让开右上按钮；商品卡统一暗底 */
+.shopMenu,.cafeMenu,.clothMenu{top:19.8vmin}
+.cmHead{align-items:flex-start;gap:1.2vmin}
+.cmHead b{line-height:1.25}
+.cmHead i{font-size:.92vmin;max-width:15vmin;line-height:1.3;text-align:right}
+#shopMenu .cmCard,#airCafeMenu .cmCard,#clothMenu .cmCard,#clothMenu .clothCard{
+  background:rgba(243,237,226,.05);border:0;border-bottom:1px solid rgba(243,237,226,.1);border-radius:0;color:#f3ede2}
+#shopMenu .cmCard:hover,#airCafeMenu .cmCard:hover,#clothMenu .cmCard:hover{
+  background:rgba(201,162,39,.1);border-bottom-color:var(--v5-bd)}
+#shopMenu .cmCard .nm,#airCafeMenu .cmCard .nm,#clothMenu .cmCard .nm{color:#f6f1e6}
+#shopMenu .cmCard .en,#airCafeMenu .cmCard .en,#clothMenu .cmCard .en{color:rgba(243,237,226,.44)}
+#shopMenu .cmCard .pr,#airCafeMenu .cmCard .pr,#clothMenu .cmCard .pr{color:var(--v5-gold)}
+#shopMenu .cmTag,#airCafeMenu .cmTag,#clothMenu .cmTag{background:rgba(201,162,39,.2);color:#f0dfa8}
+#shopMenu .cmDone,#airCafeMenu .cmDone,#clothMenu .cmDone{color:#f3ede2}
+
+/* 超市 / 便利店 商品行 */
+.smItem{background:rgba(243,237,226,.05);border:0;border-bottom:1px solid rgba(243,237,226,.1);border-radius:0;color:#f3ede2}
+.smItem:hover{border-bottom-color:var(--v5-gold);transform:none}
+.smItem.in{border-color:transparent;border-bottom:1px solid var(--v5-gold);box-shadow:none;background:rgba(201,162,39,.12)}
+.smItem .pic{border:1px solid rgba(243,237,226,.12);border-radius:0;background-color:#131a20}
+.smItem .nm{color:#f6f1e6}
+.smItem .sub{color:rgba(243,237,226,.44)}
+.smItem .qty{background:rgba(201,162,39,.32);color:#fbf3d8;border-radius:0}
+.smSum{color:rgba(243,237,226,.5)}
+.smSum b{color:var(--v5-gold)}
+.smDock{background:rgba(5,8,11,.62);border-top:1px solid var(--v5-bd)}
+.clBtn{background:none;border:1px solid rgba(243,237,226,.26);border-radius:0;color:#f3ede2}
+.clBtn:hover{background:rgba(201,162,39,.14);border-color:var(--v5-gold)}
+.clBtn.main{background:rgba(201,162,39,.18);border-color:var(--v5-bd);color:#f8edbf}
+.clBtn.main:hover{background:rgba(201,162,39,.3)}
+.clBtn.ghost{background:none;color:rgba(243,237,226,.6);border-color:transparent}
+
+/* 地图：金线外框，压一点亮 */
+.mapinner{box-shadow:0 0 0 1px rgba(201,162,39,.28),0 2vmin 6vmin rgba(0,0,0,.55)}
+.mapcanvas,.mapbody .mapcanvas{filter:brightness(.94) saturate(.9)}
+
 </style>
 </head>
 <body>
