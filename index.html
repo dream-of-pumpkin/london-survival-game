@@ -272,6 +272,8 @@ body{
 #s8.cafeMode .talk button{pointer-events:auto}
 #s8.cafeMode .spotPortrait{display:none}
 #s8.cafeMode .spotHot{display:none}
+#s4.airMode .hot,#s4.airMode .spotHot,#s4.airMode #clerk{display:none}
+#s4.airMode .talk{display:none!important}
 .cmHead{
   display:flex;align-items:center;justify-content:space-between;
   padding:1.15vmin 1.6vmin .95vmin;
@@ -818,27 +820,6 @@ body{
 .smSum b{display:block;font-family:var(--serif);font-size:1.5vmin;color:#a8473a}
 .smMsg{font-family:var(--sans);font-size:.98vmin;color:#4f6b4a;line-height:1.5}
 
-/* ===== 竖屏 / 窄屏：选人层整屏接管视口，横排卡片可滚动 ===== */
-@media (max-aspect-ratio: 8/9){
-  .roleWrap{position:fixed;inset:0;z-index:60;padding:5vw 5vw 4vw;overflow-y:auto;
-    background:linear-gradient(184deg,#fbf5e6 0%,#f2e7cf 46%,#e6d5b4 100%)}
-  .roleHead{padding-bottom:3.4vw;border-bottom:1px solid rgba(63,47,34,.16)}
-  .roleHead{flex-direction:column;align-items:flex-start;gap:1vmin}
-  .roleHead h1{font-size:8vw;white-space:nowrap}
-  .roleHead i{font-size:3vw;letter-spacing:.12em}
-  .roleSub{font-size:4vw;line-height:1.62;margin:4vw 0 4.4vw;max-width:100%}
-  .roleGrid{display:flex;flex-direction:column;gap:4vw;flex:0 0 auto}
-  .roleCard{flex-direction:row;overflow:visible;border-radius:1.6vw}
-  .rolePhoto{flex:0 0 34vw;min-height:34vw;border-bottom:none;border-right:1px solid rgba(63,47,34,.16)}
-  .roleInfo{padding:3.6vw 4vw;flex:1;min-width:0}
-  .roleInfo b{font-size:5.6vw}
-  .roleInfo em{font-size:3vw;margin:1vw 0 2.4vw;letter-spacing:.1em}
-  .roleInfo p{font-size:3.9vw;line-height:1.62}
-  .roleVals{margin-top:3vw;padding-top:2.6vw;gap:1.6vw}
-  .roleVals span{font-size:3vw}
-  .roleVals span b{font-size:5vw}
-  .roleFoot{font-size:3.4vw;margin-top:4vw;padding-bottom:3vw}
-}
 
 </style>
 </head>
@@ -933,6 +914,7 @@ body{
     <button class="hot" id="hTube" style="left:76%;top:44%;width:18%;height:11.5%">UNDERGROUND<br><span class="price">£5.90</span></button>
     <button class="hot" id="hTaxi" style="left:76%;top:56.5%;width:18%;height:9.5%">TAXI<br><span class="price">£75.00</span></button>
     <button class="spotHot" id="exitHot">点这里</button>
+    <div class="cafeMenu" id="airCafeMenu" aria-label="机场咖啡馆菜单"></div>
     <div class="talk" id="exitTalk" style="display:none">
       <div class="speech">
         <div class="who" id="exitWho">YOU</div>
@@ -1957,9 +1939,7 @@ function pickExit(kind){
     : (kind === 'tube' ? "url('assets/scene-tube-platform.jpg')" : "url('assets/scene-taxi.jpg')");
   const cash = S.cash;
   if (kind === 'coffee'){
-    S.cash = Math.max(0, cash - COSTS.coffee);
-    $('clerk').style.display = 'block';
-    showExitLine('BARISTA', "Regular or large?", "常规杯还是大杯？（regular 中杯 / large 大杯）", '£' + fmt(S.cash));
+    openAirCafe();
     return;
   }
   if (cash < COSTS[kind]){
@@ -1998,6 +1978,48 @@ function showExitLine(who, en, cn, cashText){
   speak(en, null, who === 'YOU' ? 'PLAYER' : 'TAXI');
 }
 
+
+/* ===== 机场出口 · 咖啡馆菜单（复用街角咖啡数据）===== */
+function openAirCafe(){
+  if (S.mood == null) S.mood = 52;
+  cafeSt.cat = 'coffee'; cafeSt.item = null; cafeSt.size = 'Regular';
+  cafeSt.milk = 'Whole'; cafeSt.sugar = 'No sugar'; cafeSt.serve = 'For here';
+  $('airCafeMenu').classList.add('on');
+  $('s4').classList.add('airMode');
+  $('tip').style.display = 'none';
+  renderCafeMenu('airCafeMenu');
+  speak('Morning! What can I get you?', null, 'BARISTA');
+}
+function closeAirCafe(){
+  $('airCafeMenu').classList.remove('on');
+  $('airCafeMenu').innerHTML = '';
+  $('s4').classList.remove('airMode');
+  $('tip').style.display = '';
+  document.querySelector('#s4 .bg').style.backgroundImage = "url('assets/scene-exit.jpg')";
+  $('hTube').style.display = ''; $('hTaxi').style.display = ''; $('hCoffee').style.display = '';
+  $('exitTalk').style.display = 'none';
+  updateHud();
+}
+$('airCafeMenu').addEventListener('click', e => {
+  const t = e.target.closest('button');
+  if (!t) return;
+  if (t.dataset.cat){ cafeSt.cat = t.dataset.cat; renderCafeMenu('airCafeMenu'); return; }
+  if (t.dataset.item){
+    cafeSt.item = cafeFind(t.dataset.item);
+    cafeSt.size = 'Regular'; cafeSt.milk = 'Whole'; cafeSt.sugar = 'No sugar'; cafeSt.serve = 'For here';
+    renderCafeSpec('airCafeMenu');
+    speak(cafeSt.item.say, null, 'PLAYER');
+    return;
+  }
+  if (t.dataset.size){ cafeSt.size = t.dataset.size; renderCafeSpec('airCafeMenu'); speak(t.dataset.size + ', please.', null, 'PLAYER'); return; }
+  if (t.dataset.milk){ cafeSt.milk = t.dataset.milk; renderCafeSpec('airCafeMenu'); speak(t.dataset.milk + ', please.', null, 'PLAYER'); return; }
+  if (t.dataset.sugar){ cafeSt.sugar = t.dataset.sugar; renderCafeSpec('airCafeMenu'); speak(t.dataset.sugar + ', please.', null, 'PLAYER'); return; }
+  if (t.dataset.serve){ cafeSt.serve = t.dataset.serve; renderCafeSpec('airCafeMenu'); speak(t.dataset.serve + ', please.', null, 'PLAYER'); return; }
+  const act = t.dataset.act;
+  if (act === 'order'){ cafeOrder('airCafeMenu'); return; }
+  if (act === 'back' || act === 'again'){ renderCafeMenu('airCafeMenu'); speak('Anything else?', null, 'BARISTA'); return; }
+  if (act === 'exit'){ closeAirCafe(); return; }
+});
 $('hTube').addEventListener('click', () => pickExit('tube'));
 $('hTaxi').addEventListener('click', () => pickExit('taxi'));
 $('hCoffee').addEventListener('click', () => pickExit('coffee'));
@@ -2804,17 +2826,19 @@ function openCafe(){
   updateDayHud();
 }
 
-function cafeFoot(){
+function cafeFoot(target){
   return '<div class="cmFoot">' +
-    '<span class="stat">现金 £' + fmt(S.cash) + ' · 精神 ' + Math.round(S.mood) + '</span>' +
-    '<button class="cmBtn" data-act="exit">← 回街区</button>' +
+    '<span class="stat">现金 £' + fmt(S.cash) + ' · 精神 ' + Math.round(S.mood || 52) + '</span>' +
+    '<button class="cmBtn" data-act="exit">' + (target ? '← 回到出口' : '← 回街区') + '</button>' +
     '</div>';
 }
 
-function renderCafeMenu(){
-  const box = $('cafeMenu');
+function renderCafeMenu(target){
+  const box = $(target || 'cafeMenu');
   const cat = CAFE.cats.find(c => c.k === cafeSt.cat) || CAFE.cats[0];
-  let h = '<div class="cmHead"><b>街角咖啡 CORNER CAFÉ</b><i>MENU · PICCADILLY</i></div>';
+  const air = !!target;
+  let h = '<div class="cmHead"><b>' + (air ? '希思罗咖啡 HEATHROW CAFÉ' : '街角咖啡 CORNER CAFÉ') +
+    '</b><i>' + (air ? 'MENU · T5 ARRIVALS' : 'MENU · PICCADILLY') + '</i></div>';
   h += '<div class="cmTabs">' + CAFE.cats.map(c =>
     '<button class="cmTab' + (c.k === cafeSt.cat ? ' on' : '') + '" data-cat="' + c.k + '">' + c.label + '</button>').join('') + '</div>';
   h += '<div class="cmBody">';
@@ -2827,10 +2851,11 @@ function renderCafeMenu(){
       '</span></button>';
   });
   h += '<div class="cmNote cmEnd">OPEN 07:00–18:00 · 堂食把杯子放回回收架 · 带走杯盖与糖在柜台左侧自取</div>';
-  h += '</div>' + cafeFoot();
+  h += '</div>' + cafeFoot(target);
   box.innerHTML = h;
 }
-function renderCafeSpec(){
+function renderCafeSpec(target){
+  const box = $(target || 'cafeMenu');
   const it = cafeSt.item;
   const isFood = cafeFood(it);
   let h = '<div class="cmHead"><b>' + it.nm + '</b><i>' + it.en.toUpperCase() + '</i></div>';
@@ -2854,10 +2879,10 @@ function renderCafeSpec(){
     '<button class="cmBtn" data-act="back">← 换一杯</button>' +
     '<span class="stat"></span>' +
     '<button class="cmBtn primary" data-act="order">点单 · £' + fmt(cafeTotal()) + '</button></div>';
-  $('cafeMenu').innerHTML = h;
+  box.innerHTML = h;
 }
 
-function renderCafeDone(order){
+function renderCafeDone(order, target){
   let h = '<div class="cmHead"><b>订单已收到</b><i>' + order.en.toUpperCase() + '</i></div>';
   h += '<div class="cmDone">' +
     '<div class="dk">RECEIPT · 收据</div>' +
@@ -2866,17 +2891,18 @@ function renderCafeDone(order){
     '<div class="delta">−£' + fmt(order.paid) + '　·　精神 +' + order.mood + '　·　余 £' + fmt(S.cash) + '</div>' +
     '<div class="rec">' + order.rec + '</div>' +
     '<div class="rec">店员接下来会问 Anything else? 想加个可颂（£3.60）就说 Yes, a croissant please. 不要就说 No, that\'s all, thanks.</div>' +
-    '<div class="rec">当前：现金 £' + fmt(S.cash) + ' · 精神 ' + Math.round(S.mood) + ' · 行动 ' + Math.max(0, S.act) + '</div>' +
+    '<div class="rec">当前：现金 £' + fmt(S.cash) + ' · 精神 ' + Math.round(S.mood || 52) +
+      (target ? '' : ' · 行动 ' + Math.max(0, S.act || 0)) + '</div>' +
     '<div class="row"><button class="cmBtn" data-act="again">再点一杯</button>' +
-    '<button class="cmBtn" data-act="exit">回街区</button></div>' +
+    '<button class="cmBtn" data-act="exit">' + (target ? '回到出口' : '回街区') + '</button></div>' +
     '</div>';
-  $('cafeMenu').innerHTML = h;
+  $(target || 'cafeMenu').innerHTML = h;
 }
 
-function cafeOrder(){
+function cafeOrder(target){
   const it = cafeSt.item, total = cafeTotal();
   if (S.cash < total){
-    $('spotCn').textContent = '钱不够：这杯 £' + fmt(total) + '，你只有 £' + fmt(S.cash) + '。挑便宜的那杯。';
+    if (!target) $('spotCn').textContent = '钱不够：这杯 £' + fmt(total) + '，你只有 £' + fmt(S.cash) + '。挑便宜的那杯。';
     speak("Sorry, I can't afford that.", null, 'PLAYER');
     return;
   }
@@ -2894,12 +2920,16 @@ function cafeOrder(){
     ? 'Takeaway 记得自己拿杯盖和吸管，柜台侧面的糖也自己取。'
     : 'For here 堂食：喝完把杯子放回回收架（trolley），不用自己洗。';
   const order = { nm: it.nm, en: it.en, line: line, paid: total, mood: mood, rec: rec };
-  renderCafeDone(order);
-  $('spotLine').textContent = "That's £" + fmt(total) + '. Thanks, have a good one.';
-  $('spotCn').textContent = '店员收下钱：“£' + fmt(total) + '，谢谢，慢走。”你端着杯子找个位子坐下，精神好了一点。';
-  $('spotWords').innerHTML = 'That\'s £' + fmt(total) + ' = 一共这么多钱 · have a good one 慢走/祝愉快';
+  renderCafeDone(order, target);
+  if (!target){
+    $('spotLine').textContent = "That's £" + fmt(total) + '. Thanks, have a good one.';
+    $('spotCn').textContent = '店员收下钱：“£' + fmt(total) + '，谢谢，慢走。”你端着杯子找个位子坐下，精神好了一点。';
+    $('spotWords').innerHTML = 'That\'s £' + fmt(total) + ' = 一共这么多钱 · have a good one 慢走/祝愉快';
+    updateDayHud();
+  } else {
+    updateHud();
+  }
   speak("That's £" + fmt(total) + ', please.', null, 'BARISTA');
-  updateDayHud();
 }
 
 $('cafeMenu').addEventListener('click', e => {
