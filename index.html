@@ -705,11 +705,96 @@ body{
 .sightCard .scWord b{font-weight:400;opacity:.55;margin-left:.5vmin}
 .sightCard .scRow{display:flex;align-items:center;gap:1.1vmin;margin-top:1.4vmin}
 .sightCard .scMeta{font-family:var(--sans);font-size:1.24vmin;opacity:.62;letter-spacing:.05em}
+/* ===== 开局角色选择：饥荒式选人 ===== */
+.roleWrap{position:absolute;inset:0;z-index:44;display:flex;flex-direction:column;
+  padding:2.4vmin 3.2vmin 1.8vmin;overflow:auto;
+  background:radial-gradient(122% 92% at 50% 0%,#f8f1e0,#e7dac4 60%,#cab898);
+  font-family:var(--serif);color:#2d2418}
+.roleWrap.off{display:none}
+.roleHead{display:flex;align-items:baseline;justify-content:space-between;
+  border-bottom:1px solid rgba(63,47,34,.28);padding-bottom:1vmin}
+.roleHead h1{font-size:2.9vmin;letter-spacing:.14em;font-weight:600}
+.roleHead i{font-style:normal;font-family:var(--sans);font-size:1.1vmin;letter-spacing:.22em;color:#7d6a4f}
+.roleSub{font-family:var(--sans);font-size:1.28vmin;line-height:1.7;color:#5f4d39;margin:1.1vmin 0 1.6vmin;max-width:86%}
+.roleGrid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:1.7vmin}
+.roleCard{display:flex;flex-direction:column;text-align:left;cursor:pointer;padding:0;overflow:hidden;
+  background:linear-gradient(178deg,#fdf9ee,#f1e7d3);border:1px solid rgba(63,47,34,.3);border-radius:.5vmin;
+  transition:transform .16s,box-shadow .16s,border-color .16s}
+.roleCard:hover{transform:translateY(-.45vmin);box-shadow:0 1.6vmin 3.4vmin rgba(58,38,18,.26);border-color:#a8473a}
+.rolePhoto{flex:1 1 44%;min-height:11vmin;background-size:cover;background-position:52% 12%;
+  border-bottom:1px solid rgba(63,47,34,.16)}
+.roleInfo{padding:1vmin 1.2vmin 1.2vmin}
+.roleInfo b{display:block;font-size:1.8vmin;letter-spacing:.05em}
+.roleInfo em{display:block;font-style:normal;font-family:var(--sans);font-size:1.02vmin;letter-spacing:.16em;color:#8a7558;margin:.2vmin 0 .7vmin}
+.roleInfo p{font-family:var(--sans);font-size:1.12vmin;line-height:1.62;color:#4c3d2d;min-height:5.6vmin}
+.roleVals{display:grid;grid-template-columns:repeat(3,1fr);gap:.4vmin;margin-top:.8vmin;
+  border-top:1px dashed rgba(63,47,34,.22);padding-top:.75vmin}
+.roleVals span{font-family:var(--sans);font-size:.98vmin;color:#6d5a45;text-align:center}
+.roleVals span b{font-size:1.45vmin;color:#2c3a4f;margin-top:.1vmin}
+.roleFoot{margin-top:1.2vmin;font-family:var(--sans);font-size:1.02vmin;letter-spacing:.06em;color:#7d6a4f}
+
+/* ===== 常驻任务条 ===== */
+.questBar{position:absolute;right:1.6vmin;top:16.6vmin;width:10.2vmin;z-index:24;
+  display:none;flex-direction:column;gap:.45vmin;padding:.85vmin .95vmin;
+  background:rgba(20,26,34,.74);border:1px solid rgba(238,232,218,.22);border-radius:.45vmin;
+  backdrop-filter:blur(2px);font-family:var(--sans);color:#ece5d5}
+.questBar.on{display:flex}
+.qbT{font-family:var(--serif);font-size:1.1vmin;letter-spacing:.2em;color:#c8bda6}
+.qbGoal{font-size:1.06vmin;line-height:1.5;letter-spacing:.02em}
+.qbMeta{font-size:.94vmin;color:#b3a893;line-height:1.5}
+.qbLine{height:1px;background:rgba(238,232,218,.2);margin:.3vmin 0}
+.qbRow{display:flex;align-items:center;gap:.45vmin;font-size:.92vmin;color:#ded6c4}
+.qbRow i{display:block;height:.7vmin;flex:1;background:rgba(255,255,255,.16);border-radius:.4vmin;overflow:hidden}
+.qbRow i b{display:block;height:100%;width:0;transition:width .4s ease}
+.qbWear{font-size:.9vmin;color:#b3a893;line-height:1.45}
+
+/* ===== 服装店 ===== */
+.clothMenu{position:absolute;right:1.6vmin;top:17.2vmin;bottom:1.2vmin;width:44vmin;z-index:26;
+  display:none;flex-direction:column;overflow:hidden;
+  background:linear-gradient(178deg,#fbf6ea,#f2e8d6 66%,#e8ddc8);
+  border:1px solid rgba(63,47,34,.5);border-radius:.6vmin;
+  box-shadow:0 2vmin 5vmin rgba(0,0,0,.5);font-family:var(--serif);color:#3f2f22}
+.clothMenu.on{display:flex}
+#clothMenu .cmBody{min-height:0}
+#clothMenu .dockInfo span{max-height:6.4vmin;overflow:hidden}
+#clothMenu .clothCard{overflow:hidden}
+#clothMenu .clothCard .txt{min-width:0}
+#clothMenu .clothCard .txt,.clothCard .txt .sub{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#clothMenu .clothCard .txt .sub{display:block}
+#clothMenu .cmCard{padding:.55vmin .6vmin}
+#clothMenu .clNote{margin:.1vmin 0 0;font-size:.98vmin}
+.giTh{width:4.2vmin;height:4.2vmin;flex:none;display:grid;place-items:center;
+  background:#f7efdf;border:1px solid rgba(63,47,34,.14);border-radius:.3vmin;overflow:hidden}
+.giTh svg{width:100%;height:100%}
+.clothCard.sel{border-color:#a8473a;box-shadow:inset 0 0 0 1px rgba(168,71,58,.32)}
+.dock{display:flex;gap:.7vmin;padding:.6vmin .8vmin;background:rgba(63,47,34,.07);
+  border-top:1px solid rgba(63,47,34,.2)}
+.mannequin{width:8.2vmin;height:10.6vmin;flex:none;background:#f7efdf;border:1px solid rgba(63,47,34,.16);border-radius:.35vmin;overflow:hidden}
+.mannequin svg{width:100%;height:100%}
+.dockInfo{flex:1;min-width:0}
+.dockInfo b{display:block;font-size:1.45vmin}
+.dockInfo span{display:block;font-family:var(--sans);font-size:1.02vmin;color:#6d5a45;line-height:1.55;margin-top:.25vmin}
+.dockBtns{display:flex;flex-direction:column;gap:.4vmin;flex:none}
+.clBtn{padding:.5vmin 1vmin;cursor:pointer;font-family:var(--sans);font-size:1.02vmin;
+  color:#3f2f22;background:#f7efdf;border:1px solid rgba(63,47,34,.26);border-radius:.28vmin}
+.clBtn:hover{background:#fffdf6;border-color:#a8473a}
+.clBtn.main{background:#4f6b4a;color:#f7f2e3;border-color:#425c3e}
+.clBtn.main:hover{background:#5c7a56}
+.clBtn.ghost{background:transparent;color:#6d5a45}
+.clNote{grid-column:1/-1;font-family:var(--sans);font-size:1.02vmin;color:#8a7a63;line-height:1.6}
+
 </style>
 </head>
 <body>
 <div class="stage" id="stage">
+  <div class="roleWrap" id="rolePick">
+    <div class="roleHead"><h1>选一个身份</h1><i>WHO YOU ARE IN LONDON</i></div>
+    <div class="roleSub">三个身份的钱、签证、体力和心气都不一样，选定后整局都跟着你。没有哪个更"对"——挑你想演的那个人。</div>
+    <div class="roleGrid" id="roleGrid"></div>
+    <div class="roleFoot">选完之后：下飞机 → 海关五问 → 行李转盘 → 出口 → 今晚睡哪。</div>
+  </div>
 
+  
   <!-- ===== 场景 1：机舱 ===== -->
   <section class="scene active" id="s1">
     <div class="bg" style="background-image:url('assets/scene-cabin.jpg')"></div>
@@ -923,6 +1008,19 @@ body{
   </div>
 
   <!-- ===== 场景 9：景点（游客路线） ===== -->
+  <div class="questBar" id="questBar">
+    <div class="qbT">TODAY</div>
+    <div class="qbGoal" id="qbGoal">—</div>
+    <div class="qbLine"></div>
+    <div class="qbRow"><span>饥饿</span><i><b id="qHunger"></b></i></div>
+    <div class="qbRow"><span>生命</span><i><b id="qHealth"></b></i></div>
+    <div class="qbRow"><span>理智</span><i><b id="qSanity"></b></i></div>
+    <div class="qbLine"></div>
+    <div class="qbWear" id="qbWear">衣：—</div>
+  </div>
+
+  <div class="clothMenu" id="clothMenu" aria-label="服装店"></div>
+
   <section class="scene" id="s9">
     <div class="bg" id="sightBg"></div>
     <div class="tint" style="background:linear-gradient(to bottom,rgba(10,14,18,.26),rgba(8,12,16,.55))"></div>
@@ -1741,14 +1839,15 @@ function nextQuestion(){
 }
 
 function decideVisa(){
-  // 满分 10 分，(≥8) 即"至少 4 题首答正确" → 学生签
+  // 身份已在开局选好；海关五问只影响分数，不再改身份
+  if (S.role){ applyVisa(S.role.visa, S.score); return; }
   const student = S.score >= 8;
   applyVisa(student ? 'student' : 'tourist', S.score);
 }
 
 function applyVisa(kind, score){
   S.visa = kind;
-  S.cash = kind === 'student' ? STUDENT_CASH : TOURIST_CASH;
+  S.cash = S.role ? S.role.cash : (kind === 'student' ? STUDENT_CASH : TOURIST_CASH);
   if (typeof score === 'number') S.score = score;
   updateHud();
   showScene(3);
@@ -1758,7 +1857,10 @@ function applyVisa(kind, score){
 }
 
 // 跳过海关：直接选身份
-$('skipVisa').addEventListener('click', () => $('pickVisa').classList.add('on'));
+$('skipVisa').addEventListener('click', () => {
+  renderRolePick();
+  $('rolePick').classList.remove('off');
+});
 $('pickCancel').addEventListener('click', () => $('pickVisa').classList.remove('on'));
 document.querySelectorAll('.idbtn').forEach(b => {
   b.addEventListener('click', () => {
@@ -1983,7 +2085,11 @@ function startLoop(){
   S.foodStock = 0;
   S.visaDays = S.visa === 'student' ? 365 : 90;
   S.hadTowel = false;
-  S.hunger = 65; S.health = 100; S.sanity = 75;
+  if (S.role){
+    S.hunger = S.role.hunger; S.health = S.role.health; S.sanity = S.role.sanity;
+    S.visaDays = S.role.visaDays;
+  } else { S.hunger = 65; S.health = 100; S.sanity = 75; }
+  updateStats();
   showScene(7);
   renderHub();
 }
@@ -2005,6 +2111,7 @@ function updateStats(){
   set('Hunger', clamp01(S.hunger));
   set('Health', clamp01(S.health));
   set('Sanity', clamp01(S.sanity));
+  updateQuestBar();
 }
 function showStats(kind){
   const el = $('stats'); if (!el) return;
@@ -2065,6 +2172,7 @@ function updateDayHud(){
   if ($('sightDay')) $('sightDay').textContent = S.day;
   if ($('sightCash')) $('sightCash').textContent = fmt(S.cash);
   if ($('sightActText')) $('sightActText').textContent = '行动 ' + Math.max(0, S.act);
+  updateQuestBar();
 }
 
 const HUB_SPOTS = [
@@ -2072,7 +2180,8 @@ const HUB_SPOTS = [
   { k: 'market', name: '亚洲超市', sub: '买食材 · £12/3 天', img: 'scene-market.jpg' },
   { k: 'shop', name: '便利店', sub: 'SIM · 牛奶 · 洗衣', img: 'scene-shop.jpg' },
   { k: 'kitchen', name: '中餐馆后厨', sub: '谈一份工', img: 'scene-kitchen.jpg' },
-  { k: 'tube', name: '地铁站', sub: '买票 · 问站', img: 'scene-tube-platform.jpg' }
+  { k: 'tube', name: '地铁站', sub: '买票 · 问站', img: 'scene-tube-platform.jpg' },
+  { k: 'cloth', name: '二手衣铺', sub: '试穿 · 换装 · 理智', img: 'scene-street.jpg' }
 ];
 
 // ===== 一天四段：Morning → Noon → Afternoon → Evening =====
@@ -2143,6 +2252,7 @@ function enterSpot(k){
     return;
   }
   if (k !== 'sleep'){ S.act--; if (drainStats('action')) return; }
+  if (k === 'cloth'){ openCloth(); return; }
   let key = k;
   if (k === 'kitchen' && S.visa !== 'student') key = 'kitchenT';
   runSpot(key);
@@ -3284,6 +3394,220 @@ $('mapBack').addEventListener('click', () => {
     setMapLevel(mapStack[mapStack.length - 1]);
   }
 });
+
+
+// ===== 开局：角色选择 =====
+const ROLES = [
+  { key: 'student', visa: 'student', nm: '留学生 · 学生签', en: 'THE STUDENT',
+    img: 'assets/role-student.jpg', cash: 2000, hunger: 62, health: 92, sanity: 70, visaDays: 365,
+    bg: '22 岁，语言学校 6 个月。CAS 信、宿舍合同、两千镑现金全塞在一个旧帆布包里。学生签每周能兼职 20 小时，但课不能缺。',
+    tip: '可打工 · 房租压力最大' },
+  { key: 'tourist', visa: 'tourist', nm: '游客 · 旅游签', en: 'THE TOURIST',
+    img: 'assets/role-tourist.jpg', cash: 5000, hunger: 78, health: 96, sanity: 82, visaDays: 90,
+    bg: '26 岁，十天的年假加两天调休。脖子上挂着相机，手里一张折了三道的地图。钱最宽裕，但旅游签不能打工。',
+    tip: '现金最多 · 不可打工' },
+  { key: 'backpacker', visa: 'tourist', nm: '背包客 · 旅游签', en: 'THE BACKPACKER',
+    img: 'assets/role-backpacker.jpg', cash: 3200, hunger: 55, health: 88, sanity: 62, visaDays: 90,
+    bg: '24 岁，辞职出来的第 40 天，包里还剩三件换洗和半袋饼干。钱最少、身体最扛，但心气已经磨得很薄。',
+    tip: '能吃苦 · 理智起点低' }
+];
+function renderRolePick(){
+  const box = $('roleGrid');
+  box.innerHTML = '';
+  ROLES.forEach(r => {
+    const b = document.createElement('button');
+    b.className = 'roleCard';
+    b.innerHTML =
+      '<span class="rolePhoto" style="background-image:url(\'' + r.img + '\')"></span>' +
+      '<span class="roleInfo"><b>' + r.nm + '</b><em>' + r.en + '</em>' +
+      '<p>' + r.bg + '</p>' +
+      '<span class="roleVals">' +
+        '<span>饥饿<b>' + r.hunger + '</b></span>' +
+        '<span>生命<b>' + r.health + '</b></span>' +
+        '<span>理智<b>' + r.sanity + '</b></span>' +
+      '</span>' +
+      '<span class="roleVals" style="grid-template-columns:1fr;border-top:none;padding-top:.55vmin">' +
+        '<span style="text-align:left;color:#8a7558">£' + fmt(r.cash) + ' · ' + r.tip + '</span>' +
+      '</span></span>';
+    b.addEventListener('click', () => pickRole(r));
+    box.appendChild(b);
+  });
+}
+function pickRole(r){
+  S.role = r;
+  S.visa = r.visa;
+  S.cash = r.cash;
+  S.score = r.visa === 'student' ? 10 : 4;
+  S.hunger = r.hunger; S.health = r.health; S.sanity = r.sanity;
+  S.visaDays = r.visaDays;
+  $('rolePick').classList.add('off');
+  updateHud();
+  updateStats();
+  showScene(1);
+}
+renderRolePick();
+
+// ===== 常驻任务条 =====
+function setQBar(id, v){
+  const el = $(id);
+  if (!el) return;
+  el.style.width = v + '%';
+  el.style.background = v > 55 ? '#6c9a55' : (v > 25 ? '#c8a049' : '#a8473a');
+}
+function updateQuestBar(){
+  const bar = $('questBar');
+  if (!bar) return;
+  const hubOn = $('s7').classList.contains('active');
+  const clothOn = $('clothMenu').classList.contains('on');
+  bar.classList.toggle('on', !!(hubOn || clothOn));
+  if (!(hubOn || clothOn)) return;
+  initStats();
+  const ph = phaseInfo();
+  $('qbGoal').textContent = S.act > 0
+    ? '还剩 ' + S.act + ' 个行动点 · ' + ph.k + '，先做哪件事？'
+    : '今天的行动点用完了。去睡，明天四点再开始。';
+  setQBar('qHunger', clamp01(S.hunger));
+  setQBar('qHealth', clamp01(S.health));
+  setQBar('qSanity', clamp01(S.sanity));
+  $('qbWear').textContent = '衣：' + (S.outfit || '还穿着落地那身');
+}
+
+// ===== 服装店 =====
+const GARM = {
+  tee: c => '<path d="M7.6 5.4l2.5-1 1.9 1.3 1.9-1.3 2.5 1 2.5 1.3-.8 2.2-2.1-.7v8.4a.9.9 0 0 1-.9.9H9.9a.9.9 0 0 1-.9-.9v-8.4l-2.1.7-.8-2.2z" fill="' + c + '" stroke="#3f2f22" stroke-width=".5"/>',
+  cardigan: c => '<path d="M9 4.8l3 1.1 3-1.1 2.7 1.4-.7 2.3-1.7-.6v9.1a.8.8 0 0 1-.8.8h-1.7V8.4h-1.6v8.4H10a.8.8 0 0 1-.8-.8v-9.1l-1.7.6-.7-2.3z" fill="' + c + '" stroke="#3f2f22" stroke-width=".5"/><circle cx="12" cy="10.4" r=".45" fill="#3f2f22"/><circle cx="12" cy="12.6" r=".45" fill="#3f2f22"/><circle cx="12" cy="14.8" r=".45" fill="#3f2f22"/>',
+  scarf: c => '<path d="M8.6 4.6h6.8l.6 2.6-2.2.7v10.5c0 1-.8 1.6-1.9 1.6s-1.9-.6-1.9-1.6V8l-2.1-.7z" fill="' + c + '" stroke="#3f2f22" stroke-width=".5"/><path d="M9.2 13.4l5.8 1.2" stroke="#3f2f22" stroke-width=".4" opacity=".4"/>',
+  trench: c => '<path d="M9 4.8l3 1.1 3-1.1 3 1.5-.6 2.4-1.7-.6V18a.9.9 0 0 1-.9.9h-1.9l-.9-7-.9 7H9.2a.9.9 0 0 1-.9-.9v-8.9l-1.7.6-.6-2.4z" fill="' + c + '" stroke="#3f2f22" stroke-width=".5"/><path d="M8.4 12.6h7.2l-.3 1.5H8.7z" fill="#3f2f22" opacity=".35"/>',
+  parka: c => '<path d="M12 3.6c-1.8 0-3 1.1-3 2.6h6c0-1.5-1.2-2.6-3-2.6z" fill="' + c + '" stroke="#3f2f22" stroke-width=".5"/><path d="M8.8 6.2l3.2 1.3 3.2-1.3 2.4 1.6-.5 2.4-1.6-.5v8.3a.9.9 0 0 1-.9.9H9.4a.9.9 0 0 1-.9-.9v-8.3l-1.6.5-.5-2.4z" fill="' + c + '" stroke="#3f2f22" stroke-width=".5"/><path d="M12 7.5V19" stroke="#3f2f22" stroke-width=".45" opacity=".5"/>'
+};
+function garmSVG(it){
+  return '<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">' + GARM[it.svg](it.c) + '</svg>';
+}
+function mannequinSVG(it){
+  const body = '<circle cx="12" cy="3.9" r="1.9" fill="#d6c4a4"/>' +
+    '<path d="M12 6.2c-2.1 0-3.2 1.2-3.5 2.9L7.6 14h1.5v6.6h5.8V14h1.5l-.9-4.9c-.3-1.7-1.4-2.9-3.5-2.9z" fill="#d6c4a4"/>';
+  return '<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">' +
+    '<rect width="24" height="24" fill="#f7efdf"/>' +
+    '<rect x="1.2" y="1.2" width="21.6" height="21.6" fill="none" stroke="rgba(63,47,34,.12)"/>' +
+    body + (it ? GARM[it.svg](it.c) : '') + '</svg>';
+}
+const CLOTH = {
+  cats: [{ k: 'daily', n: '日常款' }, { k: 'theme', n: '主题穿搭款' }],
+  items: [
+    { id: 'tee', cat: 'daily', nm: '纯棉基础白 T', en: 'Plain white tee', price: 12, tag: '日常', gain: 2, c: '#efe6d4', svg: 'tee',
+      say: 'Just a plain cotton tee — twelve pounds. Fits true to size.',
+      cn: '纯棉白 T，12 镑，尺码正常，洗过不缩。' },
+    { id: 'cardigan', cat: 'daily', nm: '海军蓝针织开衫', en: 'Navy wool cardigan', price: 38, tag: '日常', gain: 4, c: '#384a63', svg: 'cardigan',
+      say: 'That cardigan is lambswool. Hand wash only, please.',
+      cn: '羊毛开衫，38 镑。只能手洗，别丢洗衣机。' },
+    { id: 'scarf', cat: 'daily', nm: '格纹羊毛围巾', en: 'Tartan wool scarf', price: 22, tag: '配饰', gain: 3, c: '#8f5a4a', svg: 'scarf',
+      say: 'The tartan scarf is on the second shelf, next to the gloves.',
+      cn: '格纹围巾 22 镑，在第二层货架，手套旁边。' },
+    { id: 'trench', cat: 'theme', nm: '米色防水风衣', en: 'Waterproof trench coat', price: 85, tag: '面试', gain: 7, c: '#b9a486', svg: 'trench',
+      say: "It's waterproof and lined. Try it on if you like.",
+      cn: '防水加内衬，85 镑。想试就试，试衣间在后面。' },
+    { id: 'parka', cat: 'theme', nm: '橄榄绿旧冲锋衣', en: 'Second-hand parka', price: 68, tag: '扛冻', gain: 6, c: '#6b7350', svg: 'parka',
+      say: "This parka's seen a few winters, but it's still warm.",
+      cn: '二手冲锋衣 68 镑，过过几个冬天，但还挡风。' },
+    { id: 'coat', cat: 'theme', nm: '深灰呢大衣', en: 'Charcoal wool coat', price: 95, tag: '见工正装', gain: 8, c: '#4b4f55', svg: 'trench',
+      say: 'The charcoal coat is the warmest thing on the rail. Ninety-five.',
+      cn: '深灰呢大衣 95 镑，是整排货架最暖的一件，见工穿最稳。' },
+    { id: 'shirt', cat: 'theme', nm: '白棉质衬衫', en: 'White cotton shirt', price: 26, tag: '面试', gain: 5, c: '#f2ece0', svg: 'tee',
+      say: 'A plain white shirt — twenty-six. Ironed and ready.',
+      cn: '纯白衬衫 26 镑，已经熨好了，面试直接穿。' }
+  ]
+};
+let clothSt = { cat: 'daily', item: null, tried: false, bought: [], msg: '' };
+function renderCloth(){
+  const box = $('clothMenu');
+  if (!box) return;
+  const cat = CLOTH.cats.find(c => c.k === clothSt.cat) || CLOTH.cats[0];
+  const list = CLOTH.items.filter(i => i.cat === cat.k);
+  let h = '<div class="cmHead"><b>二手衣铺 SECOND LOOK</b><i>RAIL · PICCADILLY</i></div>';
+  h += '<div class="cmTabs">';
+  CLOTH.cats.forEach(c => {
+    h += '<button class="cmTab' + (c.k === clothSt.cat ? ' on' : '') + '" data-act="cat" data-k="' + c.k + '">' + c.n + '</button>';
+  });
+  h += '</div>';
+  h += '<div class="cmBody">';
+  list.forEach(it => {
+    const mine = clothSt.bought.indexOf(it.id) >= 0;
+    h += '<button class="cmCard clothCard' + (clothSt.item && clothSt.item.id === it.id ? ' sel' : '') + '" data-act="pick" data-id="' + it.id + '">' +
+      '<span class="giTh">' + garmSVG(it) + '</span>' +
+      '<span class="txt">' + it.nm +
+        '<span class="sub">£' + fmt(it.price) + ' · ' + it.tag + (mine ? ' · 已买' : '') + '</span>' +
+      '</span></button>';
+  });
+  h += '<div class="clNote">货架随便看，挑中 → 试穿 → 结账。</div>';
+  h += '</div>';
+  const it = clothSt.item;
+  h += '<div class="dock">' +
+    '<div class="mannequin">' + mannequinSVG(it && clothSt.tried ? it : null) + '</div>' +
+    '<div class="dockInfo"><b>' + (it ? it.nm : '还没挑') + '</b>' +
+      '<span>' + (it ? ('£' + fmt(it.price) + ' · ' + it.tag + ' · 理智 +' + it.gain + '<br>' + it.cn) : '在左边货架点一件，试穿镜里就会显示。') + '</span>' +
+      (clothSt.msg ? '<span style="color:#a8473a">' + clothSt.msg + '</span>' : '') +
+    '</div>' +
+    '<div class="dockBtns">' +
+      '<button class="clBtn" data-act="try">试穿</button>' +
+      '<button class="clBtn main" data-act="buy">结账</button>' +
+      '<button class="clBtn ghost" data-act="leave">离开</button>' +
+    '</div></div>';
+  box.innerHTML = h;
+}
+function openCloth(){
+  clothSt = { cat: 'daily', item: null, tried: false, bought: [], msg: '' };
+  $('clothMenu').classList.add('on');
+  renderCloth();
+  updateQuestBar();
+  speak('Morning! Everything on the rail is for sale.', null, 'CASHIER');
+}
+function closeCloth(){
+  $('clothMenu').classList.remove('on');
+  updateQuestBar();
+  renderHub();
+}
+$('clothMenu').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  const act = b.dataset.act;
+  if (act === 'cat'){ clothSt.cat = b.dataset.k; clothSt.msg = ''; renderCloth(); return; }
+  if (act === 'pick'){
+    clothSt.item = CLOTH.items.find(i => i.id === b.dataset.id) || null;
+    clothSt.tried = false; clothSt.msg = '';
+    renderCloth();
+    if (clothSt.item) speak(clothSt.item.say, null, 'CASHIER');
+    return;
+  }
+  if (act === 'try'){
+    if (!clothSt.item){ clothSt.msg = '先在货架上挑一件。'; renderCloth(); return; }
+    clothSt.tried = true;
+    clothSt.msg = '试衣间里灯光偏黄，镜子里的人比平时精神一点。';
+    renderCloth();
+    speak('The fitting room is just there. Take your time.', null, 'CASHIER');
+    return;
+  }
+  if (act === 'buy'){
+    const it = clothSt.item;
+    if (!it){ clothSt.msg = '先在货架上挑一件。'; renderCloth(); return; }
+    if (clothSt.bought.indexOf(it.id) >= 0){ clothSt.msg = '这件已经买了，衣柜里有了。'; renderCloth(); return; }
+    if (S.cash < it.price){
+      clothSt.msg = '现金不够：手上有 £' + fmt(S.cash) + '，这件 £' + fmt(it.price) + '。';
+      renderCloth(); return;
+    }
+    S.cash -= it.price;
+    clothSt.bought.push(it.id);
+    S.outfit = it.nm;
+    initStats();
+    S.sanity = clamp01(S.sanity + it.gain);
+    updateStats(); updateDayHud();
+    clothSt.msg = '结账 £' + fmt(it.price) + '，换上「' + it.nm + '」。理智 +' + it.gain + '。';
+    renderCloth();
+    speak('Card, please. Thank you — enjoy it.', null, 'PLAYER');
+    return;
+  }
+  if (act === 'leave') closeCloth();
+});
+
 
 // 键盘：空格推进场景1
 document.addEventListener('keydown', e => {
