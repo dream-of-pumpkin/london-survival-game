@@ -1289,6 +1289,74 @@ body.inHub .stats .stBar{flex:1 1 auto;width:auto}
 .said{display:block;font-size:.88em;opacity:.55;letter-spacing:.02em;margin-bottom:.2em}
 .saidyou{display:block;font-size:1.02em;font-weight:600;margin:.25em 0 .9em}
 </style>
+<style id="shop11-css">
+#clothMenu{position:fixed;left:0;top:0;right:0;bottom:0;width:auto;height:auto;z-index:80;
+  padding:2vmin 2.2vmin 1.8vmin;border:0;border-radius:0;
+  background:linear-gradient(160deg,rgba(13,18,24,.955),rgba(6,9,12,.985));
+  display:none;flex-direction:column;gap:1.2vmin;overflow:hidden}
+#clothMenu.on{display:flex}
+#clothMenu .fsTop{display:flex;align-items:flex-end;gap:2vmin;
+  padding-bottom:.9vmin;border-bottom:1px solid rgba(200,153,74,.28);flex:none}
+#clothMenu .fsTitle b{font-family:var(--serif);font-size:2.5vmin;letter-spacing:.18em;color:#f5f0e5;font-weight:600}
+#clothMenu .fsTitle i{display:block;font-style:normal;font-family:var(--sans);font-size:.9vmin;
+  letter-spacing:.22em;color:rgba(200,153,74,.9);margin-top:.35vmin}
+#clothMenu .fsTabs{display:flex;gap:.5vmin;margin-left:1.6vmin}
+#clothMenu .fsTab{font-family:var(--sans);font-size:1.05vmin;letter-spacing:.08em;color:rgba(243,237,226,.58);
+  background:transparent;border:1px solid rgba(243,237,226,.14);border-radius:.25vmin;
+  padding:.55vmin 1.1vmin;cursor:pointer}
+#clothMenu .fsTab:hover{color:#f3ede2;border-color:rgba(243,237,226,.3)}
+#clothMenu .fsTab.on{color:#f2cd87;border-color:rgba(200,153,74,.75);background:rgba(200,153,74,.12)}
+#clothMenu .fsCash{margin-left:auto;font-family:var(--sans);font-size:1.25vmin;letter-spacing:.08em;color:#e9e1cf}
+#clothMenu .fsLeave{font-family:var(--sans);font-size:1.05vmin;letter-spacing:.1em;color:rgba(243,237,226,.7);
+  background:transparent;border:1px solid rgba(243,237,226,.2);border-radius:.25vmin;padding:.55vmin 1.2vmin;cursor:pointer}
+#clothMenu .fsLeave:hover{color:#f5c7b8;border-color:rgba(220,120,96,.6)}
+
+#clothMenu .fsBody{flex:1;min-height:0;display:grid;grid-template-columns:1.55fr 1fr;gap:1.7vmin}
+#clothMenu .fsRail{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:.95vmin;min-height:0;overflow:auto}
+#clothMenu .fsCard{display:flex;flex-direction:column;padding:.55vmin;cursor:pointer;text-align:left;
+  position:relative;overflow:hidden;border-radius:.45vmin;
+  background:linear-gradient(180deg,rgba(37,47,59,.99),rgba(21,28,37,1));
+  border:1px solid rgba(243,237,226,.1)}
+#clothMenu .fsCard:hover{border-color:rgba(200,153,74,.55)}
+#clothMenu .fsCard.sel{border-color:#e8c073;
+  box-shadow:0 0 0 1px rgba(232,192,115,.35),0 3px 10px rgba(0,0,0,.45)}
+#clothMenu .fsCard .th{width:100%;flex:1;min-height:0;border-radius:.3vmin;overflow:hidden;display:block;
+  background:radial-gradient(ellipse at 50% 35%,rgba(255,246,228,.1),rgba(9,13,17,.55) 70%)}
+#clothMenu .fsCard .th img{width:100%;height:100%;object-fit:contain;object-position:center bottom;display:block}
+#clothMenu .fsCard .tp{display:block;padding:.5vmin .5vmin .15vmin;flex:none}
+#clothMenu .fsCard .nm{display:block;font-family:var(--sans);font-size:1.22vmin;color:#f2ecdf;line-height:1.3}
+#clothMenu .fsCard .en{display:block;font-family:var(--sans);font-size:.76vmin;letter-spacing:.18em;
+  color:rgba(200,153,74,.85);margin-top:.22vmin;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#clothMenu .fsCard .pr{display:block;font-family:var(--sans);font-size:.98vmin;color:rgba(243,237,226,.5);margin-top:.32vmin}
+#clothMenu .fsCard .badge{position:absolute;right:.5vmin;top:.5vmin;font-family:var(--sans);
+  font-size:.75vmin;padding:.12vmin .42vmin;border-radius:.2vmin;
+  background:rgba(154,168,119,.22);color:#cfd8b2}
+
+#clothMenu .fsRoom{display:flex;flex-direction:column;min-height:0;gap:.9vmin;padding:1.1vmin;border-radius:.55vmin;
+  background:linear-gradient(180deg,rgba(22,29,37,.8),rgba(12,16,21,.92));
+  border:1px solid rgba(243,237,226,.08)}
+#clothMenu .fsMirror{position:relative;flex:1;min-height:0;border-radius:.4vmin;overflow:hidden;
+  border:1px solid rgba(200,153,74,.28);
+  background:radial-gradient(ellipse at 50% 26%,rgba(255,246,228,.11),rgba(10,14,18,.55))}
+#clothMenu .fsMirror img{width:100%;height:100%;object-fit:contain;object-position:center bottom;display:block}
+#clothMenu .fsMirror .ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;
+  font-family:var(--sans);font-size:1.15vmin;letter-spacing:.12em;line-height:2;color:rgba(243,237,226,.38)}
+#clothMenu .fsInfo{flex:none}
+#clothMenu .fsInfo .n1{font-family:var(--serif);font-size:2vmin;color:#f7f2e7}
+#clothMenu .fsInfo .n2{font-family:var(--sans);font-size:1vmin;letter-spacing:.08em;color:rgba(243,237,226,.45);margin-top:.35vmin}
+#clothMenu .fsInfo .cn{font-family:var(--sans);font-size:1.1vmin;line-height:1.6;color:rgba(243,237,226,.7);margin-top:.6vmin}
+#clothMenu .fsInfo .wnc{margin-top:1vmin;gap:.8vmin}
+#clothMenu .fsInfo .wnc i{font-size:.92vmin;letter-spacing:.12em;color:rgba(243,237,226,.82)}
+#clothMenu .fsInfo .wnc span{height:.8vmin;background:rgba(243,237,226,.14)}
+#clothMenu .fsInfo .msg{font-family:var(--sans);font-size:.98vmin;line-height:1.55;
+  color:#f0c97a;margin-top:.65vmin}
+#clothMenu .fsBtns{display:flex;gap:.7vmin;margin-top:.9vmin}
+#clothMenu .fsBtns .clBtn{flex:1;padding:1.05vmin 0;font-size:1.2vmin;letter-spacing:.08em}
+</style>
+</head>
+<style>/* 服装店场景：提亮一档 */
+#s8.shopMode #spotBg{filter:brightness(1.18) saturate(1.05)}
+</style>
 </head>
 <body>
 <div class="stage" id="stage">
@@ -2776,7 +2844,7 @@ const HUB_SPOTS = [
   { k: 'shop', name: '便利店', sub: 'SIM · 牛奶 · 洗衣', img: 'scene-shop.jpg' },
   { k: 'kitchen', name: '中餐馆后厨', sub: '谈一份工', img: 'scene-kitchen.jpg' },
   { k: 'tube', name: '地铁站', sub: '买票 · 问站', img: 'scene-tube-platform.jpg' },
-  { k: 'cloth', name: '二手衣铺', sub: '试穿 · 换装 · 理智', img: 'scene-street.jpg' }
+  { k: 'cloth', name: '服装店', sub: '试穿 · 换装 · 当面换上', img: 'scene-cloth.jpg' }
 ];
 
 // ===== 一天四段：Morning → Noon → Afternoon → Evening =====
@@ -2862,7 +2930,22 @@ function enterSpot(k){
     return;
   }
   if (k !== 'sleep'){ S.act--; if (drainStats('action')) return; }
-  if (k === 'cloth'){ openCloth(); return; }
+  if (k === 'cloth'){
+    $('s8').classList.add('shopMode'); $('s8').classList.remove('intro');
+    $('s8').classList.remove('cafeMode');
+    $('spotEnterBar').classList.remove('on');
+    $('spotPlace').textContent = 'HIGH STREET · 服装店';
+    $('spotBg').style.backgroundImage = "url('assets/scene-cloth.jpg')";
+    $('spotOpts').innerHTML = '';
+    $('spotWords').innerHTML = '';
+    $('spotBack').style.display = 'none';
+    $('spotProg').textContent = '';
+    $('cafeMenu').classList.remove('on');
+    $('s8').classList.remove('asking');
+    $('learnLayer').classList.remove('on');
+    showScene(8);
+    openCloth(); return;
+  }
   if (SHOPS[k]){ openShop(k); return; }
   let key = k;
   if (k === 'kitchen' && S.visa !== 'student') key = 'kitchenT';
@@ -4214,97 +4297,126 @@ function updateQuestBar(){
   setQBar('qHunger', clamp01(S.hunger));
   setQBar('qHealth', clamp01(S.health));
   setQBar('qSanity', clamp01(S.sanity));
-  $('qbWear').textContent = '衣：' + (S.outfit || '还穿着落地那身');
+  $('qbWear').textContent = '衣：' + (S.outfit || '还穿着落地那身') + (S.warm ? ' · 暖' + S.warm + ' 体' + S.neat + ' 舒' + S.comfort : '');
 }
 
-// ===== 服装店 =====
-const GARM = {
-  tee: c => '<path d="M7.6 5.4l2.5-1 1.9 1.3 1.9-1.3 2.5 1 2.5 1.3-.8 2.2-2.1-.7v8.4a.9.9 0 0 1-.9.9H9.9a.9.9 0 0 1-.9-.9v-8.4l-2.1.7-.8-2.2z" fill="' + c + '" stroke="#3f2f22" stroke-width=".5"/>',
-  cardigan: c => '<path d="M9 4.8l3 1.1 3-1.1 2.7 1.4-.7 2.3-1.7-.6v9.1a.8.8 0 0 1-.8.8h-1.7V8.4h-1.6v8.4H10a.8.8 0 0 1-.8-.8v-9.1l-1.7.6-.7-2.3z" fill="' + c + '" stroke="#3f2f22" stroke-width=".5"/><circle cx="12" cy="10.4" r=".45" fill="#3f2f22"/><circle cx="12" cy="12.6" r=".45" fill="#3f2f22"/><circle cx="12" cy="14.8" r=".45" fill="#3f2f22"/>',
-  scarf: c => '<path d="M8.6 4.6h6.8l.6 2.6-2.2.7v10.5c0 1-.8 1.6-1.9 1.6s-1.9-.6-1.9-1.6V8l-2.1-.7z" fill="' + c + '" stroke="#3f2f22" stroke-width=".5"/><path d="M9.2 13.4l5.8 1.2" stroke="#3f2f22" stroke-width=".4" opacity=".4"/>',
-  trench: c => '<path d="M9 4.8l3 1.1 3-1.1 3 1.5-.6 2.4-1.7-.6V18a.9.9 0 0 1-.9.9h-1.9l-.9-7-.9 7H9.2a.9.9 0 0 1-.9-.9v-8.9l-1.7.6-.6-2.4z" fill="' + c + '" stroke="#3f2f22" stroke-width=".5"/><path d="M8.4 12.6h7.2l-.3 1.5H8.7z" fill="#3f2f22" opacity=".35"/>',
-  parka: c => '<path d="M12 3.6c-1.8 0-3 1.1-3 2.6h6c0-1.5-1.2-2.6-3-2.6z" fill="' + c + '" stroke="#3f2f22" stroke-width=".5"/><path d="M8.8 6.2l3.2 1.3 3.2-1.3 2.4 1.6-.5 2.4-1.6-.5v8.3a.9.9 0 0 1-.9.9H9.4a.9.9 0 0 1-.9-.9v-8.3l-1.6.5-.5-2.4z" fill="' + c + '" stroke="#3f2f22" stroke-width=".5"/><path d="M12 7.5V19" stroke="#3f2f22" stroke-width=".45" opacity=".5"/>'
-};
-function garmSVG(it){
-  return '<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">' + GARM[it.svg](it.c) + '</svg>';
-}
-function mannequinSVG(it){
-  const body = '<circle cx="12" cy="3.9" r="1.9" fill="#d6c4a4"/>' +
-    '<path d="M12 6.2c-2.1 0-3.2 1.2-3.5 2.9L7.6 14h1.5v6.6h5.8V14h1.5l-.9-4.9c-.3-1.7-1.4-2.9-3.5-2.9z" fill="#d6c4a4"/>';
-  return '<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">' +
-    '<rect width="24" height="24" fill="#f7efdf"/>' +
-    '<rect x="1.2" y="1.2" width="21.6" height="21.6" fill="none" stroke="rgba(63,47,34,.12)"/>' +
-    body + (it ? GARM[it.svg](it.c) : '') + '</svg>';
-}
-const CLOTH = {
-  cats: [{ k: 'daily', n: '日常款' }, { k: 'theme', n: '主题穿搭款' }],
+// ===== 服装店 · HIGH STREET（全屏版）=====
+const OUTFITS = {
+  cats: [
+    { k: 'all', n: '全部' },
+    { k: 'daily', n: '日常' },
+    { k: 'commute', n: '通勤' },
+    { k: 'work', n: '打工' },
+    { k: 'party', n: '派对' }
+  ],
   items: [
-    { id: 'tee', cat: 'daily', nm: '纯棉基础白 T', en: 'Plain white tee', price: 12, tag: '日常', gain: 2, c: '#efe6d4', svg: 'tee',
-      say: 'Just a plain cotton tee — twelve pounds. Fits true to size.',
-      cn: '纯棉白 T，12 镑，尺码正常，洗过不缩。' },
-    { id: 'cardigan', cat: 'daily', nm: '海军蓝针织开衫', en: 'Navy wool cardigan', price: 38, tag: '日常', gain: 4, c: '#384a63', svg: 'cardigan',
-      say: 'That cardigan is lambswool. Hand wash only, please.',
-      cn: '羊毛开衫，38 镑。只能手洗，别丢洗衣机。' },
-    { id: 'scarf', cat: 'daily', nm: '格纹羊毛围巾', en: 'Tartan wool scarf', price: 22, tag: '配饰', gain: 3, c: '#8f5a4a', svg: 'scarf',
-      say: 'The tartan scarf is on the second shelf, next to the gloves.',
-      cn: '格纹围巾 22 镑，在第二层货架，手套旁边。' },
-    { id: 'trench', cat: 'theme', nm: '米色防水风衣', en: 'Waterproof trench coat', price: 85, tag: '面试', gain: 7, c: '#b9a486', svg: 'trench',
-      say: "It's waterproof and lined. Try it on if you like.",
-      cn: '防水加内衬，85 镑。想试就试，试衣间在后面。' },
-    { id: 'parka', cat: 'theme', nm: '橄榄绿旧冲锋衣', en: 'Second-hand parka', price: 68, tag: '扛冻', gain: 6, c: '#6b7350', svg: 'parka',
-      say: "This parka's seen a few winters, but it's still warm.",
-      cn: '二手冲锋衣 68 镑，过过几个冬天，但还挡风。' },
-    { id: 'coat', cat: 'theme', nm: '深灰呢大衣', en: 'Charcoal wool coat', price: 95, tag: '见工正装', gain: 8, c: '#4b4f55', svg: 'trench',
-      say: 'The charcoal coat is the warmest thing on the rail. Ninety-five.',
-      cn: '深灰呢大衣 95 镑，是整排货架最暖的一件，见工穿最稳。' },
-    { id: 'shirt', cat: 'theme', nm: '白棉质衬衫', en: 'White cotton shirt', price: 26, tag: '面试', gain: 5, c: '#f2ece0', svg: 'tee',
-      say: 'A plain white shirt — twenty-six. Ironed and ready.',
-      cn: '纯白衬衫 26 镑，已经熨好了，面试直接穿。' }
+    { id: 'puffer', cat: 'commute', nm: '黑色短款羽绒', en: 'SHORT PUFFER', price: 59, shop: 'H&M', w: 5, n: 3, c: 4,
+      img: 'outfit-puffer.png',
+      say: "That puffer's the last one in a small. Fifty-nine.",
+      cn: '这件羽绒 S 码只剩最后一件，59 镑。' },
+    { id: 'shell', cat: 'commute', nm: '藏青冲锋衣', en: 'WATERPROOF SHELL', price: 115, shop: 'NORTH FACE', w: 4, n: 1, c: 5,
+      img: 'outfit-shell.png',
+      say: "This shell is waterproof. By November you'll want it. A hundred and fifteen.",
+      cn: '这件是防水的，到十一月你就用得上了，115 镑。' },
+    { id: 'hoodie', cat: 'daily', nm: '灰卫衣 + 打底裤', en: 'OVERSIZED HOODIE', price: 22, shop: 'PRIMARK', w: 2, n: 1, c: 4,
+      img: 'outfit-hoodie.png',
+      say: 'Oversized hoodie, twenty-two. Everyone wears these to lectures.',
+      cn: '宽松卫衣 22 镑，上课的人基本都这么穿。' },
+    { id: 'coat', cat: 'commute', nm: '驼色双排扣大衣', en: 'WOOL OVERCOAT', price: 89, shop: 'ZARA', w: 4, n: 4, c: 2,
+      img: 'outfit-coat.png',
+      say: 'Wool overcoat, eighty-nine. Good for an interview, if you have one coming.',
+      cn: '羊毛大衣 89 镑。要是有面试，穿这件最稳。' },
+    { id: 'vintage', cat: 'daily', nm: '红棕格纹古着衬衫', en: 'VINTAGE FLANNEL', price: 16, shop: 'CHARITY SHOP', w: 2, n: 2, c: 3,
+      img: 'outfit-vintage.png',
+      say: "That flannel came from a charity shop up the road. Sixteen pounds and it's yours.",
+      cn: '这件格纹衬衫是从街那头的慈善商店收来的，16 镑拿走。' },
+    { id: 'cafe', cat: 'work', nm: '咖啡店围裙', en: 'CAFÉ APRON', price: 0, shop: 'EMPLOYER', w: 2, n: 2, c: 2,
+      img: 'outfit-cafe.png',
+      say: "The apron's free, but you only get one. Bring it back washed.",
+      cn: '围裙不要钱，但只发一条。洗干净了再还回来。' },
+    { id: 'kitchen', cat: 'work', nm: '后厨厨师服', en: 'KITCHEN WHITES', price: 0, shop: 'EMPLOYER', w: 2, n: 1, c: 2,
+      img: 'outfit-kitchen.png',
+      say: 'Kitchen whites. We supply them. Do not take them home.',
+      cn: '后厨的衣服店里发，别带回家。' },
+    { id: 'dress', cat: 'party', nm: '黑缎面吊带长裙', en: 'SATIN SLIP DRESS', price: 38, shop: 'H&M', w: 1, n: 5, c: 2,
+      img: 'outfit-dress.png',
+      say: 'Satin slip, thirty-eight. For a birthday, or a Christmas do.',
+      cn: '缎面吊带裙 38 镑，生日或圣诞聚会穿。' },
+    { id: 'rain', cat: 'commute', nm: '风衣 + 雨靴', en: 'TRENCH & WELLIES', price: 72, shop: 'M&S', w: 3, n: 4, c: 5,
+      img: 'outfit-rain.png',
+      say: "Trench and wellies, seventy-two. It rains here, in case nobody told you.",
+      cn: '风衣加雨靴 72 镑。这儿老下雨，没人告诉过你吧。' }
   ]
 };
-let clothSt = { cat: 'daily', item: null, tried: false, bought: [], msg: '' };
+const BASEW = { nm: '学生开衫 · 白衬衫 · 长裤 · 帆布鞋', w: 3, n: 2, c: 1 };
+let clothSt = { cat: 'all', item: null, tried: false, bought: [], msg: '' };
+
+function wncBars(w, n, c){
+  return '<div class="wnc">' +
+    '<div class="w"><i>保暖 WARM ' + w + '/5</i><span><u style="width:' + (w / 5 * 100) + '%"></u></span></div>' +
+    '<div class="n"><i>体面 TIDY ' + n + '/5</i><span><u style="width:' + (n / 5 * 100) + '%"></u></span></div>' +
+    '<div class="c"><i>舒适 COMFORT ' + c + '/5</i><span><u style="width:' + (c / 5 * 100) + '%"></u></span></div>' +
+    '</div>';
+}
+
 function renderCloth(){
   const box = $('clothMenu');
   if (!box) return;
-  const cat = CLOTH.cats.find(c => c.k === clothSt.cat) || CLOTH.cats[0];
-  const list = CLOTH.items.filter(i => i.cat === cat.k);
-  let h = '<div class="cmHead"><b>二手衣铺 SECOND LOOK</b><i>RAIL · PICCADILLY</i></div>';
-  h += '<div class="cmTabs">';
-  CLOTH.cats.forEach(c => {
-    h += '<button class="cmTab' + (c.k === clothSt.cat ? ' on' : '') + '" data-act="cat" data-k="' + c.k + '">' + c.n + '</button>';
-  });
-  h += '</div>';
-  h += '<div class="cmBody">';
-  list.forEach(it => {
-    const mine = clothSt.bought.indexOf(it.id) >= 0;
-    h += '<button class="cmCard clothCard' + (clothSt.item && clothSt.item.id === it.id ? ' sel' : '') + '" data-act="pick" data-id="' + it.id + '">' +
-      '<span class="giTh">' + garmSVG(it) + '</span>' +
-      '<span class="txt">' + it.nm +
-        '<span class="sub">£' + fmt(it.price) + ' · ' + it.tag + (mine ? ' · 已买' : '') + '</span>' +
-      '</span></button>';
-  });
-  h += '<div class="clNote">货架随便看，挑中 → 试穿 → 结账。</div>';
-  h += '</div>';
+  const list = clothSt.cat === 'all'
+    ? OUTFITS.items
+    : OUTFITS.items.filter(i => i.cat === clothSt.cat);
   const it = clothSt.item;
-  h += '<div class="dock">' +
-    '<div class="mannequin">' + mannequinSVG(it && clothSt.tried ? it : null) + '</div>' +
-    '<div class="dockInfo"><b>' + (it ? it.nm : '还没挑') + '</b>' +
-      '<span>' + (it ? ('£' + fmt(it.price) + ' · ' + it.tag + ' · 理智 +' + it.gain + '<br>' + it.cn) : '在左边货架点一件，试穿镜里就会显示。') + '</span>' +
-      (clothSt.msg ? '<span style="color:#a8473a">' + clothSt.msg + '</span>' : '') +
-    '</div>' +
-    '<div class="dockBtns">' +
-      '<button class="clBtn" data-act="try">试穿</button>' +
-      '<button class="clBtn main" data-act="buy">结账</button>' +
-      '<button class="clBtn ghost" data-act="leave">离开</button>' +
-    '</div></div>';
+  const show = (it && clothSt.tried) ? it : null;
+
+  let h = '<div class="fsTop">';
+  h += '<div class="fsTitle"><b>服装店</b><i>HIGH STREET · OXFORD ST</i></div>';
+  h += '<div class="fsTabs">';
+  OUTFITS.cats.forEach(c => {
+    h += '<button class="fsTab' + (c.k === clothSt.cat ? ' on' : '') + '" data-act="cat" data-k="' + c.k + '">' + c.n + '</button>';
+  });
+  h += '</div>';
+  h += '<div class="fsCash">现金 £' + fmt(S.cash) + '</div>';
+  h += '<button class="fsLeave" data-act="leave">离开</button>';
+  h += '</div>';
+
+  h += '<div class="fsBody"><div class="fsRail">';
+  list.forEach(o => {
+    const mine = clothSt.bought.indexOf(o.id) >= 0;
+    h += '<button class="fsCard' + (it && it.id === o.id ? ' sel' : '') + '" data-act="pick" data-id="' + o.id + '">' +
+      '<span class="th"><img src="assets/' + o.img + '" alt=""></span>' +
+      '<span class="tp"><span class="nm">' + o.nm + '</span>' +
+        '<span class="en">' + o.en + '</span>' +
+        '<span class="pr">' + (o.price ? '£' + fmt(o.price) : '免费') + ' · ' + o.shop + '</span></span>' +
+      (mine ? '<span class="badge">已买</span>' : '') +
+      '</button>';
+  });
+  h += '</div>';
+
+  h += '<div class="fsRoom">';
+  h += '<div class="fsMirror">' +
+       (show ? '<img src="assets/' + show.img + '" alt="">'
+             : '<span class="ph">试衣镜<br>还没换上</span>') + '</div>';
+  h += '<div class="fsInfo">';
+  h += '<div class="n1">' + (it ? it.nm : '还没挑') + '</div>';
+  h += '<div class="n2">' + (it ? ('£' + fmt(it.price) + ' · ' + it.shop) : '当前：' + BASEW.nm) + '</div>';
+  h += '<div class="cn">' + (it ? it.cn : '从左边货架上点一件，镜子里就能看见效果。') + '</div>';
+  h += wncBars(it ? it.w : BASEW.w, it ? it.n : BASEW.n, it ? it.c : BASEW.c);
+  if (clothSt.msg) h += '<div class="msg">' + clothSt.msg + '</div>';
+  h += '<div class="fsBtns">' +
+    '<button class="clBtn" data-act="try">试穿</button>' +
+    '<button class="clBtn main" data-act="buy">' +
+      (it ? (it.price ? '买 £' + fmt(it.price) : '免费领走') : '买下') + '</button>' +
+    '</div>';
+  h += '</div></div></div>';
   box.innerHTML = h;
 }
+
 function openCloth(){
-  clothSt = { cat: 'daily', item: null, tried: false, bought: [], msg: '' };
+  clothSt = { cat: 'all', item: null, tried: false, bought: clothSt.bought || [], msg: '' };
   $('clothMenu').classList.add('on');
   renderCloth();
   updateQuestBar();
-  speak('Morning! Everything on the rail is for sale.', null, 'CASHIER');
+  speak('Morning! Everything on the rail is for sale — try anything you like.', null, 'CASHIER');
 }
 function closeCloth(){
   $('clothMenu').classList.remove('on');
@@ -4317,42 +4429,43 @@ $('clothMenu').addEventListener('click', e => {
   const act = b.dataset.act;
   if (act === 'cat'){ clothSt.cat = b.dataset.k; clothSt.msg = ''; renderCloth(); return; }
   if (act === 'pick'){
-    clothSt.item = CLOTH.items.find(i => i.id === b.dataset.id) || null;
+    clothSt.item = OUTFITS.items.find(i => i.id === b.dataset.id) || null;
     clothSt.tried = false; clothSt.msg = '';
     renderCloth();
     if (clothSt.item) speak(clothSt.item.say, null, 'CASHIER');
     return;
   }
   if (act === 'try'){
-    if (!clothSt.item){ clothSt.msg = '先在货架上挑一件。'; renderCloth(); return; }
+    if (!clothSt.item){ clothSt.msg = '先在左边挑一件。'; renderCloth(); return; }
     clothSt.tried = true;
-    clothSt.msg = '试衣间里灯光偏黄，镜子里的人比平时精神一点。';
+    clothSt.msg = '试衣间灯偏黄，镜子里的人比平时精神一点。';
     renderCloth();
     speak('The fitting room is just there. Take your time.', null, 'CASHIER');
     return;
   }
   if (act === 'buy'){
     const it = clothSt.item;
-    if (!it){ clothSt.msg = '先在货架上挑一件。'; renderCloth(); return; }
-    if (clothSt.bought.indexOf(it.id) >= 0){ clothSt.msg = '这件已经买了，衣柜里有了。'; renderCloth(); return; }
+    if (!it){ clothSt.msg = '先在左边挑一件。'; renderCloth(); return; }
+    if (clothSt.bought.indexOf(it.id) >= 0){ clothSt.msg = '这件已经买过了，衣柜里有。'; renderCloth(); return; }
     if (S.cash < it.price){
       clothSt.msg = '现金不够：手上有 £' + fmt(S.cash) + '，这件 £' + fmt(it.price) + '。';
       renderCloth(); return;
     }
-    S.cash -= it.price;
+    initStats();
+    S.cash = Math.round((S.cash - it.price) * 100) / 100;
     clothSt.bought.push(it.id);
     S.outfit = it.nm;
-    initStats();
-    S.sanity = clamp01(S.sanity + it.gain);
-    updateStats(); updateDayHud();
-    clothSt.msg = '结账 £' + fmt(it.price) + '，换上「' + it.nm + '」。理智 +' + it.gain + '。';
+    S.warm = it.w; S.neat = it.n; S.comfort = it.c;
+    S.sanity = clamp01(S.sanity + Math.round(it.c * 1.2));
+    updateStats(); updateDayHud(); updateQuestBar();
+    clothSt.tried = true;
+    clothSt.msg = (it.price ? '结账 £' + fmt(it.price) : '免费领走') + '，当场换上「' + it.nm + '」。舒适 ' + it.c + '/5，理智跟着回了一点。';
     renderCloth();
-    speak('Card, please. Thank you — enjoy it.', null, 'PLAYER');
+    speak('There you go — wear it out if you want.', null, 'CASHIER');
     return;
   }
   if (act === 'leave') closeCloth();
 });
-
 
 
 // ===== 商店统一菜单：超市 / 便利店 / 地铁 =====
